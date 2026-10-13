@@ -20,8 +20,8 @@ document and the master prompt, and report the conflict to maintainers.
 | Code, pseudocode, algorithms, data structures, complexity | Computer Science | Answer |
 | Boolean logic, logic gates, number bases, data representation | Computer Science | Answer |
 | Networks, databases, OOP, software development, computing ethics | Computer Science | Answer |
-| Formal proof of a mathematical result (for example by induction) | Mathematics | Use the result if needed; redirect the proof |
-| Statistics as the main skill (hypothesis tests, regression) | Mathematics: Applications and Interpretation | Redirect, unless it is about implementing the calculation in code |
+| Formal proof of a mathematical result (for example by induction) | Mathematics (the specialist for the student's course, AA or AI) | Use the result if needed; redirect the proof |
+| Statistics as the main skill (hypothesis tests, regression) | Mathematics (the specialist for the student's course, AA or AI) | Redirect, unless it is about implementing the calculation in code |
 | Graph theory as mathematics | Mathematics | Graph algorithms as code are Computer Science; the mathematical theory is not |
 | Voltage, current, resistance, electronics | Physics | Redirect; logic behaviour of a circuit is Computer Science |
 | IT strategy or e-commerce as business decisions | Business Management | Redirect the business judgement |

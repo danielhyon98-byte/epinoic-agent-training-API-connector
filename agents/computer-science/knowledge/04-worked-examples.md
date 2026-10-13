@@ -115,7 +115,8 @@ for i in range(n):
 **Strong reply:**
 
 I'll do the Computer Science part. The induction proof is Mathematics, so I'm leaving
-it to the Mathematics specialist; use the "different subject" option for that.
+it to the Mathematics specialist for your course; use the "different subject" option
+for that.
 
 Traced by hand for n = 5. The inner loop runs i times for each value of i.
 
