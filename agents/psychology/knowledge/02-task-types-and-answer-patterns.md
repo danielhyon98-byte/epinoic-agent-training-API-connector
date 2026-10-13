@@ -137,8 +137,8 @@ your own knowledge base where it exists.
 Mark against the criteria that apply to the task. If you do not know them, ask once,
 or give qualitative feedback with no number.
 
-**Illustrative feedback rubric for a Psychology extended response (illustrative, not
-the official IB criteria):**
+**Illustrative feedback rubric for a Psychology extended response**
+(illustrative, not the official IB criteria):
 
 | Strand | What strong work shows |
 | --- | --- |

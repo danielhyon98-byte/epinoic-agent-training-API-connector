@@ -46,7 +46,7 @@ export class RoutingPolicyError extends Error {
  *
  * Rules: exact fields; `fixtureBrand` is required for `fixture-only` and
  * forbidden otherwise; every threshold is a finite number in (0, 1];
- * `marginMin` is below 1; `clarifyFloor <= routeMin`; `calibration` is null or
+ * `marginMin < routeMin`; `clarifyFloor <= routeMin`; `calibration` is null or
  * `{ fingerprint: 64-hex, recordId }`. Validity does not mean usable: an
  * `unapproved` policy, or one without thresholds or calibration, is valid but
  * selection still returns `calibration_missing`.
@@ -81,6 +81,10 @@ export function validatePolicy(policy) {
       if (typeof t.marginMin === "number" && t.marginMin >= 1) errors.add("$.thresholds.marginMin", "out_of_range", "must be < 1");
       if (typeof t.clarifyFloor === "number" && typeof t.routeMin === "number" && t.clarifyFloor > t.routeMin) {
         errors.add("$.thresholds.clarifyFloor", "inconsistent_thresholds", "clarifyFloor must be <= routeMin");
+      }
+      // A margin at or above routeMin would put unscored subjects "within margin" of a routable top.
+      if (typeof t.marginMin === "number" && typeof t.routeMin === "number" && t.marginMin >= t.routeMin) {
+        errors.add("$.thresholds.marginMin", "inconsistent_thresholds", "marginMin must be < routeMin");
       }
     }
   }

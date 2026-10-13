@@ -159,8 +159,8 @@ ask once, or give qualitative feedback with no number.
 When the student does not supply criteria but wants a sense of level, you may use the
 rubric below. Always call it "illustrative, not the official IB criteria".
 
-**Illustrative feedback rubric for an extended Economics response (illustrative, not
-the official IB criteria):**
+**Illustrative feedback rubric for an extended Economics response**
+(illustrative, not the official IB criteria):
 
 | Strand | What strong work shows |
 | --- | --- |
