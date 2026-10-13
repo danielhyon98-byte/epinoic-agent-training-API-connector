@@ -1,0 +1,10 @@
+node_modules/
+.DS_Store
+*.log
+.env
+.env.*
+# Exported bundles from a private knowledge-base checkout must not be committed
+# to this public repository.
+specialist-runtime/dist/
+specialist-runtime/build/
+*.bundle.local.*
