@@ -18,3 +18,13 @@ Newest first. Each entry says what changed and what was and was not verified.
 - Added `agents/agents.json` (16-agent roster; 6 slugs from the handoffs, 10 provisional) and
   `agents/_shared/knowledge/00-answering-functionality-core.md` (cross-subject answering rules).
 - Source pins in both contracts are copied from the handoffs and are NOT verified (repos unreachable).
+
+## 2026-10-13, session 1, checkpoint 3
+
+- Added `agents/model-assignment.json` (proposal): Claude Haiku 5.5 primary for all 16 agents,
+  GPT-6 Luna as comparison/fallback candidate, with an evidence-based switch rule.
+- Added `agents/handoff-spec.json` (per-agent focus, neighbours, clarify triggers, checkable habits,
+  7 original synthetic probe messages each) and `agents/tools/generate-handoffs.mjs`.
+- Generated 48 files: per agent `README.md`, `HANDOFF-CLAUDE-HAIKU-5-5.md`, `HANDOFF-GPT-6-LUNA.md`.
+  `--check` mode confirms they are up to date.
+- No model was called; the probe messages have not been run on any model.

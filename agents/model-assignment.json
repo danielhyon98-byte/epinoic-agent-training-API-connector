@@ -1,0 +1,70 @@
+{
+  "schema": "epinoic.model-assignment.v1",
+  "assignmentVersion": "2026-10-13.1",
+  "status": "PROPOSAL. Not approved. The coordination handoffs state that models, prices and production enablement are not selected in this slice; Bruno/website 03 approve model configuration.",
+  "models": {
+    "claude-haiku-5-5": {
+      "vendor": "Anthropic",
+      "displayName": "Claude Haiku 5.5",
+      "apiModelId": "claude-haiku-5-5",
+      "apiModelIdStatus": "Anthropic's published model ID. No date suffix and no alias, so pin it exactly.",
+      "api": "Anthropic Messages API (POST /v1/messages)",
+      "transportOwner": "website task 03 (Anthropic Messages transport)",
+      "handoffFile": "HANDOFF-CLAUDE-HAIKU-5-5.md",
+      "reportedFacts": [
+        "Context window about 1M tokens and max output 128K (zip doc 02; verify on Anthropic's models page).",
+        "Input price reportedly steps up for prompts over 100K tokens (zip doc 02, third-party figures; verify on Anthropic's pricing page).",
+        "Tokenizer reportedly counts about 30% more tokens than earlier Claude models for the same text (zip doc 02; measure with the token-count endpoint).",
+        "Max-plan monthly API credits apply only on the Claude Platform (zip doc 02)."
+      ]
+    },
+    "gpt-6-luna": {
+      "vendor": "OpenAI",
+      "displayName": "GPT-6 Luna",
+      "apiModelId": "gpt-6-luna",
+      "apiModelIdStatus": "UNVERIFIED. The ID is taken from the comparison URL in zip doc 08. Confirm the exact API model ID on OpenAI's models page before use.",
+      "api": "OpenAI Responses API (POST /v1/responses)",
+      "transportOwner": "website task 03 (OpenAI Responses transport)",
+      "handoffFile": "HANDOFF-GPT-6-LUNA.md",
+      "reportedFacts": [
+        "Context window about 1.05M tokens (zip doc 04, third-party comparison; verify).",
+        "The Assistants API shut down on 2026-08-26; use the Responses API (zip doc 04).",
+        "Custom GPTs inside ChatGPT have no backend API, as far as the zip's research found (zip doc 04). A custom GPT is for manual testing only, never the website path."
+      ]
+    }
+  },
+  "policy": {
+    "defaultPrimary": "claude-haiku-5-5",
+    "defaultComparison": "gpt-6-luna",
+    "whyHaikuFirst": [
+      "The owner's stated preference (zip doc 00).",
+      "Max-plan API credits only work on the Claude Platform (zip docs 02 and 04).",
+      "One vendor for the History pilot keeps the first live test simple: one transport, one budget unit, one set of error codes."
+    ],
+    "whyLunaForEveryAgent": [
+      "Zip doc 04 recommends running about 20 real questions through one specialist on each model and comparing.",
+      "Zip doc 05 recommends keeping a second model configured and tested as a fallback against model retirement.",
+      "The specialists previously ran on OpenAI custom GPTs, so their prompts may already suit GPT models."
+    ],
+    "switchRule": "Make GPT-6 Luna an agent's primary only when (a) a reviewed side-by-side comparison of at least 20 synthetic or approved questions, marked with the same rubric, favours it, or (b) the agent's measured bundle token count puts every Haiku 5.5 call above the 100K-token price step and Luna's verified price for that size is lower. Record the evidence next to the change. Never switch on file size or a characters/4 estimate.",
+    "fallbackRule": "No automatic runtime fallback. The pilot has no fallback path (handoffs). A model switch is a reviewed configuration change by website 03/Bruno."
+  },
+  "assignments": [
+    {"slug": "history", "primary": "claude-haiku-5-5", "comparison": "gpt-6-luna", "note": "Pilot. About 300 KB bundle: measure tokens with both providers' counters before any live test; it may cross Haiku's reported 100K-token price step."},
+    {"slug": "english-a-literature", "primary": "claude-haiku-5-5", "comparison": "gpt-6-luna", "note": ""},
+    {"slug": "english-a-lang-lit", "primary": "claude-haiku-5-5", "comparison": "gpt-6-luna", "note": ""},
+    {"slug": "english-specialist", "primary": "claude-haiku-5-5", "comparison": "gpt-6-luna", "note": "Scope unverified."},
+    {"slug": "mathematics-aa", "primary": "claude-haiku-5-5", "comparison": "gpt-6-luna", "note": "No calculator tool in the pilot: compare both models on worked-arithmetic accuracy specifically."},
+    {"slug": "mathematics-ai", "primary": "claude-haiku-5-5", "comparison": "gpt-6-luna", "note": "No calculator tool in the pilot: compare both models on worked-arithmetic accuracy specifically."},
+    {"slug": "economics", "primary": "claude-haiku-5-5", "comparison": "gpt-6-luna", "note": ""},
+    {"slug": "business-management", "primary": "claude-haiku-5-5", "comparison": "gpt-6-luna", "note": ""},
+    {"slug": "psychology", "primary": "claude-haiku-5-5", "comparison": "gpt-6-luna", "note": "Compare on study-attribution accuracy (researcher, year, finding)."},
+    {"slug": "geography", "primary": "claude-haiku-5-5", "comparison": "gpt-6-luna", "note": ""},
+    {"slug": "spanish-b", "primary": "claude-haiku-5-5", "comparison": "gpt-6-luna", "note": "Compare on Spanish correction quality, which is written by native-level reviewers."},
+    {"slug": "computer-science", "primary": "claude-haiku-5-5", "comparison": "gpt-6-luna", "note": "No code execution in the pilot: compare on hand-traced code accuracy."},
+    {"slug": "physics", "primary": "claude-haiku-5-5", "comparison": "gpt-6-luna", "note": "No calculator tool in the pilot: compare on units and arithmetic."},
+    {"slug": "chemistry", "primary": "claude-haiku-5-5", "comparison": "gpt-6-luna", "note": "No calculator tool in the pilot: compare on stoichiometry and equation balance."},
+    {"slug": "biology", "primary": "claude-haiku-5-5", "comparison": "gpt-6-luna", "note": ""},
+    {"slug": "ess", "primary": "claude-haiku-5-5", "comparison": "gpt-6-luna", "note": ""}
+  ]
+}
