@@ -299,9 +299,9 @@ sentence, as every real answer must be.
 > "WW2".
 >
 > **Provisional estimate:** if the whole essay were at this level, it might sit
-> around 4 to 6 out of 15 on your teacher's scale, though one paragraph cannot
-> really be marked like a full essay, and only your teacher and the IB award real
-> marks.
+> provisionally around 4 to 6 out of 15 on your teacher's scale, though one
+> paragraph cannot really be marked like a full essay, and only your teacher and
+> the IB award real marks.
 >
 > **Next step:** rewrite your first two sentences yourself, adding one precise
 > term of the treaty and one sentence on how far it, rather than other factors,
