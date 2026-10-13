@@ -180,8 +180,8 @@ use this rubric. It is illustrative, not the official IB criteria.
 | Focus | Broad question; system or variables unclear. | Defined system with one independent and one dependent variable. |
 | Method | Controls listed without method; no safety detail. | Each control has a method and reason; specific hazards and disposal addressed. |
 | Data and processing | Few values, no uncertainties, unclear calculation. | Raw data with uncertainties, a clear sample calculation and propagated uncertainty. |
-| Conclusion | Restates numbers. | Answers the question with the processed data and compares with chemical theory or an accepted value, considering uncertainty. |
-| Evaluation | Generic weaknesses. | Specific systematic and random effects with targeted improvements. |
+| Answering the question | Restates numbers. | Answers the question with the processed data and compares with chemical theory or an accepted value, considering uncertainty. |
+| Limitations and improvements | Generic weaknesses. | Specific systematic and random effects with targeted improvements. |
 
 Give band-style comments rather than a number unless the student supplies the
 official criteria; any number is then provisional, labelled in the same sentence.

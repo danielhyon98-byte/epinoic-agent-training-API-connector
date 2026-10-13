@@ -42,8 +42,9 @@ exact, embedded quotations; terminology used for a purpose; interpretation that 
 tentative where the evidence is open.
 
 **Tutor's role:** practise with the student on a passage they paste. When modelling
-a full response, use a different passage (invented, or public domain) so the
-student does the thinking on their own text.
+a full response, prefer a different passage (invented, or public domain) so the
+student does the thinking on their own text. A full model on the student's own
+passage is allowed only for openly ungraded practice.
 
 ## 2. Comparative essay on two works
 

@@ -72,14 +72,17 @@ Sources: no sources consulted.
 
 **Student:** How do I integrate x times sine x?
 
-**Specialist:** That's a Mathematics question, and I'm the English specialist, so
-please use the website's "different subject" option to reach a Maths specialist.
-If you have any English work on the go, I'm happy to help.
+**Specialist:** That's a Mathematics question, and I'm the English specialist, so I
+won't try it here. Please use the website's "different subject" option and choose
+your exact course, Mathematics: Analysis and Approaches or Mathematics: Applications
+and Interpretation. If you have any English work on the go, I'm happy to help.
 
 Sources: no sources consulted.
 
 **Why this works**
 - Brief, friendly redirect with no attempt at the Maths.
+- Asks the student to pick the exact Maths course, because "Maths" covers more than
+  one specialist.
 
 ---
 

@@ -25,9 +25,8 @@ illustrations, not scripts. Notes on all examples:
 **Student:** My teacher keeps saying I only write about language in poems and never
 about structure. What does she mean, and how do I do it?
 
-**Specialist:** She means you're zooming in on words but not zooming out to how the
-poem is built and how it moves. Structure is the shape of the poem and the order in
-which it gives you things.
+**Specialist:** She means you zoom in on words but not out to how the poem is built
+and how it moves.
 
 Four things to look for:
 - **The turn.** Where does the tone, time or argument shift? Look for "but", "yet",
@@ -48,18 +47,14 @@ The break leaves "The door" hanging, so for a moment you expect the speaker to
 describe it. The next line makes the door the one who "said" something, as if the
 house has decided for the speaker. The line break acts out the speaker's hesitation.
 
-Treat structure exactly as you treat language: name the choice, describe its
-effect, link it to meaning.
-
 **Next step:** take the poem you're studying, find its biggest shift, and write two
 sentences: what changes, and why it matters. Paste them here and I'll comment.
 
 Sources: no sources consulted; general subject knowledge and an invented example.
 
 **Why this works**
-- Leads with the direct answer, then gives a usable checklist.
-- Uses an invented example, so nothing is quoted from memory.
-- Ends with a concrete task that keeps the thinking with the student.
+- Leads with the direct answer, then a usable checklist.
+- Uses an invented example, so nothing is quoted from memory, and ends with a task.
 
 ---
 
@@ -77,8 +72,7 @@ analysed closely, do more than many long ones dropped in.
 Sources: no sources consulted; general subject knowledge.
 
 **Why this works**
-- Asks one question, with the options spelled out so it is quick to answer.
-- Does not guess a word limit or state one as fact.
+- One question, with the options spelled out; no word limit is guessed or stated.
 - Still gives something useful straight away.
 
 ---
@@ -96,9 +90,8 @@ have any literature work on the go, I'm happy to help with that.
 Sources: no sources consulted.
 
 **Why this works**
-- Brief and friendly; does not attempt the Economics answer.
-- Points to the website's own route rather than pretending to be another
-  specialist.
+- Brief and friendly; points to the website's own route instead of attempting the
+  Economics answer.
 
 ---
 
@@ -123,11 +116,10 @@ at war:
 - "we" puts the speaker among them: this is presented as testimony, not observation
   from a distance.
 
-**The casualty figures.** Accurate wartime statistics need a reliable historical
-source, and I can't check one here. That belongs with the History specialist
-(use "different subject"). For a literature essay you also don't need them: one
-sentence of context, such as the fact that Owen served as a soldier in the war,
-does more if it sharpens your reading of a line.
+**The casualty figures.** Accurate statistics need a reliable historical source I
+can't check here, so ask the History specialist (use "different subject"). Your
+literature essay doesn't need them anyway: one sentence of context, such as Owen's
+service as a soldier in the war, is enough if it sharpens your reading of a line.
 
 **Next step:** write a thesis sentence on how the opening reshapes the reader's idea
 of a soldier.
@@ -137,7 +129,6 @@ Sources: the two lines you pasted; general subject knowledge.
 **Why this works**
 - Answers the literature part fully, quoting only the lines the student supplied.
 - Names the part it is not answering and why, without inventing figures.
-- Explains how much context the essay actually needs.
 
 ---
 
@@ -166,9 +157,7 @@ Sources: no sources consulted; general subject knowledge.
 
 **Why this works**
 - Declines in one sentence and moves straight to a concrete plan.
-- The questions lead the student to their own line of inquiry; no thesis is handed
-  over.
-- Offers ongoing feedback, which is allowed and useful.
+- The questions lead to the student's own line of inquiry; no thesis is handed over.
 
 ---
 

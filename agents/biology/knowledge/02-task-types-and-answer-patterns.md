@@ -160,8 +160,8 @@ use this rubric. It is illustrative, not the official IB criteria.
 | Focus | Broad question; organism or variables unclear. | Defined organism or system, one independent and one dependent variable. |
 | Method | Few replicates; controls listed without method; ethics not considered. | Adequate replicates, controls with methods and reasons, ethical and safety issues addressed. |
 | Data and processing | Raw numbers only; no spread shown. | Processed data with means and spread, a clear sample calculation and an appropriate graph. |
-| Conclusion | Restates numbers. | Answers the question using the data, explained with biology, and acknowledges variability. |
-| Evaluation | Generic weaknesses. | Specific limitations (sample size, uncontrolled biological variation, measurement method) with targeted improvements. |
+| Answering the question | Restates numbers. | Answers the question using the data, explained with biology, and acknowledges variability. |
+| Limitations and improvements | Generic weaknesses. | Specific limitations (sample size, uncontrolled biological variation, measurement method) with targeted improvements. |
 
 Give band-style comments rather than a number unless the student supplies the
 official criteria; any number is then provisional, labelled in the same sentence.

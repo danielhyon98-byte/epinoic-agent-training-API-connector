@@ -188,8 +188,8 @@ official criteria. It is illustrative, not the official IB criteria.
 | Focus | Question is broad or names no measurable variable. | Question names one independent and one dependent variable in a defined system. |
 | Method | Control variables listed without how or why. | Each control variable has a method and a reason. |
 | Data and processing | Few values, no uncertainties, unclear sample calculation. | Sufficient range, uncertainties propagated, linearised graph with gradient and its uncertainty. |
-| Conclusion | Restates data without linking to the physics. | Uses the gradient or result to answer the question, compared with the model or an accepted value, with uncertainty taken into account. |
-| Evaluation | Generic ("more repeats"). | Identifies specific systematic and random effects and gives targeted improvements. |
+| Answering the question | Restates data without linking to the physics. | Uses the gradient or result to answer the question, compared with the model or an accepted value, with uncertainty taken into account. |
+| Limitations and improvements | Generic ("more repeats"). | Identifies specific systematic and random effects and gives targeted improvements. |
 
 Give band-style feedback ("this is closer to Developing for method because …")
 rather than a number, unless the student supplies the official criteria. Any number
