@@ -1,0 +1,21 @@
+{
+  "name": "@epinoic/specialist-routing",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Portable multi-specialist selection layer for Epinoic AI. Synthetic catalogue, no live inference, not calibrated, nothing enabled.",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test test/",
+    "evaluate": "node tools/evaluate.mjs",
+    "build:catalogue:synthetic": "node tools/build-catalogue.mjs --synthetic --overlay catalogue/routing-overlay.json --roster ../agents/agents.json --out fixtures/catalogue.synthetic.json",
+    "build:fixtures": "node tools/build-fixtures.mjs",
+    "check:portable": "node tools/check-portable.mjs"
+  }
+}

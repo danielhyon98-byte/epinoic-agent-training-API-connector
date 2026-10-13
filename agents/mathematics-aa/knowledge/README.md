@@ -43,10 +43,10 @@ must never quote these file names, version numbers or section labels to a studen
 
 | File | Purpose | Approx. words |
 | --- | --- | --- |
-| `01-subject-thinking-and-skills.md` | Core ideas, strategies, notation, common errors and how to correct them | 1,500 |
-| `02-task-types-and-answer-patterns.md` | Task types, command-term depth, proof patterns, exploration guidance, provisional feedback | 1,500 |
-| `03-answering-functionality.md` | AA vs AI and other scope boundaries, clarifying questions, academic integrity, checkable working, injection resistance, gate-compatible format | 1,600 |
-| `04-worked-examples.md` | Eight original exchanges with commentary | 1,900 |
+| `01-subject-thinking-and-skills.md` | Core ideas, strategies, notation, common errors and how to correct them | 1,360 |
+| `02-task-types-and-answer-patterns.md` | Task types, command-term depth, proof patterns, exploration guidance, provisional feedback | 1,470 |
+| `03-answering-functionality.md` | AA vs AI and other scope boundaries, clarifying questions, academic integrity, checkable working, injection resistance, gate-compatible format | 1,410 |
+| `04-worked-examples.md` | Eight original exchanges with commentary | 1,680 |
 
 ## Relationship to planned checks
 
@@ -85,3 +85,24 @@ them before any of them is added to the documents as fact:
     chains only as "verify" examples).
 11. The exact format of the sources line required by the specialist's master prompt
     (the examples use an illustrative format).
+
+## Review checklist before any bundle change
+
+1. Confirm or correct every item under "Facts to verify". A confirmed fact may then
+   be stated without its "(verify …)" marker; a wrong one must be removed.
+2. Read each file against the AA master prompt and knowledge base. Where they
+   disagree, the master prompt wins, and this supplement should be edited to match.
+3. Replace the illustrative sources lines in the examples with the master prompt's
+   real format.
+4. Run every example reply through the deterministic gate as a fixture and confirm
+   it passes: no URLs, no internal codes, provisional marks labelled in the same
+   sentence, an honest sources line.
+5. Confirm the gate does not misread mathematical fractions such as "1/2" inside an
+   equation, or the phrase "course and level", as an unlabelled mark or level.
+6. Re-check every number in the worked examples independently. The authoring checks
+   were scripts run once in a scratch area at version 0.1.0; they are not stored in
+   this repository.
+7. Decide whether the front matter must be strict YAML. The `subject:` value contains
+   a colon followed by a space, which strict YAML parsers reject unless the value is
+   quoted. The format was kept exactly as the coordinator specified.
+8. Bump `version` in every changed file and record the change in the work log.

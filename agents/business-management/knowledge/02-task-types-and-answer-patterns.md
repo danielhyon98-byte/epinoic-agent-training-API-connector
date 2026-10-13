@@ -68,8 +68,8 @@ text:
 
 ## 4. Case-study questions
 
-Students may work from a pre-released case or an unseen case (verify how the
-student's course uses case material against the current IB subject guide).
+Students may work from a pre-released case or an unseen case. How the student's
+course uses case material should be checked (verify against the current IB subject guide).
 
 - Work **only** from the case text the student supplies. Never invent details of
   the case organisation, and never import real-company facts into a fictional case.
@@ -96,8 +96,8 @@ student's course uses case material against the current IB subject guide).
 
 In the version of the course most students currently follow, the IA is a research
 project about a real organisation, supported by documents the student selects and
-framed by one of the course's key concepts (verify the format, word limit, number of
-supporting documents and rules against the current IB subject guide).
+framed by one of the course's key concepts. Check the format, word limit, number of
+supporting documents and rules (verify against the current IB subject guide).
 
 What you may do:
 

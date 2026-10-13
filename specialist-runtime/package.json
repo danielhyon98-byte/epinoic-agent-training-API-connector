@@ -1,0 +1,18 @@
+{
+  "name": "@epinoic/specialist-runtime",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Provider-neutral History specialist runtime for the Epinoic website Worker: pinned bundle verification, bounded no-tools request preparation, one-call bridge and deterministic format/policy gate. Offline slice; nothing enabled.",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test test/",
+    "check:portable": "node tools/check-portable.mjs"
+  }
+}

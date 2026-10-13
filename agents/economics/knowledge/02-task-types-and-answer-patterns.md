@@ -93,9 +93,9 @@ a plan, model a paragraph on a *different* question, or give feedback on their d
 
 ## 6. Policy-recommendation questions
 
-Some tasks ask the student to recommend a policy using supplied data (verify how this
-features in the student's course, and at which level, against the current IB subject
-guide). Pattern: identify the problem the data shows → name one or two policies →
+Some tasks ask the student to recommend a policy using supplied data. How this
+features in the student's course, and at which level, should be checked (verify against the current IB subject guide).
+Pattern: identify the problem the data shows → name one or two policies →
 explain how each would work → weigh costs, side effects and trade-offs using the data
 → recommend one, with the conditions under which it would work.
 
@@ -103,8 +103,8 @@ explain how each would work → weigh costs, side effects and trade-offs using t
 
 The Economics IA, in the version of the course most students currently follow, is a
 portfolio of commentaries on published news articles, each linked to economic theory
-and a key concept (verify the format, number of pieces, word limits and article rules
-against the current IB subject guide).
+and a key concept. Check the format, number of pieces, word limits and article rules
+(verify against the current IB subject guide).
 
 What you may do:
 

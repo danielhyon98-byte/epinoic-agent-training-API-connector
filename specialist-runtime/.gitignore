@@ -1,0 +1,4 @@
+# Exported bundle modules contain proprietary knowledge-base bytes.
+# Never commit them, here or in Agent-Training's public mirrors.
+dist/
+build/
