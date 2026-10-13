@@ -1,0 +1,244 @@
+{
+  "schema": "epinoic.routing-overlay.v1",
+  "overlayVersion": "0.1.0",
+  "note": "Hand-curated routing overlay. Teaching scopes are short original sentences written for routing, not text from the knowledge-base packages, which could not be read. Aliases are catalogue metadata for the adapter owner and reviewers; the selection policy reads only classification evidence. Slugs and slugStatus must match agents/agents.json (slugSource).",
+  "source": {
+    "repo": "Epinoic-AI/Epinoic-Agent-Training",
+    "packagesPath": "knowledge-bases"
+  },
+  "excluded": [],
+  "families": [
+    {
+      "id": "english",
+      "displayName": "English",
+      "members": ["english-a-literature", "english-a-lang-lit", "english-specialist"],
+      "genericAliases": ["english", "english a", "ib english", "english literature", "english lit", "english a literature", "english a: literature"],
+      "resolution": "clarify"
+    },
+    {
+      "id": "mathematics",
+      "displayName": "Mathematics",
+      "members": ["mathematics-aa", "mathematics-ai"],
+      "genericAliases": ["maths", "math", "mathematics", "ib maths", "ib math", "ib mathematics"],
+      "resolution": "clarify"
+    }
+  ],
+  "subjects": [
+    {
+      "slug": "history",
+      "displayName": "History",
+      "family": null,
+      "teachingScope": "Helps with IB History: causes and consequences of events, change and continuity, historical perspectives, source evaluation and essay argument.",
+      "aliases": ["history", "hist", "ib history"],
+      "overlapGroups": [],
+      "isLanguageCourse": false,
+      "slugStatus": "handoff"
+    },
+    {
+      "slug": "english-a-literature",
+      "displayName": "English A: Literature",
+      "family": "english",
+      "teachingScope": "Helps with IB English A: Literature: close reading of poems, novels and plays, how writers shape meaning, and comparative literary essays.",
+      "aliases": [],
+      "overlapGroups": [],
+      "isLanguageCourse": false,
+      "slugStatus": "handoff"
+    },
+    {
+      "slug": "english-a-lang-lit",
+      "displayName": "English A: Language and Literature",
+      "family": "english",
+      "teachingScope": "Helps with IB English A: Language and Literature: analysis of literary and non-literary texts such as speeches, adverts and articles, with attention to audience, purpose and context.",
+      "aliases": ["lang and lit", "language and literature", "lang lit", "english lang and lit", "english lang lit", "english a language and literature"],
+      "overlapGroups": [],
+      "isLanguageCourse": false,
+      "slugStatus": "handoff"
+    },
+    {
+      "slug": "english-specialist",
+      "displayName": "English specialist",
+      "family": "english",
+      "teachingScope": "An English specialist whose exact course scope is not yet confirmed. It covers shared English skills such as close reading, quotation and analytical writing.",
+      "aliases": [],
+      "overlapGroups": [],
+      "isLanguageCourse": false,
+      "slugStatus": "handoff"
+    },
+    {
+      "slug": "mathematics-aa",
+      "displayName": "Mathematics: Analysis and Approaches",
+      "family": "mathematics",
+      "teachingScope": "Helps with IB Mathematics: Analysis and Approaches: algebra, functions, calculus, proof and exact reasoning.",
+      "aliases": ["maths aa", "math aa", "mathematics aa", "analysis and approaches", "maths analysis and approaches"],
+      "overlapGroups": [],
+      "isLanguageCourse": false,
+      "slugStatus": "handoff"
+    },
+    {
+      "slug": "mathematics-ai",
+      "displayName": "Mathematics: Applications and Interpretation",
+      "family": "mathematics",
+      "teachingScope": "Helps with IB Mathematics: Applications and Interpretation: modelling, statistics and probability, financial mathematics and interpreting results with technology.",
+      "aliases": ["maths ai", "math ai", "mathematics ai", "applications and interpretation", "maths applications and interpretation"],
+      "overlapGroups": [],
+      "isLanguageCourse": false,
+      "slugStatus": "handoff"
+    },
+    {
+      "slug": "economics",
+      "displayName": "Economics",
+      "family": null,
+      "teachingScope": "Helps with IB Economics: microeconomics, macroeconomics, the global economy and development, including diagrams, calculations and policy evaluation.",
+      "aliases": ["economics", "econ", "econs", "ib economics"],
+      "overlapGroups": [],
+      "isLanguageCourse": false,
+      "slugStatus": "provisional"
+    },
+    {
+      "slug": "business-management",
+      "displayName": "Business Management",
+      "family": null,
+      "teachingScope": "Helps with IB Business Management: organisations, human resources, finance, marketing and operations, applied to case studies with business tools.",
+      "aliases": ["business management", "business", "biz", "ib business management"],
+      "overlapGroups": [],
+      "isLanguageCourse": false,
+      "slugStatus": "provisional"
+    },
+    {
+      "slug": "psychology",
+      "displayName": "Psychology",
+      "family": null,
+      "teachingScope": "Helps with IB Psychology: biological, cognitive and sociocultural approaches to behaviour, research methods, ethics and evaluating studies.",
+      "aliases": ["psychology", "psych", "ib psychology"],
+      "overlapGroups": [],
+      "isLanguageCourse": false,
+      "slugStatus": "provisional"
+    },
+    {
+      "slug": "geography",
+      "displayName": "Geography",
+      "family": null,
+      "teachingScope": "Helps with IB Geography: physical and human systems, places, hazards, urban and population change, case studies and fieldwork.",
+      "aliases": ["geography", "geog", "ib geography"],
+      "overlapGroups": ["environment"],
+      "isLanguageCourse": false,
+      "slugStatus": "provisional"
+    },
+    {
+      "slug": "spanish-b",
+      "displayName": "Language B: Spanish",
+      "family": null,
+      "teachingScope": "Helps with IB Language B: Spanish as a course: grammar, vocabulary, text types, register and preparation for reading, writing and speaking tasks.",
+      "aliases": ["spanish b", "spanish", "language b spanish", "spanish language b", "ib spanish"],
+      "overlapGroups": [],
+      "isLanguageCourse": true,
+      "slugStatus": "provisional"
+    },
+    {
+      "slug": "computer-science",
+      "displayName": "Computer Science",
+      "family": null,
+      "teachingScope": "Helps with IB Computer Science: algorithms, programming concepts, data structures, computer organisation, networks and databases.",
+      "aliases": ["computer science", "comp sci", "compsci", "cs", "ib computer science"],
+      "overlapGroups": [],
+      "isLanguageCourse": false,
+      "slugStatus": "provisional"
+    },
+    {
+      "slug": "physics",
+      "displayName": "Physics",
+      "family": null,
+      "teachingScope": "Helps with IB Physics: mechanics, thermal physics, waves, electricity and fields, and nuclear and modern physics, with worked calculations.",
+      "aliases": ["physics", "phys", "ib physics"],
+      "overlapGroups": [],
+      "isLanguageCourse": false,
+      "slugStatus": "provisional"
+    },
+    {
+      "slug": "chemistry",
+      "displayName": "Chemistry",
+      "family": null,
+      "teachingScope": "Helps with IB Chemistry: atomic structure, bonding, energetics, kinetics, equilibrium, acids and bases, redox and organic chemistry.",
+      "aliases": ["chemistry", "chem", "ib chemistry"],
+      "overlapGroups": [],
+      "isLanguageCourse": false,
+      "slugStatus": "provisional"
+    },
+    {
+      "slug": "biology",
+      "displayName": "Biology",
+      "family": null,
+      "teachingScope": "Helps with IB Biology: molecules, cells, genetics, evolution, physiology and ecology, explained at the level of mechanisms.",
+      "aliases": ["biology", "bio", "ib biology"],
+      "overlapGroups": ["environment"],
+      "isLanguageCourse": false,
+      "slugStatus": "provisional"
+    },
+    {
+      "slug": "ess",
+      "displayName": "Environmental Systems and Societies",
+      "family": null,
+      "teachingScope": "Helps with IB Environmental Systems and Societies: systems thinking, environmental value systems, ecosystems, resources, pollution and sustainability.",
+      "aliases": ["ess", "environmental systems", "environmental systems and societies", "environmental systems and society", "ib ess"],
+      "overlapGroups": ["environment"],
+      "isLanguageCourse": false,
+      "slugStatus": "provisional"
+    }
+  ],
+  "overlapPolicies": [
+    {
+      "id": "environment",
+      "members": ["ess", "biology", "geography"],
+      "rule": "clarify_unless_trusted_course"
+    }
+  ],
+  "taskContextTerms": [
+    "paper 1", "paper 2", "paper 3", "essay", "source analysis", "exam help", "exam", "ia",
+    "internal assessment", "extended essay", "ee", "commentary", "individual oral", "io",
+    "written assignment", "data-based question", "past paper", "mock exam", "revision", "exploration"
+  ],
+  "unresolvedDecisions": [
+    {
+      "id": "real-folder-slugs",
+      "question": "What are the real knowledge-bases folder names for economics, business-management, psychology, geography, spanish-b, computer-science, physics, chemistry, biology and ess?",
+      "interim": "These ten slugs carry slugStatus 'provisional'. The catalogue builder refuses a non-synthetic catalogue until every overlay slug matches a folder in a clean, pinned knowledge-bases checkout.",
+      "owners": ["Daniel", "Bruno"]
+    },
+    {
+      "id": "english-specialist-scope",
+      "question": "Is english-specialist a second English A: Literature agent, as the translator roster suggests, or something else?",
+      "interim": "'english literature', 'english lit', 'english a literature' and 'english a: literature' are family-level ambiguous aliases, not leaf aliases of english-a-literature. Generic English always clarifies.",
+      "owners": ["Daniel", "Bruno"]
+    },
+    {
+      "id": "website-english-route-id",
+      "question": "Which of the three English packages does the website's existing 'english' route ID map to?",
+      "interim": "This package defines no mapping from website route IDs. Website 01 decides.",
+      "owners": ["website 01"]
+    },
+    {
+      "id": "trusted-course-source",
+      "question": "Does a server-side student profile exist that can supply trusted course metadata?",
+      "interim": "trusted.courseSlugs is absent, so family and overlap ambiguity always clarifies.",
+      "owners": ["website 01", "Daniel"]
+    },
+    {
+      "id": "spanish-b-input-language",
+      "question": "Should the router accept Spanish-language messages about the Spanish B course?",
+      "interim": "English-language input only in the pilot. A Spanish-language message gives unsupported_language, even about Spanish B. A Spanish course asked about in English is a subject signal, not non-English input.",
+      "owners": ["Daniel", "Bruno"]
+    },
+    {
+      "id": "fastino-label-capacity",
+      "question": "Does GLiNER-2.5-Decide through the hosted adapter support this many labels, multi-label output and per-label scores in one request?",
+      "interim": "The label set is a proposal. Payload size is measured in bytes; the token bound is unverified. No provider capability is assumed.",
+      "owners": ["website 01"]
+    },
+    {
+      "id": "sl-hl-level",
+      "question": "Should SL or HL ever influence routing?",
+      "interim": "Level is kept out of routing. It is a specialist-side clarifying question.",
+      "owners": ["Daniel", "Bruno"]
+    }
+  ]
+}
