@@ -1,0 +1,30 @@
+{
+  "schema": "epinoic.agent-roster.v1",
+  "rosterVersion": "2026-10-13.1",
+  "generatedBy": "hand-written in session 1; see agents/README.md",
+  "sourceStatus": {
+    "knowledgeBaseRepo": "Epinoic-AI/Epinoic-Agent-Training",
+    "knowledgeBaseRepoReadable": false,
+    "pinnedMainCommitFromHandoff": "651d71ded41d4a3b8a106fe23b4198e7fc292146",
+    "rosterEvidence": "Logic Translator docs/ARENA_RESULTS.md round 7 (danielhyon98-byte/https-github.com-lovishchopra-NL2FOL @ 361cc4e) lists sixteen specialist agents across fifteen IB subjects; six slugs are named verbatim in the 13 Oct coordination handoffs",
+    "slugVerification": "Slugs with slugSource 'handoff' appear verbatim in the coordination handoffs. Slugs with slugSource 'provisional' are guesses and MUST be replaced by the real knowledge-bases/<folder> names before any code relies on them."
+  },
+  "agents": [
+    {"slug": "history", "displayName": "History", "ibCourse": "History", "family": "individuals-and-societies", "slugSource": "handoff", "pilot": true, "notes": "The only pilot specialist. Bundle SHA-256 reported by audit 02: a5b8a2da6feb447ea06d9e38946ba50f71b14495e517169b5b3a418530119240 (not verified here)."},
+    {"slug": "english-a-literature", "displayName": "English A: Literature", "ibCourse": "English A: Literature", "family": "english", "slugSource": "handoff", "pilot": false, "notes": "Generic 'English' must not silently route here."},
+    {"slug": "english-a-lang-lit", "displayName": "English A: Language and Literature", "ibCourse": "English A: Language and Literature", "family": "english", "slugSource": "handoff", "pilot": false, "notes": "Generic 'English' must not silently route here."},
+    {"slug": "english-specialist", "displayName": "English specialist", "ibCourse": "English A (scope unverified)", "family": "english", "slugSource": "handoff", "pilot": false, "notes": "Named in the handoffs. The translator roster lists two English A: Literature agents, so this is probably the second; unverified. Its scope must be read from its master prompt."},
+    {"slug": "mathematics-aa", "displayName": "Mathematics: Analysis and Approaches", "ibCourse": "Mathematics: Analysis and Approaches", "family": "mathematics", "slugSource": "handoff", "pilot": false, "notes": "Generic 'Maths' must not silently route here."},
+    {"slug": "mathematics-ai", "displayName": "Mathematics: Applications and Interpretation", "ibCourse": "Mathematics: Applications and Interpretation", "family": "mathematics", "slugSource": "handoff", "pilot": false, "notes": "Generic 'Maths' must not silently route here."},
+    {"slug": "economics", "displayName": "Economics", "ibCourse": "Economics", "family": "individuals-and-societies", "slugSource": "provisional", "pilot": false, "notes": ""},
+    {"slug": "business-management", "displayName": "Business Management", "ibCourse": "Business Management", "family": "individuals-and-societies", "slugSource": "provisional", "pilot": false, "notes": ""},
+    {"slug": "psychology", "displayName": "Psychology", "ibCourse": "Psychology", "family": "individuals-and-societies", "slugSource": "provisional", "pilot": false, "notes": ""},
+    {"slug": "geography", "displayName": "Geography", "ibCourse": "Geography", "family": "individuals-and-societies", "slugSource": "provisional", "pilot": false, "notes": "Overlaps ESS and Biology on environmental topics; see the routing overlap policy."},
+    {"slug": "spanish-b", "displayName": "Language B: Spanish", "ibCourse": "Spanish B", "family": "language-acquisition", "slugSource": "provisional", "pilot": false, "notes": "A Spanish course is a subject, not a signal that the input language is Spanish."},
+    {"slug": "computer-science", "displayName": "Computer Science", "ibCourse": "Computer Science", "family": "sciences", "slugSource": "provisional", "pilot": false, "notes": ""},
+    {"slug": "physics", "displayName": "Physics", "ibCourse": "Physics", "family": "sciences", "slugSource": "provisional", "pilot": false, "notes": ""},
+    {"slug": "chemistry", "displayName": "Chemistry", "ibCourse": "Chemistry", "family": "sciences", "slugSource": "provisional", "pilot": false, "notes": ""},
+    {"slug": "biology", "displayName": "Biology", "ibCourse": "Biology", "family": "sciences", "slugSource": "provisional", "pilot": false, "notes": "Overlaps ESS and Geography; see the routing overlap policy."},
+    {"slug": "ess", "displayName": "Environmental Systems and Societies", "ibCourse": "Environmental Systems and Societies", "family": "interdisciplinary", "slugSource": "provisional", "pilot": false, "notes": "Overlaps Biology and Geography; see the routing overlap policy."}
+  ]
+}
