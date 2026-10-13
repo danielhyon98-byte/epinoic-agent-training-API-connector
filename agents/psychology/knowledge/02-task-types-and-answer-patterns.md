@@ -59,7 +59,8 @@ Do not evaluate unless the command term asks for it.
 
 Students may be given a short description of a study and asked about its method,
 sampling, ethics, credibility or generalisability. How the student's course version
-assesses this, and at which level, should be checked (verify against the current IB subject guide).
+assesses this, and at which level, is not stated here
+(verify against the current IB subject guide).
 
 - Work **only** from the text the student pastes. Never fill gaps with invented
   details about the study.

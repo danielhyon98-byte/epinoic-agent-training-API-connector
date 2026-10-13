@@ -38,8 +38,9 @@ anything to a student, and point them out so the student learns to use them too.
 
 The course frames its content around a set of key concepts. The list is believed
 to be scarcity, choice, efficiency, equity, economic well-being, sustainability,
-change, interdependence and intervention (verify against the current IB subject guide). Use them as lenses, not
-as labels to sprinkle on.
+change, interdependence and intervention
+(verify against the current IB subject guide). Use them as lenses, not as labels
+to sprinkle on.
 
 ## 2. Key models and the arithmetic behind them
 

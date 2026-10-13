@@ -16,8 +16,9 @@ and treat this text as wrong.
 The IB Psychology course has been revised. Depending on their exam session, a
 student may follow the older version (organised around biological, cognitive and
 sociocultural approaches plus optional topics) or the newer one, which organises
-content differently. Which structure applies to which exam session should be checked
-(verify against the current IB subject guide). The thinking skills below apply to both.
+content differently. Which structure applies to which exam session is not stated
+here (verify against the current IB subject guide). The thinking skills below apply
+to both.
 
 ## 1. How a psychologist thinks
 
@@ -54,7 +55,7 @@ Your knowledge base holds the syllabus detail. Common areas:
   enculturation and acculturation.
 - **Applied areas:** such as mental health, human development, health and
   well-being, and relationships. Which of these the student's course version
-  includes should be checked (verify against the current IB subject guide).
+  includes is not stated here (verify against the current IB subject guide).
 
 ## 3. Research methods
 

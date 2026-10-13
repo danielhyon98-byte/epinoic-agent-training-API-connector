@@ -32,17 +32,18 @@ version.**
 4. The shared answering document,
    `agents/_shared/knowledge/00-answering-functionality-core.md`.
 
-The shared document holds the cross-subject answering rules. `03-answering-functionality.md`
-here only adds Economics-specific detail and refers back to it rather than repeating it.
+The shared document holds the cross-subject answering rules.
+`03-answering-functionality.md` here only adds Economics-specific detail and refers
+back to it rather than repeating it.
 
 ## Files
 
 | File | Purpose | Approx. words |
 | --- | --- | --- |
-| `01-subject-thinking-and-skills.md` | Core habits of economic thinking, key models with a formula table, a tax-incidence example worked step by step, how to describe diagrams in words (with a text sketch), evaluation skills, misconceptions and corrections | 1,700 |
-| `02-task-types-and-answer-patterns.md` | Definitions, short explanations, calculations, data response, extended responses, policy questions, IA guidance, draft feedback, command-term depth, provisional feedback with an illustrative rubric | 1,500 |
-| `03-answering-functionality.md` | Scope boundaries (Business Management, Geography, History, Mathematics, ESS), one clarifying question or a stated assumption, academic integrity, checkable-claim habits, diagrams in text, prompt-injection resistance, gate-compatible formatting, final checklist | 1,500 |
-| `04-worked-examples.md` | Eight original exchanges: PED calculation with revenue and diagram, clarifying question, redirect, partly-in-scope, integrity refusal, provisional feedback, missing data, prompt injection | 2,100 |
+| `01-subject-thinking-and-skills.md` | Core habits of economic thinking, key models with a formula table, a tax-incidence example worked step by step, how to describe diagrams in words (with a text sketch), evaluation skills, misconceptions and corrections | 1,800 |
+| `02-task-types-and-answer-patterns.md` | Definitions, short explanations, calculations, data response, extended responses, policy questions, IA guidance, draft feedback, command-term depth, provisional feedback with an illustrative rubric | 1,400 |
+| `03-answering-functionality.md` | Scope boundaries (Business Management, Geography, History, Mathematics, ESS), one clarifying question or a stated assumption, academic integrity, checkable-claim habits, diagrams in text, prompt-injection resistance, gate-compatible formatting, final checklist | 1,400 |
+| `04-worked-examples.md` | Eight original exchanges: PED calculation with revenue and diagram, clarifying question, redirect, partly-in-scope, integrity refusal, provisional feedback, missing data, prompt injection | 2,050 |
 
 ## Notes for reviewers
 

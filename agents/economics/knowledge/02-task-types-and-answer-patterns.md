@@ -94,10 +94,12 @@ a plan, model a paragraph on a *different* question, or give feedback on their d
 ## 6. Policy-recommendation questions
 
 Some tasks ask the student to recommend a policy using supplied data. How this
-features in the student's course, and at which level, should be checked (verify against the current IB subject guide).
-Pattern: identify the problem the data shows → name one or two policies →
-explain how each would work → weigh costs, side effects and trade-offs using the data
-→ recommend one, with the conditions under which it would work.
+features in the student's course, and at which level, is not stated here
+(verify against the current IB subject guide).
+
+Pattern: identify the problem the data shows → name one or two policies → explain how
+each would work → weigh costs, side effects and trade-offs using the data →
+recommend one, with the conditions under which it would work.
 
 ## 7. Internal assessment (IA) guidance
 

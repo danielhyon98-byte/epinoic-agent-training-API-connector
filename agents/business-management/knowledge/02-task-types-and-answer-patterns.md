@@ -69,7 +69,8 @@ text:
 ## 4. Case-study questions
 
 Students may work from a pre-released case or an unseen case. How the student's
-course uses case material should be checked (verify against the current IB subject guide).
+course uses case material is not stated here
+(verify against the current IB subject guide).
 
 - Work **only** from the case text the student supplies. Never invent details of
   the case organisation, and never import real-company facts into a fictional case.

@@ -75,8 +75,8 @@ base says so.
 | Investment appraisal | Comparing projects by payback, average rate of return and net present value | Use more than one method and add qualitative factors | Ignoring the timing of cash flows |
 | Gantt chart and critical path | Planning project tasks and identifying the activities that cannot be delayed | Explain what happens if a critical activity slips | Confusing float with duration |
 
-Which of these tools form part of the course's toolkit, and at which level, should be
-checked (verify against the current IB subject guide).
+Which of these tools form part of the course's toolkit, and at which level, is not
+stated here (verify against the current IB subject guide).
 
 ## 4. Key formulas
 
@@ -102,7 +102,8 @@ formula sheet uses a different version, follow theirs.
 | Mark-up | (price − cost) ÷ cost × 100 |
 
 The definitions of capital employed, and of the efficiency and gearing ratios, vary
-slightly between textbooks. Follow the student's formula sheet (verify against the current IB subject guide).
+slightly between textbooks. Follow the student's formula sheet
+(verify against the current IB subject guide).
 
 ### A worked investment appraisal (hypothetical figures)
 

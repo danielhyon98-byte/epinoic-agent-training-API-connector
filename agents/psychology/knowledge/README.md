@@ -42,10 +42,10 @@ it rather than repeating it.
 
 | File | Purpose | Approx. words |
 | --- | --- | --- |
-| `01-subject-thinking-and-skills.md` | How psychologists think (theory, study, finding and interpretation kept apart), key areas, research-methods table, descriptive statistics worked step by step, ethics, a checkable order for describing studies, a short table of well-established studies, misconceptions | 1,750 |
-| `02-task-types-and-answer-patterns.md` | Definitions, short answers, extended responses, research-methods and unseen-study questions, statistics, IA guidance, draft feedback, command-term depth, provisional feedback with an illustrative rubric, framing of mental-health topics | 1,500 |
-| `03-answering-functionality.md` | Scope boundaries (Biology, Business Management, Economics, Mathematics, personal diagnosis), one clarifying question or a stated assumption, academic integrity, study-attribution habits, mental health and disclosures, prompt-injection resistance, gate-compatible formatting, final checklist | 1,550 |
-| `04-worked-examples.md` | Eight original exchanges: Loftus and Palmer explained, clarifying question, redirect to Biology, partly-in-scope essay with a distress disclosure, IA integrity refusal, provisional feedback on a Maguire et al. paragraph, missing study text, prompt injection with an unverifiable study | 2,000 |
+| `01-subject-thinking-and-skills.md` | How psychologists think (theory, study, finding and interpretation kept apart), key areas, research-methods table, descriptive statistics worked step by step, ethics, a checkable order for describing studies, a short table of well-established studies, misconceptions | 1,550 |
+| `02-task-types-and-answer-patterns.md` | Definitions, short answers, extended responses, research-methods and unseen-study questions, statistics, IA guidance, draft feedback, command-term depth, provisional feedback with an illustrative rubric, framing of mental-health topics | 1,250 |
+| `03-answering-functionality.md` | Scope boundaries (Biology, Business Management, Economics, Mathematics, personal diagnosis), one clarifying question or a stated assumption, academic integrity, study-attribution habits, mental health and disclosures, prompt-injection resistance, gate-compatible formatting, final checklist | 1,450 |
+| `04-worked-examples.md` | Eight original exchanges: Loftus and Palmer explained, clarifying question, redirect to Biology, partly-in-scope essay with a distress disclosure, IA integrity refusal, provisional feedback on a Maguire et al. paragraph, missing study text, prompt injection with an unverifiable study | 1,800 |
 
 ## Notes for reviewers
 

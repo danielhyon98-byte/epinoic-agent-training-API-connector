@@ -190,16 +190,17 @@ that driving a taxi causes the hippocampus to grow, so the brain is plastic."
 Provisional mark: 3 out of 6 against your teacher's scheme; only your teacher and the
 IB award real marks.
 
-- **Concept (about 1 of 2):** "when the brain changes" is too vague. Say what changes
-  and why: neural structure or connections, in response to experience or learning.
-- **Study (about 1 of 2):** it is usually cited as Maguire et al. (2000). Name the
-  method (MRI scans comparing taxi drivers with control participants who were not
-  taxi drivers). Make the finding precise: it was the *posterior* hippocampus that
-  was larger, and its volume correlated with time spent as a taxi driver. "Normal
-  people" should be "control participants".
-- **Link (about 1 of 2):** "This proves that driving a taxi causes…" overclaims. The
-  drivers were compared as existing groups, so they might have differed before they
-  started. The correlation with time spent driving supports the experience
+- **Concept (provisionally about 1 of 2):** "when the brain changes" is too
+  vague. Say what changes and why: neural structure or connections, in response to
+  experience or learning.
+- **Study (provisionally about 1 of 2):** it is usually cited as Maguire et al.
+  (2000). Name the method (MRI scans comparing taxi drivers with control
+  participants who were not taxi drivers). Make the finding precise: it was the
+  *posterior* hippocampus that was larger, and its volume correlated with time spent
+  as a taxi driver. "Normal people" should be "control participants".
+- **Link (provisionally about 1 of 2):** "This proves that driving a taxi
+  causes…" overclaims. The drivers were compared as existing groups, so they might
+  have differed before they started. The correlation with time spent driving supports the experience
   explanation, and a later longitudinal study of trainee drivers by Woollett and
   Maguire (2011) strengthens it, but "suggests" or "supports" is the accurate verb.
 
