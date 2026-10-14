@@ -38,7 +38,7 @@ const dirs = (p) => (existsSync(p) ? readdirSync(p).filter((d) => statSync(join(
 const oneLine = (s) => String(s ?? "").replace(/\s+/g, " ").trim();
 const cell = (s) => oneLine(s).replace(/\|/g, "\\|");
 
-const totals = { questions: 0, accepted: 0, rounds: 0, firstTry: 0, firstTryFlags: 0, fresh: {}, flags: { a_lacking_detail: 0, b_logic_or_false: 0, c_no_source: 0, d_no_evidence: 0 }, major: 0, detBlocking: 0, z3Errors: 0 };
+const totals = { questions: 0, accepted: 0, rounds: 0, firstTry: 0, firstTryFlags: 0, firstTryMajor: 0, fresh: {}, flags: { a_lacking_detail: 0, b_logic_or_false: 0, c_no_source: 0, d_no_evidence: 0 }, major: 0, detBlocking: 0, z3Errors: 0 };
 const bySubject = [];
 const body = [];
 
@@ -91,7 +91,7 @@ for (const slug of dirs(RUNS).filter((s) => !only || only.has(s))) {
       return { ok: Boolean(det && !det.blocking && oa?.verdict === "accept" && ob?.verdict === "accept"), flags, det, oa, ob, major: flags.filter((f) => f.severity === "major").length };
     };
     const first = existsSync(join(qdir, "round-1", "answer.md")) ? verdictOf(join(qdir, "round-1")) : null;
-    if (first) totals.firstTryFlags += first.flags.length;
+    if (first) { totals.firstTryFlags += first.flags.length; totals.firstTryMajor += first.major; }
     const cnt = (fl) => CATS.map(([k]) => fl.filter((f) => f.category === k).length).join(" / ");
     const fresh = {};
     for (const fd of dirs(qdir).filter((d) => /^fresh-/.test(d))) {
@@ -106,9 +106,13 @@ for (const slug of dirs(RUNS).filter((s) => !only || only.has(s))) {
     }
     const tags = Object.keys(fresh);
     const base = tags.find((t) => /baseline/.test(t));
-    for (const t of tags.filter((x) => x !== base && base)) {
-      const b = fresh[base], v = fresh[t];
-      roundLines.push(`| change: fresh-${base} → fresh-${t} | ${b.ok ? "accepted" : "rejected"} → ${v.ok ? "accepted" : "rejected"} | | | | | flags ${b.flags.length} → ${v.flags.length}; major ${b.major} → ${v.major} | |`);
+    // Baseline: a fresh-*baseline* retest if there is one, otherwise round 1 (a fresh instance on
+    // the original knowledge base when the training rounds used the retest's specialist model).
+    const b = base ? fresh[base] : first;
+    const bName = base ? `fresh-${base}` : "round-1";
+    for (const t of tags.filter((x) => x !== base && b)) {
+      const v = fresh[t];
+      roundLines.push(`| change: ${bName} → fresh-${t} | ${b.ok ? "accepted" : "rejected"} → ${v.ok ? "accepted" : "rejected"} | | | | | flags ${b.flags.length} → ${v.flags.length}; major ${b.major} → ${v.major} | |`);
     }
     body.push(`### ${qid} (${sc?.kind ?? "?"}): ${accepted ? "accepted" : "not accepted"} after ${rounds.length} round(s)\n`);
     body.push(`> ${oneLine(sc?.request).slice(0, 400)}\n`);
@@ -130,7 +134,7 @@ const head = [
   `- Questions: ${totals.questions}; accepted: ${totals.accepted}; accepted on the first answer: ${totals.firstTry}; specialist rounds: ${totals.rounds}`,
   `- Flags: (a) lacking detail ${totals.flags.a_lacking_detail}, (b) logic/false ${totals.flags.b_logic_or_false}, (c) no source ${totals.flags.c_no_source}, (d) no evidence ${totals.flags.d_no_evidence}; major ${totals.major}`,
   `- Deterministic blocking rounds: ${totals.detBlocking}; Z3 error findings: ${totals.z3Errors}`,
-  `- First attempts in the training rounds: accepted ${totals.firstTry} of ${totals.questions}, ${totals.firstTryFlags} flags.`,
+  `- First attempts in the training rounds: accepted ${totals.firstTry} of ${totals.questions}; ${totals.firstTryFlags} flags, ${totals.firstTryMajor} major.`,
   ...Object.entries(totals.fresh).map(([tag, t]) => `- Fresh-instance retest \`fresh-${tag}\` (new instance, ${kbOf(tag)}, one attempt, no feedback): accepted ${t.accepted} of ${t.questions}; ${t.flags} flags, ${t.major} major.`),
   "",
   "| Specialist | Questions | Accepted | Rounds | Flags |",
