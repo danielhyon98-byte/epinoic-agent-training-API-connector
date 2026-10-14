@@ -18,6 +18,14 @@ const MAX_ROUNDS = A.maxRounds
 const NAMES = A.names
 const MODEL = A.model
 if (!MODEL || !WT || !TOOLS) throw new Error('args.model, args.worktree and args.tools are required')
+// Model split (owner's instruction, 14 Oct): specialists that produce the answers run on
+// SPECIALIST_MODEL (Haiku 5.5); overseers, curators and scenario writers run on JUDGE_MODEL
+// (Fable 5.1). The deterministic runner only executes a command.
+const SPECIALIST_MODEL = A.specialistModel || MODEL
+const JUDGE_MODEL = A.judgeModel || MODEL
+// Optional: read the specialist's bundle from another checkout (for example the untouched
+// baseline on main) so a same-model before/after comparison is possible.
+const BUNDLE_ROOT = A.bundleRoot || null
 // mode "train" (default): scenarios -> answers with feedback revisions -> curation.
 // mode "retest": a FRESH specialist instance (no feedback, no memory) answers the given
 // cycle's questions once from the rebuilt bundle; the same overseers judge it. This shows
@@ -119,7 +127,7 @@ const NO_NET = 'Self-contained environment: do NOT use web search, web fetch or 
 const KB = `${WT}/knowledge-bases`
 const qdirOf = (slug, qid) => `${WT}/training/runs/cycle-${N}/${slug}/${qid}`
 const rdirOf = (slug, qid, r) => `${qdirOf(slug, qid)}/${MODE === 'retest' ? `fresh-${A.retestTag}` : `round-${r}`}`
-const bundleOf = (slug) => `${KB}/_bundles/${slug}.full-context.txt`
+const bundleOf = (slug) => `${BUNDLE_ROOT || KB}/_bundles/${slug}.full-context.txt`
 
 function writerPrompt(slug) {
   const kinds = A.kinds.map((k, i) => `${i + 1}. ${k}`).join('\n')
@@ -191,7 +199,8 @@ function overseerPrompt(which, slug, qid, r) {
 Also verify the request items yourself (deterministic coverage is heuristic): an unanswered required item is a major (a) flag.`
     : `You judge TRUTH, two categories:
 (b) b_logic_or_false: leaps in logic (a conclusion that does not follow, a missing step, generalising from one case, causation from correlation, a judgement not weighed against the counter-argument it needs) and factually untrue statements (wrong dates, figures, names, definitions, mechanisms, arithmetic). Any source, study, quotation, statistic, historian's view, page number, edition, library unit, textbook or MyLib/MyBib result that appears invented, misattributed or not actually available in this no-tools session is a MAJOR (b) flag. Recompute every number. Z3 findings with severity "error" in deterministic.json (for example INT-SUBJ-001) are formally verified failures of the answer's own arithmetic: include each as a (b) flag quoting the claim.
-(c) c_no_source: a contestable claim that is not backed by a source the specialist's own SOURCE POLICY permits (read it in ${KB}/${slug}/master_prompt.txt: conversation material, course-standard knowledge presented as such, the library when available, MyLib for referencing only) or that is not flagged as unverified when it should be; and any "Sources:" line that does not follow that policy and audit 02 section 5 (in a no-tools run it may name supplied material or course-standard knowledge, never library units or MyLib guides).`
+(c) c_no_source: a contestable claim that is not backed by a source the specialist's own SOURCE POLICY permits (read it in ${KB}/${slug}/master_prompt.txt: conversation material, course-standard knowledge presented as such, the library when available, MyLib for referencing only) or that is not flagged as unverified when it should be; and any "Sources:" line that does not follow that policy and audit 02 section 5 (in a no-tools run it may name supplied material or course-standard knowledge, never library units or MyLib guides).
+Also judge marking against the specialist's own rules (its non-negotiables and Assessment K32): any mark, band, level or grade the answer AWARDS to student work must be labelled provisional as those rules require; a missing label is a major (b) flag. A header stating what a question is worth (for example "Question - to what extent - 15 marks") is not an awarded mark.`
   return `You are Overseer ${which} in a self-contained training simulation that polices an answer by the REAL Epinoic AI "${NAMES[slug]}" specialist for IB Diploma students. ${NO_NET}
 
 ${lens}
@@ -208,6 +217,7 @@ function curatorPrompt(slug, outcomes) {
   return `You are the knowledge-base curator for the REAL Epinoic AI "${NAMES[slug]}" specialist after training cycle ${N}. ${NO_NET}
 The specialist ran from its full-context bundle (its master prompt and knowledge documents in ${dir}/). Read every run file for this cycle under ${WT}/training/runs/cycle-${N}/${slug}/ (scenario.json, request.txt, supplied.json, and per round answer.md, diagnosis.json, deterministic.json, overseer-a.json, overseer-b.json).
 Outcome summary: ${JSON.stringify(outcomes)}
+Notes on the evidence: deterministic.json files are authoritative (they were re-scored after a gate false positive on question-value headers was fixed; any "provisional_label_missing" in the outcome summary above is that false positive, not an agent fault). A Z3 finding INT-SUBJ-001 on a line where the specialist QUOTES a student's wrong arithmetic in order to correct it is a checker artefact; do not teach the agent to avoid correcting errors, but you may teach it to state the correct relation rather than restating the wrong equation as its own.
 
 Your job: change the REAL knowledge base so the next cycle starts better, in the house format.
 1. Read ${KB}/_build/SPEC.md (house format: file roster, coded rules with evidence labels [E] [O] [R] [I] [P], cross-reference style, Open points, word-count bounds) and the files you edit.
@@ -225,18 +235,18 @@ async function runQuestion(slug, q, maxRounds = MAX_ROUNDS) {
   let accepted = false
   for (let r = 1; r <= maxRounds; r++) {
     const ans = await agent(specialistPrompt(slug, q.qid, r, feedback), {
-      label: `specialist:${q.qid}:r${r}`, phase: 'Simulate', schema: ANSWER_SCHEMA, model: MODEL,
+      label: `specialist:${q.qid}:r${r}`, phase: 'Simulate', schema: ANSWER_SCHEMA, model: SPECIALIST_MODEL,
     })
     if (!ans || !ans.answer_written) {
       rounds.push({ r, error: 'specialist_failed' })
       break
     }
     const det = await agent(detPrompt(slug, q.qid, r), {
-      label: `deterministic:${q.qid}:r${r}`, phase: 'Simulate', schema: DET_SCHEMA, model: MODEL, effort: 'low',
+      label: `deterministic:${q.qid}:r${r}`, phase: 'Simulate', schema: DET_SCHEMA, model: 'haiku', effort: 'low',
     })
     const [oa, ob] = await parallel([
-      () => agent(overseerPrompt('A', slug, q.qid, r), { label: `overseerA:${q.qid}:r${r}`, phase: 'Simulate', schema: OVERSEER_SCHEMA, model: MODEL }),
-      () => agent(overseerPrompt('B', slug, q.qid, r), { label: `overseerB:${q.qid}:r${r}`, phase: 'Simulate', schema: OVERSEER_SCHEMA, model: MODEL, effort: 'high' }),
+      () => agent(overseerPrompt('A', slug, q.qid, r), { label: `overseerA:${q.qid}:r${r}`, phase: 'Simulate', schema: OVERSEER_SCHEMA, model: JUDGE_MODEL }),
+      () => agent(overseerPrompt('B', slug, q.qid, r), { label: `overseerB:${q.qid}:r${r}`, phase: 'Simulate', schema: OVERSEER_SCHEMA, model: JUDGE_MODEL, effort: 'high' }),
     ])
     const flags = [...((oa && oa.flags) || []), ...((ob && ob.flags) || [])]
     const count = (cat, sev) => flags.filter((f) => f.category === cat && (!sev || f.severity === sev)).length
@@ -266,9 +276,24 @@ async function runQuestion(slug, q, maxRounds = MAX_ROUNDS) {
   return { qid: q.qid, kind: q.kind, accepted, rounds }
 }
 
+if (MODE === 'curate') {
+  // Finish a cycle from files already on disk: run any missing overseer reports, then curate.
+  log(`REAL AGENTS | CURATE | judges ${JUDGE_MODEL} | cycle ${N}: ${A.slugs.join(', ')}`)
+  phase('Simulate')
+  await parallel((A.missing || []).flatMap((m) => [
+    () => agent(overseerPrompt('A', m.slug, m.qid, m.r), { label: `overseerA:${m.qid}:r${m.r}`, phase: 'Simulate', schema: OVERSEER_SCHEMA, model: JUDGE_MODEL }),
+    () => agent(overseerPrompt('B', m.slug, m.qid, m.r), { label: `overseerB:${m.qid}:r${m.r}`, phase: 'Simulate', schema: OVERSEER_SCHEMA, model: JUDGE_MODEL, effort: 'high' }),
+  ]))
+  phase('Curate')
+  const cur = await parallel(A.slugs.map((slug) => () =>
+    agent(curatorPrompt(slug, (A.outcomes || {})[slug] || []), { label: `curator:${slug}`, phase: 'Curate', schema: CURATOR_SCHEMA, model: JUDGE_MODEL, effort: 'high' })
+      .then((c) => ({ slug, curator: c }))))
+  return { cycle: N, mode: 'curate', curated: cur.filter(Boolean) }
+}
+
 if (MODE === 'retest') {
   if (!A.retestTag || !A.questions) throw new Error('retest needs args.retestTag and args.questions {slug: [{qid, kind}]}')
-  log(`REAL AGENTS | FRESH-INSTANCE RETEST ${A.retestTag} | model ${MODEL} | cycle ${N}, cluster ${A.cluster}: ${A.slugs.join(', ')}`)
+  log(`REAL AGENTS | FRESH-INSTANCE RETEST ${A.retestTag} | specialists ${SPECIALIST_MODEL}${BUNDLE_ROOT ? ' (baseline bundle)' : ''}, judges ${JUDGE_MODEL} | cycle ${N}, cluster ${A.cluster}: ${A.slugs.join(', ')}`)
   phase('Simulate')
   const fresh = await pipeline(
     A.slugs,
@@ -280,11 +305,11 @@ if (MODE === 'retest') {
   )
   return { cycle: N, cluster: A.cluster, mode: 'retest', retestTag: A.retestTag, subjects: fresh.filter(Boolean) }
 }
-log(`REAL AGENTS | model ${MODEL} | cycle ${N}, cluster ${A.cluster}: ${A.slugs.join(', ')} | ${Q} questions each, up to ${MAX_ROUNDS} rounds`)
+log(`REAL AGENTS | specialists ${SPECIALIST_MODEL}, judges ${JUDGE_MODEL} | cycle ${N}, cluster ${A.cluster}: ${A.slugs.join(', ')} | ${Q} questions each, up to ${MAX_ROUNDS} rounds`)
 phase('Scenarios')
 const results = await pipeline(
   A.slugs,
-  (slug) => agent(writerPrompt(slug), { label: `scenarios:${slug}`, phase: 'Scenarios', schema: SCENARIO_SCHEMA, model: MODEL }),
+  (slug) => agent(writerPrompt(slug), { label: `scenarios:${slug}`, phase: 'Scenarios', schema: SCENARIO_SCHEMA, model: JUDGE_MODEL }),
   async (sc, slug) => {
     if (!sc || !sc.questions || sc.questions.length === 0) return { slug, questions: [], error: 'no_scenarios' }
     const qs = sc.questions.filter((q) => q.route_ok)
@@ -294,7 +319,7 @@ const results = await pipeline(
   },
   async (res, slug) => {
     const outcomes = res.questions.map((q) => ({ qid: q.qid, accepted: q.accepted, rounds: q.rounds.map((x) => ({ r: x.r, rejected: x.rejected, flags: x.flags, blocking: x.blockingReasons })) }))
-    const cur = await agent(curatorPrompt(slug, outcomes), { label: `curator:${slug}`, phase: 'Curate', schema: CURATOR_SCHEMA, model: MODEL, effort: 'high' })
+    const cur = await agent(curatorPrompt(slug, outcomes), { label: `curator:${slug}`, phase: 'Curate', schema: CURATOR_SCHEMA, model: JUDGE_MODEL, effort: 'high' })
     return { ...res, curator: cur }
   },
 )
