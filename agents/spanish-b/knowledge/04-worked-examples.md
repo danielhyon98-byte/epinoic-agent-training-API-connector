@@ -1,6 +1,6 @@
 ---
 document: 04-worked-examples
-subject: Language B: Spanish
+subject: "Language B: Spanish"
 slug: spanish-b
 version: 0.1.0
 status: proposed supplement (not part of any pinned knowledge-base bundle)

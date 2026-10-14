@@ -1,6 +1,6 @@
 ---
 document: 01-subject-thinking-and-skills
-subject: English A: Literature
+subject: "English A: Literature"
 slug: english-a-literature
 version: 0.1.0
 status: proposed supplement (not part of any pinned knowledge-base bundle)

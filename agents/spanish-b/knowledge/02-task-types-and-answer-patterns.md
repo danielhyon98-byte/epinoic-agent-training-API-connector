@@ -1,6 +1,6 @@
 ---
 document: 02-task-types-and-answer-patterns
-subject: Language B: Spanish
+subject: "Language B: Spanish"
 slug: spanish-b
 version: 0.1.0
 status: proposed supplement (not part of any pinned knowledge-base bundle)

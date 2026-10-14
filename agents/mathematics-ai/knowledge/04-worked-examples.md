@@ -1,6 +1,6 @@
 ---
 document: 04-worked-examples
-subject: Mathematics: Applications and Interpretation
+subject: "Mathematics: Applications and Interpretation"
 slug: mathematics-ai
 version: 0.1.0
 status: proposed supplement (not part of any pinned knowledge-base bundle)

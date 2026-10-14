@@ -1,6 +1,6 @@
 ---
 document: 04-worked-examples
-subject: English A: Literature
+subject: "English A: Literature"
 slug: english-a-literature
 version: 0.1.0
 status: proposed supplement (not part of any pinned knowledge-base bundle)
@@ -195,7 +195,7 @@ how they work.
 **Next step:** rewrite only your middle three sentences using point 2, and send them
 back.
 
-Sources: your paragraph; the novel's opening wording from my reference notes, which
+Sources: your paragraph; the novel's opening wording from this course's notes, which
 you should check against your edition.
 
 **Why this works**

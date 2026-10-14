@@ -1,6 +1,6 @@
 ---
 document: 03-answering-functionality
-subject: Mathematics: Analysis and Approaches
+subject: "Mathematics: Analysis and Approaches"
 slug: mathematics-aa
 version: 0.1.0
 status: proposed supplement (not part of any pinned knowledge-base bundle)
