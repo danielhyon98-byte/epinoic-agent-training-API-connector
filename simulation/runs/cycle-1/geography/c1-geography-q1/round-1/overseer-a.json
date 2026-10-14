@@ -1,0 +1,21 @@
+{
+  "overseer": "A",
+  "verdict": "accept",
+  "flags": [
+    {
+      "category": "d_no_evidence",
+      "severity": "minor",
+      "excerpt": "Roughly a quarter to a third of Chile's deaths, including holidaymakers camping on beaches, are attributed to the tsunami (fairly sure of the order, not the exact number).",
+      "explanation": "The tsunami share of Chile's deaths carries the argument of point 5 ('the deaths that did occur clustered where the system failed'), yet it is the one load-bearing figure given in the passive ('are attributed') with no source type named, while the student explicitly asked where each number comes from. Every other casualty figure in the answer is tied to a source (Interior Ministry, Haitian government, Kolbe, USAID/Schwartz).",
+      "required_fix": "Name the source type for the tsunami share, e.g. 'the Chilean Interior Ministry's final casualty breakdown (early 2011) attributed roughly 120-125 of the 525 confirmed deaths, about a quarter, to the tsunami (fairly sure of the order)', or state plainly that the proportion is recalled from press summaries of the official count."
+    },
+    {
+      "category": "d_no_evidence",
+      "severity": "minor",
+      "excerpt": "many of them died in the following days for want of surgery, which is one reason the death toll kept rising and is so hard to count",
+      "explanation": "This causal claim (late deaths from untreated injuries explain part of the rising toll) is asserted with no figure, source or example. The answer's own table shows the toll rising mainly through revised government estimates (about 230,000 in February 2010 to 316,000 in January 2011), not through counted late deaths, so the link is unsupported as written and the student could repeat it as fact.",
+      "required_fix": "Either support it (e.g. cite medical NGO or PAHO reporting of post-earthquake deaths from crush injuries and infection as a recalled source, with a hedge) or soften it to what the later paragraph already says: that definitions differ over whether deaths from untreated injuries are counted, which is one reason estimates diverge, without claiming it drove the official increases."
+    }
+  ],
+  "summary": "Strong answer. All five request items are genuinely addressed: five developed points each give claim, mechanism, located evidence and a link back to deaths; physical causes (12 January 2010, Mw 7.0, about 13 km deep, about 25 km WSW of Port-au-Prince near Leogane, left-lateral strike-slip on the Caribbean/North American boundary; 27 February 2010, Mw 8.8, about 35 km, offshore Maule megathrust on the Nazca/South American subduction zone, about 100 km from Concepcion) and human causes (GDP per person about US$650-700 vs about US$10,000, no enforced Haitian code vs NCh433 shaped by 1960 and 1985, MINUSTAH/102 UN staff, ONEMI, tsunami-warning failure) are all specific and correctly located. The Haiti death toll is presented as a sourced range (Haitian government 230,000 to 316,000; UN about 220,000; Kolbe about 158,000 for Port-au-Prince; USAID/Schwartz 46,000-85,000) with the contesting parties named, which directly answers the teacher's 'says who?'. The energy ratio is worked correctly (10^(1.5 x 1.8) = 10^2.7, about 500 times, cross-checked via log E = 1.5M + 4.8) and both classmates are corrected explicitly, including the amplitude ratio of about 63. Confidence tags accompany figures and a tagged Sources line uses 'recalled, not consulted'. Two minor evidence gaps only: the tsunami share of Chile's deaths and the late-deaths-from-injury claim are asserted without a named source."
+}

@@ -1,0 +1,82 @@
+{
+  "schema": "epinoic.simulation-deterministic-check.v1",
+  "slug": "history",
+  "blocking": false,
+  "blockingReasons": [],
+  "gate": {
+    "status": "passed",
+    "checks": [
+      {
+        "id": "completeness",
+        "status": "pass",
+        "code": "complete"
+      },
+      {
+        "id": "url-policy",
+        "status": "pass",
+        "code": "no_url"
+      },
+      {
+        "id": "internal-code-leakage",
+        "status": "pass",
+        "code": "no_internal_code"
+      },
+      {
+        "id": "provisional-mark",
+        "status": "pass",
+        "code": "no_awarded_marks"
+      },
+      {
+        "id": "sources-line",
+        "status": "pass",
+        "code": "sources_line_valid"
+      }
+    ]
+  },
+  "z3": {
+    "status": "ACCEPTED_WITH_FINDINGS",
+    "branch": "history",
+    "counts": {
+      "error": 0,
+      "warning": 0,
+      "info": 0
+    },
+    "formalErrors": 0,
+    "findings": [],
+    "requestItems": [
+      {
+        "item_id": "i1",
+        "text": "(a) With reference to its origin, purpose and content, analyse the value and limitations of Source A for a historian studying why Britain and France did not resist the remilitarisation of the Rhineland in March 1936. [4 marks]",
+        "command_term": "analyse"
+      },
+      {
+        "item_id": "i2",
+        "text": "(b) Separately, can you fact-check the source for me? Is \"nineteen thousand soldiers\" right - I've seen 3,000, 22,000 and 30,000 in different places? Did Hitler really say the \"tails between our legs\" thing, and if so how do we even know - my teacher said some of the quotes in the source are \"suspiciously famous\" and we should ask where they really come from. Who was the lord with the \"back garden\" comment? And is it true the French didn't act because of their elections, or is that just the diarist's opinion? I want to know which bits are solid and which bits historians disagree on, so please say where each claim comes from rather than just telling me it's true.",
+        "command_term": "comment"
+      }
+    ],
+    "coverage": [
+      {
+        "item_id": "i1",
+        "addressed": true,
+        "method": "part_label"
+      },
+      {
+        "item_id": "i2",
+        "addressed": true,
+        "method": "part_label"
+      }
+    ],
+    "uncoveredItems": [],
+    "constraints": [],
+    "versions": {
+      "ENGINE_VERSION": "0.3.0",
+      "IR_VERSION": "1.0",
+      "POLICY_VERSION": "2026.10-v3",
+      "TRANSLATOR_VERSION": "0.3.0"
+    },
+    "reason": null
+  },
+  "advisory": [],
+  "note": "Deterministic format/policy gate plus the translator hub's Z3 checks of the answer's own stated arithmetic, quotations and limits. Item coverage is heuristic and advisory. None of this establishes that the answer is true or complete."
+}

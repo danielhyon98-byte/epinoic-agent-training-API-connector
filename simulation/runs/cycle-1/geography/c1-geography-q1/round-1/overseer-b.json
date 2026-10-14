@@ -1,0 +1,21 @@
+{
+  "overseer": "B",
+  "verdict": "accept",
+  "flags": [
+    {
+      "category": "b_logic_or_false",
+      "severity": "minor",
+      "excerpt": "**Chile** was an upper-income country that joined the OECD in 2010 (fairly sure)",
+      "explanation": "\"Upper-income\" is not a World Bank income category and, read as \"high-income\", is wrong for 2009-2010: Chile was classified as upper-middle-income at the time of the earthquake (it was reclassified as high-income only in the early 2010s). The OECD accession date and the GDP-per-person figure that follow are correct, so the contrast with Haiti stands, but a student copying \"upper-income\" would be using a non-standard and potentially inaccurate label.",
+      "required_fix": "Replace \"upper-income\" with \"upper-middle-income (World Bank classification, 2009)\" or simply \"a much wealthier country\", keeping the OECD and GDP-per-person evidence."
+    },
+    {
+      "category": "c_no_source",
+      "severity": "minor",
+      "excerpt": "Sources: course notes on hazard risk as hazard, exposure, vulnerability and capacity (course notes); Hanks and Kanamori, A moment magnitude scale (1979) (recalled, not consulted)",
+      "explanation": "Several figures are attributed in the body to named recalled sources that never appear in the Sources line: the World Bank GDP-per-person figures, the 2010 UNDP Human Development Index ranks (145th and 45th of 169), the IOM displacement figure (1.5 million), the Transparency International corruption ranking, the UN assessment of Léogâne destruction and the Chilean Interior Ministry/government loss estimates. The in-text attributions are honest and tagged with confidence levels, so the student is not misled, but the Sources line does not fully reflect what was drawn on.",
+      "required_fix": "Add the omitted recalled sources to the Sources line, each tagged \"(recalled, not consulted)\": World Bank GDP per capita data (2009); UNDP Human Development Report (2010); IOM displacement tracking (2010); Transparency International Corruption Perceptions Index (2009); UN/OCHA situation reports on Léogâne (2010)."
+    }
+  ],
+  "summary": "A strong, well-evidenced answer. Every number I recomputed is correct: the energy ratio 10^(1.5 x 1.8) = 10^2.7 of about 500, the amplitude ratio 10^1.8 of about 63, the per-event energies from log E = 1.5M + 4.8, the 88x and 602x death-toll ratios, and the loss-to-GDP percentages. Both classmates are corrected for the right reasons. Tectonics are right (Haiti: shallow left-lateral strike-slip on the Enriquillo-Plantain Garden system at the Caribbean/North American boundary, with the Calais/Hayes revision to the Leogane thrust noted; Chile: Nazca/South American megathrust, ~35 km, offshore ~100 km from Concepcion). The Haiti death toll is presented as a sourced, contested range (Haitian government 230,000 to 316,000; UN ~220,000; Kolbe et al. ~158,000; USAID/Schwartz BARR 46,000-85,000) with the reasons for the dispute, which is exactly what the student was marked down for lacking. Chile's 525 confirmed deaths, the tsunami share and the SHOA/ONEMI warning failure with later criminal charges are correctly stated and attributed. Dates, times, depths, HDI ranks, NCh433, the 1960 and 1985 precedents, Alto Rio and the 102 UN staff all check against what I can confidently recall. Each point links mechanism to deaths, confidence tags are used throughout, and the Sources line uses \"recalled, not consulted\" rather than invented references. Two minor issues only: \"upper-income\" is a non-standard label for Chile in 2010 (it was upper-middle-income), and several in-text recalled sources (World Bank, UNDP HDI, IOM, Transparency International) are missing from the Sources line. Z3 reported zero errors. Verdict: accept."
+}

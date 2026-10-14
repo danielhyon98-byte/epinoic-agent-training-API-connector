@@ -1,0 +1,112 @@
+{
+  "schema": "epinoic.simulation-deterministic-check.v1",
+  "slug": "geography",
+  "blocking": false,
+  "blockingReasons": [],
+  "gate": {
+    "status": "passed",
+    "checks": [
+      {
+        "id": "completeness",
+        "status": "pass",
+        "code": "complete"
+      },
+      {
+        "id": "url-policy",
+        "status": "pass",
+        "code": "no_url"
+      },
+      {
+        "id": "internal-code-leakage",
+        "status": "pass",
+        "code": "no_internal_code"
+      },
+      {
+        "id": "provisional-mark",
+        "status": "pass",
+        "code": "no_awarded_marks"
+      },
+      {
+        "id": "sources-line",
+        "status": "pass",
+        "code": "sources_line_valid"
+      }
+    ]
+  },
+  "z3": {
+    "status": "ACCEPTED_WITH_FINDINGS",
+    "branch": "generic",
+    "counts": {
+      "error": 0,
+      "warning": 0,
+      "info": 0
+    },
+    "formalErrors": 0,
+    "findings": [],
+    "requestItems": [
+      {
+        "item_id": "i1",
+        "text": "The question is:\n\n\"Explain why the Haiti earthquake of January 2010 caused far more deaths than the Chile earthquake of February 2010, even though the Chile earthquake was much larger.\" [12 marks]\n\nLast time I wrote \"over 300,000 people died in Haiti\" and my teacher wrote \"says who? this figure is disputed\" in the margin, so this time I want to actually say where the numbers come from and which ones are contested.",
+        "command_term": "explain"
+      },
+      {
+        "item_id": "i2",
+        "text": "Can you explain the main physical reasons (magnitude, depth, how far the epicentre was from cities, what type of plate boundary/fault) and the main human reasons (wealth, building codes, governance, preparedness) with specific evidence - dates, figures, named places - and tell me which claims are contested and by whom?",
+        "command_term": "explain"
+      },
+      {
+        "item_id": "i3",
+        "text": "Four or five developed points would be ideal for 12 marks, and please say how sure you are about each figure.",
+        "command_term": null
+      },
+      {
+        "item_id": "i4",
+        "text": "One more thing: how many times more energy did the M8.8 release than the M7.0?",
+        "command_term": null
+      },
+      {
+        "item_id": "i5",
+        "text": "Can you show the working?",
+        "command_term": null
+      }
+    ],
+    "coverage": [
+      {
+        "item_id": "i1",
+        "addressed": true,
+        "method": "lexical_heuristic"
+      },
+      {
+        "item_id": "i2",
+        "addressed": true,
+        "method": "lexical_heuristic"
+      },
+      {
+        "item_id": "i3",
+        "addressed": true,
+        "method": "lexical_heuristic"
+      },
+      {
+        "item_id": "i4",
+        "addressed": true,
+        "method": "lexical_heuristic"
+      },
+      {
+        "item_id": "i5",
+        "addressed": true,
+        "method": "lexical_heuristic"
+      }
+    ],
+    "uncoveredItems": [],
+    "constraints": [],
+    "versions": {
+      "ENGINE_VERSION": "0.3.0",
+      "IR_VERSION": "1.0",
+      "POLICY_VERSION": "2026.10-v3",
+      "TRANSLATOR_VERSION": "0.3.0"
+    },
+    "reason": null
+  },
+  "advisory": [],
+  "note": "Deterministic format/policy gate plus the translator hub's Z3 checks of the answer's own stated arithmetic, quotations and limits. Item coverage is heuristic and advisory. None of this establishes that the answer is true or complete."
+}

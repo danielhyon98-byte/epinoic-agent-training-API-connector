@@ -1,0 +1,124 @@
+{
+  "schema": "epinoic.simulation-deterministic-check.v1",
+  "slug": "geography",
+  "blocking": true,
+  "blockingReasons": [
+    "gate:provisional-mark:provisional_label_missing"
+  ],
+  "gate": {
+    "status": "failed",
+    "checks": [
+      {
+        "id": "completeness",
+        "status": "pass",
+        "code": "complete"
+      },
+      {
+        "id": "url-policy",
+        "status": "pass",
+        "code": "no_url"
+      },
+      {
+        "id": "internal-code-leakage",
+        "status": "pass",
+        "code": "no_internal_code"
+      },
+      {
+        "id": "provisional-mark",
+        "status": "fail",
+        "code": "provisional_label_missing"
+      },
+      {
+        "id": "sources-line",
+        "status": "pass",
+        "code": "sources_line_valid"
+      }
+    ]
+  },
+  "z3": {
+    "status": "ACCEPTED_WITH_FINDINGS",
+    "branch": "generic",
+    "counts": {
+      "error": 0,
+      "warning": 0,
+      "info": 0
+    },
+    "formalErrors": 0,
+    "findings": [],
+    "requestItems": [
+      {
+        "item_id": "i1",
+        "text": "(a) Analyse what the data in Source A show about the effects of the Saltmarsh Point realignment scheme. [4 marks]",
+        "command_term": "analyse"
+      },
+      {
+        "item_id": "i2",
+        "text": "(b) Evaluate the reliability of Source A as evidence that managed realignment is a better option than hard engineering for Port Harrow. [6 marks]",
+        "command_term": "evaluate"
+      },
+      {
+        "item_id": "i3",
+        "text": "Could you go through what the data actually show, with the numbers worked out (percentage changes, anything that doesn't fit the trend), and then evaluate the source - who wrote it, how the data were collected, what's missing?",
+        "command_term": "evaluate"
+      },
+      {
+        "item_id": "i4",
+        "text": "I think the Company's claim that the maintenance bill \"more than halved\" is wrong but I'm not sure how to prove it, and I don't know if their other two claims are right either.",
+        "command_term": "prove"
+      },
+      {
+        "item_id": "i5",
+        "text": "Also can you give me one real managed realignment scheme with actual figures (where, when, cost, area) that I could compare Port Harrow with, and be honest about how sure you are of those numbers.",
+        "command_term": "compare"
+      },
+      {
+        "item_id": "i6",
+        "text": "Please don't write the answers for me - I'll write them up myself - but tell me what a full-mark answer to (b) would have to include.",
+        "command_term": null
+      }
+    ],
+    "coverage": [
+      {
+        "item_id": "i1",
+        "addressed": true,
+        "method": "lexical_heuristic"
+      },
+      {
+        "item_id": "i2",
+        "addressed": true,
+        "method": "lexical_heuristic"
+      },
+      {
+        "item_id": "i3",
+        "addressed": true,
+        "method": "lexical_heuristic"
+      },
+      {
+        "item_id": "i4",
+        "addressed": true,
+        "method": "lexical_heuristic"
+      },
+      {
+        "item_id": "i5",
+        "addressed": true,
+        "method": "lexical_heuristic"
+      },
+      {
+        "item_id": "i6",
+        "addressed": true,
+        "method": "lexical_heuristic"
+      }
+    ],
+    "uncoveredItems": [],
+    "constraints": [],
+    "versions": {
+      "ENGINE_VERSION": "0.3.0",
+      "IR_VERSION": "1.0",
+      "POLICY_VERSION": "2026.10-v3",
+      "TRANSLATOR_VERSION": "0.3.0"
+    },
+    "reason": null
+  },
+  "advisory": [],
+  "note": "Deterministic format/policy gate plus the translator hub's Z3 checks of the answer's own stated arithmetic, quotations and limits. Item coverage is heuristic and advisory. None of this establishes that the answer is true or complete."
+}

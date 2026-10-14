@@ -1,0 +1,35 @@
+{
+  "overseer": "B",
+  "verdict": "reject",
+  "flags": [
+    {
+      "category": "b_logic_or_false",
+      "severity": "minor",
+      "excerpt": "The famine of 1959 to 1961, at the heart of the Great Leap Forward (launched in 1958 and abandoned in stages during 1961 and 1962), was overwhelmingly man-made.",
+      "explanation": "Z3 finding INT-SUBJ-001 (severity error, formal) reports that the sentence's own chronology does not hold as stated: the nested parenthetical reads as asserting that the 1958 launch falls 'during' 1961-62. Historically the dates are right (launch 1958, retreat 1960-62), so the student is not misled on substance, but the sentence as written fails the formal containment check and the clause packs three date ranges into one bracket in a way that can be read as inconsistent.",
+      "required_fix": "Rewrite so each dated event stands alone, e.g. 'The Great Leap Forward was launched in 1958 and wound down in stages in 1961-62; the famine at its heart ran from 1959 to 1961 and was overwhelmingly man-made.'"
+    },
+    {
+      "category": "c_no_source",
+      "severity": "minor",
+      "excerpt": "Sources: course notes on historical thinking, source evaluation and historiography (course notes);",
+      "explanation": "supplied.json is empty: no course notes or any other text was supplied with the request, so this item cannot have been consulted. It is listed without the '(recalled, not consulted)' tag that every other item carries, and nothing in the answer draws on a specific course note. The deterministic gate blocks on this (sources_line_untagged_item). The Sources line therefore does not honestly reflect what was used.",
+      "required_fix": "Remove the 'course notes' item, or if the answer's 'standard textbook point' remarks are meant to rest on general IB course content, say so in general terms ('standard IB Paper 2 Topic 10 course content') and tag it consistently with the rest of the line."
+    },
+    {
+      "category": "c_no_source",
+      "severity": "minor",
+      "excerpt": "| About 17 million (1959 to 1961) | Jiang Zhenghua, Chinese demographer | mid-1980s, demographic study | Reworks official census and registration data |",
+      "explanation": "The death-toll table and section 3 rest on several named works that the Sources line omits entirely: Jiang Zhenghua (mid-1980s), Peng Xizhe (1987), Ansley Coale (1984), Cao Shuji (2005), Sun Jingxian (2010s), the State Statistical Bureau series of the early 1980s, and the Party's 2011 official history. These are the very 'according to X' attributions the student asked for, so the Sources line does not reflect what the answer actually relied on; a student copying the line would under-cite half the table.",
+      "required_fix": "Add each of these works to the Sources line with its year and the same '(recalled, not consulted)' tag, so the Sources line matches the attributions used in sections 3 and 4."
+    },
+    {
+      "category": "b_logic_or_false",
+      "severity": "minor",
+      "excerpt": "the lowest Chinese estimates and the highest journalistic ones are outliers that most scholars reject.",
+      "explanation": "This conclusion does not follow from the answer's own table. The only journalistic estimates listed are Becker (about 30 million) and Chang and Halliday (about 38 million), both of which sit inside the 17-45 million range the paragraph has just described as defensible; the highest figure in the table is Dikötter's, whom the answer calls a historian. No journalistic estimate above the range is given, so the student is told to dismiss 'the highest journalistic ones' without being able to name one.",
+      "required_fix": "Either name the high popular/journalistic figures being dismissed (and who gives them) or drop the clause and say only that Sun Jingxian's few-million figure is rejected by most demographers and that Ó Gráda and others regard Dikötter's 45 million as too high."
+    }
+  ],
+  "summary": "The substance is strong: chronology, Lushan (Peng Dehuai's 14 July 1959 letter, Lin Biao's replacement), Liu Shaoqi's 'three parts natural, seven parts man-made' at the January-February 1962 cadres' conference, the revised State Statistical Bureau grain series (195/200/170/143.5/147.5/160 million tonnes), the procurement arithmetic (67 of 170 million tonnes is about 39 per cent), the death-rate series, and the attributed death-toll range (Jiang ~17m to Dikötter 45m) all check out, and the responsibility debate (Dikötter, Bernstein, MacFarquhar, Yang, Sen, Lin and Yang, Thaxton, the 1981-style weather argument) is correctly attributed and honestly flagged as contested. No invented sources or figures were found. The answer is rejected on four minor flags: the Z3-verified chronology sentence (INT-SUBJ-001), an untagged and unsupplied 'course notes' entry that blocks the deterministic gate, a Sources line that omits Jiang, Peng Xizhe, Coale, Cao Shuji, Sun Jingxian, the SSB series and the 2011 Party history on which the death-toll table depends, and an 'outliers' claim that does not match the table. All are quick fixes; once made, the answer should pass."
+}
