@@ -267,7 +267,50 @@ review.
 6. **Fastino label capacity and shape** (section 4).
 7. **SL/HL**: kept out of routing. Level is a specialist-side clarifying question.
 
-## 10. Website 01 integration delta (not done here)
+## 10. Clarifications made during implementation (still v0.1.0)
+
+Each was resolved with the stricter reading. These are binding for consumers:
+
+1. **Configuration failures map onto existing reason codes.** No new codes were
+   added. An invalid catalogue, or a label set not built from it, gives
+   `identity_mismatch`. A malformed policy gives `calibration_missing`. An invalid
+   `trusted` object or missing limits gives `evidence_invalid`. A missing
+   calibration context gives `calibration_mismatch`. All are `unavailable`.
+2. **Extra inputs:** `selectSpecialist(..., options)` takes `options.limits` (for
+   example `maxExcerptUtf8Bytes`) and `options.calibrationContext = { model, datasets: { tuneSha256, holdoutSha256 } }`.
+   The router computes the other fingerprint fields from the catalogue, label set,
+   policy and evidence. `selectSticky` takes an optional `options` used only for the
+   offline harness.
+3. **Thresholds are not in the fingerprint**, as section 7 says. Bump
+   `policyVersion` on any threshold change so the fingerprint changes.
+4. **English naming is stricter than section 9.** "english literature", "english lit",
+   "english a literature" and "english a: literature" are family-level aliases.
+   `english-a-literature` and `english-specialist` have no leaf aliases until the
+   scope decision. They are reached only through trusted course metadata, sticky
+   selection or an explicit choice after clarification.
+5. **Mixed:** a strong generic family counts as a topic, so "English and History"
+   clarifies as mixed. An `out_of_scope` signal at or above threshold together with
+   any routable subject or family is also mixed, never reduced to the in-scope half.
+6. **Near ties:** a gap exactly equal to `marginMin` counts as a tie, with a 1e-9
+   tolerance. In the family step, a member stands out only if it is also at or
+   above `routeMin`.
+7. **Trusted course metadata** resolves only when exactly one member of the family
+   or overlap group is listed. For overlaps, that member must be among the
+   near-tie candidates. It does not resolve `competing_subjects`. A trusted pick
+   still goes through the availability check.
+8. **Guards:** capabilities with `environment: "offline-test"` are refused outside the
+   offline harness. An `available: true` entry must carry modes, a gate version and
+   a bundle digest. Policies need `marginMin < routeMin` and
+   `clarifyFloor <= routeMin`.
+9. **Catalogue evidence** is `{ path: "knowledge-bases/<slug>", sha256 }` and must
+   equal `source.packageDigests[slug]`. Real mode hashes git-tracked files only, and
+   refuses symlinks and packages with no tracked files.
+10. **Synthetic capabilities** mark history, english-a-lang-lit, mathematics-aa,
+    biology and spanish-b available so the route paths are exercised. Physics and
+    ESS are present but unavailable, and the rest are absent. The real runtime
+    reports every entry unavailable today.
+
+## 11. Website 01 integration delta (not done here)
 
 The current public specialist IDs and D1 route constraints allow only `english` and
 `history`. Routing to any other slug needs a reviewed website change to

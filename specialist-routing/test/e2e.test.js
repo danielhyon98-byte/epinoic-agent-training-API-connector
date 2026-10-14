@@ -65,3 +65,23 @@ describe("offline end-to-end example (synthetic evidence, no model)", () => {
     assert.equal(followUp.path, "sticky");
   });
 });
+
+describe("public exports", () => {
+  test("every export the contract names is present, with async functions where a digest is needed", async () => {
+    const api = await import("../src/index.js");
+    const required = [
+      "ROUTING_CONTRACT_VERSION", "validateCatalogue", "catalogueDigest", "buildLabelSet", "labelSetDigest",
+      "validateEvidence", "validateCapabilities", "measureClassificationPayload", "selectSpecialist", "selectSticky",
+      "computeCalibrationFingerprint", "checkCalibration", "PRODUCTION_POLICY", "loadApprovedPolicy", "canonicalJson",
+      "ROUTING_OUTCOMES", "ROUTING_REASONS", "REASONS_BY_OUTCOME",
+    ];
+    for (const name of required) assert.ok(name in api, name);
+    const AsyncFunction = (async () => {}).constructor;
+    for (const name of ["catalogueDigest", "labelSetDigest", "validateEvidence", "selectSpecialist", "selectSticky", "computeCalibrationFingerprint", "checkCalibration"]) {
+      assert.ok(api[name] instanceof AsyncFunction, `${name} is async`);
+    }
+    for (const name of ["validateCatalogue", "buildLabelSet", "validateCapabilities", "measureClassificationPayload", "loadApprovedPolicy", "canonicalJson"]) {
+      assert.ok(!(api[name] instanceof AsyncFunction), `${name} is synchronous`);
+    }
+  });
+});

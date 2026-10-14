@@ -224,6 +224,14 @@ describe("buildLabelSet", () => {
     assert.deepEqual(buildLabelSet(clone(FIXTURE)), ls);
   });
 
+  test("a language course label says it is not the input language; other labels do not", () => {
+    const ls = buildLabelSet(FIXTURE);
+    const note = "it says nothing about the language the message is written in";
+    assert.ok(ls.subjects.find((s) => s.label === "spanish-b").description.includes(note));
+    assert.equal(ls.subjects.filter((s) => s.description.includes(note)).length, 1);
+    assert.match(ls.flags.find((f) => f.label === "non_english_input").description, /language course/);
+  });
+
   test("throws for an invalid catalogue", () => {
     const c = clone(FIXTURE);
     c.subjects.push(clone(c.subjects[0]));

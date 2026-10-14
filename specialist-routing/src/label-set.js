@@ -16,9 +16,12 @@ import { ErrorList, checkKeys, deepFreeze, isNonEmptyString, isPlainObject } fro
 export const FLAG_DESCRIPTIONS = Object.freeze({
   out_of_scope: "The message is not about any listed IB subject course, or asks for something other than tutoring.",
   mixed_request: "The message asks about more than one subject, or pairs a listed subject with an unlisted subject or a non-tutoring request.",
-  non_english_input: "The message is written mainly in a language other than English.",
+  non_english_input: "The message is written mainly in a language other than English. An English message about a language course, or one quoting a few foreign words, is not non-English input.",
   needs_task_context: "The message names an assessment task, such as Paper 1, an essay, source analysis or exam help, without saying which subject.",
 });
+
+/** Appended to language-course labels: a course is a subject, not the input language. */
+export const LANGUAGE_COURSE_NOTE = "This is a course; it says nothing about the language the message is written in.";
 
 const LABEL_SET_KEYS = Object.freeze(["schema", "labelSetVersion", "status", "subjects", "families", "flags"]);
 /** Status recorded inside every label set this version builds. */
@@ -27,7 +30,9 @@ export const LABEL_SET_STATUS = "proposed-unverified-against-provider";
 /**
  * Build the proposed label set from a catalogue: one subject label per slug,
  * one family label per family and the four flags, each with a short
- * description. Synchronous; hash it with `labelSetDigest` (async).
+ * description. Language courses (`isLanguageCourse`, e.g. spanish-b) get a note
+ * that the course label is not the input language. Synchronous; hash it with
+ * `labelSetDigest` (async).
  *
  * @param {object} catalogue a catalogue that passes validateCatalogue
  * @returns {Readonly<{schema: string, labelSetVersion: string, status: string,
@@ -48,7 +53,7 @@ export function buildLabelSet(catalogue) {
     status: LABEL_SET_STATUS,
     subjects: catalogue.subjects.map((s) => ({
       label: s.slug,
-      description: `${s.displayName}. ${s.teachingScope}`,
+      description: `${s.displayName}. ${s.teachingScope}${s.isLanguageCourse ? ` ${LANGUAGE_COURSE_NOTE}` : ""}`,
     })),
     families: catalogue.families.map((f) => ({
       label: f.id,

@@ -5,7 +5,7 @@
   "evidence": {
     "schema": "epinoic.routing-evidence.v1",
     "labelSetVersion": "routing-labels/0.1.0",
-    "labelSetSha256": "c7f869038b3c3ae87b2306dd1fb552ea14303896905e5579597fc1f3d926b7d3",
+    "labelSetSha256": "6a507d6eeaef786fe7d9fb76447a5c130c08a6bfc4e5ad19bd27284b59803f49",
     "catalogueSha256": "9b71c5cf01f4a921e8237b541f0181434cc62b150881bbad950f2f305ce9f904",
     "adapter": {
       "id": "synthetic-fixture-adapter",
