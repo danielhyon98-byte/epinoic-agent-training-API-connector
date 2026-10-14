@@ -1,0 +1,38 @@
+{
+  "fixtureBrand": "SYNTHETIC-FIXTURE-NOT-FOR-PRODUCTION",
+  "note": "Hand-assigned synthetic scores for one example message, in the exact epinoic.routing-evidence.v1 shape. Not provider output: no adapter or model produced it.",
+  "text": "Why did the Soviet Union put up the Berlin Wall in 1961 instead of just closing the border?",
+  "evidence": {
+    "schema": "epinoic.routing-evidence.v1",
+    "labelSetVersion": "routing-labels/0.1.0",
+    "labelSetSha256": "c7f869038b3c3ae87b2306dd1fb552ea14303896905e5579597fc1f3d926b7d3",
+    "catalogueSha256": "9b71c5cf01f4a921e8237b541f0181434cc62b150881bbad950f2f305ce9f904",
+    "adapter": {
+      "id": "synthetic-fixture-adapter",
+      "version": "synthetic-adapter/0.1.0"
+    },
+    "excerpt": {
+      "version": "synthetic-excerpt/0.1.0-head-2048",
+      "utf8Bytes": 91,
+      "codePoints": 91,
+      "truncated": false
+    },
+    "subjects": [
+      {
+        "label": "history",
+        "score": 0.91
+      },
+      {
+        "label": "geography",
+        "score": 0.14
+      }
+    ],
+    "families": [],
+    "flags": {
+      "out_of_scope": 0.03,
+      "mixed_request": 0.02,
+      "non_english_input": 0.01,
+      "needs_task_context": 0.05
+    }
+  }
+}

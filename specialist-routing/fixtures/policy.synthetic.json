@@ -14,7 +14,7 @@
     "taskContextMin": 0.55
   },
   "calibration": {
-    "fingerprint": "0000000000000000000000000000000000000000000000000000000000000000",
+    "fingerprint": "80cb367aaca79f6901f6baf752ce5f4962f49a2da422df2d8ad69334182ca730",
     "recordId": "synthetic-fixture-record-0001"
   }
 }
