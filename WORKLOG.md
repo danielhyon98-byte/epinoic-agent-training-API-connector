@@ -28,3 +28,23 @@ Newest first. Each entry says what changed and what was and was not verified.
 - Generated 48 files: per agent `README.md`, `HANDOFF-CLAUDE-HAIKU-5-5.md`, `HANDOFF-GPT-6-LUNA.md`.
   `--check` mode confirms they are up to date.
 - No model was called; the probe messages have not been run on any model.
+
+## 2026-10-13 to 14, session 1, final
+
+- Supplementary knowledge complete: 16 agents x (README + 01-04), all original. The shared answering rules
+  were revised to v0.1.4 from five subject reviewers' feedback. `check-knowledge.mjs` passes.
+  Worked-example arithmetic, maths and chemical equations were checked by script; the science set reports 17/19
+  equations balance, and the 2 that don't are deliberately wrong examples.
+- `specialist-runtime/` complete: 117 tests pass, `check:portable` OK. Implementation clarifications added to its
+  contract (section 11). Website limits from the handoff are recorded as reference-only values.
+- `specialist-routing/` complete: 175 tests pass. The evaluator passes over 260 original synthetic items
+  (153 tune / 107 holdout, mechanics 260/260); these are policy-mechanics results, not accuracy.
+  Clarifications added to its contract (section 10).
+- `tools/cross-check.mjs`: the runtime's capabilities are accepted by the router; nothing routes while
+  everything is disabled.
+- `docs/handoff/PASTE-READY-NOTES.md` added.
+- Correction on record: commits `f0216bb` and `da63361` described shared-rule changes that an edit script had
+  failed to write. Those changes landed in `e1d5bfb` and `04626c9`. Later edit scripts stop on the first error.
+- Still not done: anything needing the private repos, API keys or approval. That covers the real bundle,
+  validators, handoff/04 rules, real catalogue, token counts, Fastino label check, live tests, website
+  integration and enablement.

@@ -61,13 +61,15 @@ models, prices and production enablement are not selected in this slice.
 
 | Part | Path | State |
 | --- | --- | --- |
-| Unpacked context | `docs/context/api-repo-website-setup/` | Copied verbatim from the zip. |
-| Runtime contract | `docs/handoff/website-specialist-integration.md` | Written. Its source pins could not be verified. |
-| Routing contract | `docs/handoff/specialist-routing.md` | Written. Its source pins could not be verified. |
-| History specialist runtime | `specialist-runtime/` | Portable ES modules and offline tests. The real bundle checksum and the History-specific gate rules depend on the unreachable repo, so those checks fail closed and report "unsupported". They never report a pass. |
-| Specialist router | `specialist-routing/` | Portable ES modules, synthetic catalogue, original synthetic evaluation set, offline evaluator and tests. Not built from the real packages. |
-| Agent handoffs | `agents/*/HANDOFF-*.md` | One Claude and one GPT handoff per agent, generated from `agents/agents.json`. |
-| Supplementary knowledge | `agents/*/knowledge/` | Original documents. They are not part of any pinned bundle and do not change its checksum. They are proposals for review. |
+| Unpacked context | `docs/context/api-repo-website-setup/` | Copied verbatim from the zip (9 files). |
+| Runtime contract | `docs/handoff/website-specialist-integration.md` | Written before the code, then updated with the implementation clarifications. Its source pins could not be verified. |
+| Routing contract | `docs/handoff/specialist-routing.md` | Same. |
+| Website 01 plan | `docs/handoff/website-01-integration-plan.md` | Plan only. No website file was changed. |
+| History specialist runtime | `specialist-runtime/` | Portable ES modules. `npm test`: 117 pass, 0 fail. `check:portable`: OK. The real bundle checksum and History's handoff/04 gate rules depend on the unreachable repo, so the pinned config fails closed (`unsupported`, at best `gate_unverifiable`) and never reports a pass. Nothing is enabled. |
+| Specialist router | `specialist-routing/` | Portable ES modules. `npm test`: 175 pass, 0 fail. `npm run evaluate`: PASS over 260 original synthetic items (153 tune / 107 holdout). These are policy-mechanics tests over synthetic scores, not classifier accuracy. The catalogue is synthetic. No live inference; the production policy is unapproved. |
+| Cross-package check | `tools/cross-check.mjs` | The runtime's real capabilities object is accepted by the router, and nothing routes while every specialist is disabled. |
+| Agent handoffs | `agents/*/HANDOFF-*.md` | 32 files: one Claude Haiku 5.5 and one GPT-6 Luna handoff per agent, generated from `agents/agents.json`, `model-assignment.json` and `handoff-spec.json`. `--check` passes. Their probe messages have **not** been run on any model. |
+| Supplementary knowledge | `agents/*/knowledge/`, `agents/_shared/knowledge/` | 80 subject files (16 agents x README plus 01-04) and the shared answering rules (v0.1.4). All are original. Worked-example arithmetic and chemical equations were checked by script. They are not part of any pinned bundle and do not change its checksum. They are proposals for review by subject teachers. |
 
 Each directory's README gives its exact tests and limits.
 

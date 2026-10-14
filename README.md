@@ -19,7 +19,10 @@ and a GPT handoff per agent, and supplementary knowledge documents.
 | `docs/context/` | The unpacked `API_Repo_Website_Set_Up_context.zip`, and how it relates to the newer handoffs |
 | `docs/handoff/website-specialist-integration.md` | Contract for the History specialist runtime (first Daniel Claude's deliverable) |
 | `docs/handoff/specialist-routing.md` | Contract for the multi-specialist router (second Daniel Claude's deliverable) |
+| `docs/handoff/website-01-integration-plan.md` | Smallest website 01 patch plan for the History pilot (plan only) |
+| `docs/handoff/PASTE-READY-NOTES.md` | Paste-ready hand-back notes |
 | `docs/related-projects/` | Notes on the Logic Translator (NL2FOL/Z3) repo, which is deferred |
+| `tools/` | Cross-package check |
 | `specialist-runtime/` | Portable ES-module History specialist package: manifest, bundle integrity, input preparation, one-turn bridge, deterministic gate |
 | `specialist-routing/` | Portable ES-module router: catalogue, evidence validation, selection policy, calibration fingerprint, synthetic evaluation set |
 | `agents/` | One folder per specialist (16), each with a Claude Haiku 5.5 handoff, a GPT-6 Luna handoff, a README and supplementary knowledge |
@@ -40,14 +43,26 @@ From the coordination handoffs:
 - Synthetic fixtures are labelled synthetic. They are never provider observations
   or accuracy results.
 
-## Running the offline tests
+## Running the offline checks
 
-Node.js 22 or later. No dependencies need installing.
+Node.js 22 or later. No dependencies need installing. Nothing calls a model or the
+network.
 
 ```
-cd specialist-runtime && npm test
-cd specialist-routing && npm test && npm run evaluate
+(cd specialist-runtime && npm test && npm run check:portable)              # 117 tests
+(cd specialist-routing && npm test && npm run evaluate && npm run check:portable)  # 175 tests, 260 eval items
+node tools/cross-check.mjs                     # runtime capabilities accepted by the router
+node agents/tools/generate-handoffs.mjs --check  # 48 generated agent files up to date
+node agents/tools/check-knowledge.mjs          # 16 x 5 knowledge files plus the shared core
 ```
+
+Results at the last commit: all pass. The evaluator's numbers are policy-mechanics
+results over synthetic scores, not classifier accuracy.
+
+## Hand-back notes
+
+`docs/handoff/PASTE-READY-NOTES.md` has short paste-ready notes for Daniel, Bruno,
+website 01 and Codex.
 
 ## Work log
 
