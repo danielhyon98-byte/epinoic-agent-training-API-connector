@@ -39,6 +39,8 @@ and must be checked against the real knowledge-base folder name.
 
 ## Design notes
 
+- Written to agree with version 0.1.1 of the shared answering document. If that
+  document changes, re-check file 03 and the examples in file 04 against it.
 - The pilot runs with no tools. File 03 asks for conversions on their own lines,
   explicit substitution, units on every result and atom checks on any symbol
   equation, so that planned deterministic checks can follow each step.

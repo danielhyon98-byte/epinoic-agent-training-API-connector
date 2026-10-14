@@ -1,0 +1,8 @@
+SYNTHETIC TEST BUNDLE — NOT THE EPINOIC HISTORY KNOWLEDGE BASE
+This text exists only to exercise the specialist-runtime offline tests.
+It contains no Epinoic knowledge-base content, was not derived from it, and must never be used as instructions for a real tutor.
+
+Fake internal codes used by the synthetic gate configuration: HXR-101, HXR-102, HXR-215.
+HXR-101 (fake): answer in plain prose.
+HXR-102 (fake): end with the line "Sources: none consulted (no retrieval in this session)".
+HXR-215 (fake): label any awarded mark as provisional.

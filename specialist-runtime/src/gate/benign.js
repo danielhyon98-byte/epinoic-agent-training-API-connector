@@ -11,7 +11,7 @@ const BENIGN_TOKEN_PATTERNS = Object.freeze([
   /^papers?\s*[1-3](?:\s*(?:\/|and|&|or)\s*[1-3])?$/i, // Paper 1, Paper 2, Papers 1/2
   /^(?:HL|SL|HL\/SL|SL\/HL|higher level|standard level)$/i,
   /^(?:IA|EE|TOK|IB)$/i,
-  /^\(?\[?(?:c\.\s*)?\d{1,4}(?:\s*[-–—/]\s*\d{1,4})?\)?\]?$/, // 1917, (1917), 1914–1918, 1917/18, [15]
+  /^\(?\[?(?:c\.\s*)?\d{1,4}(?:\s*[-\u2013\u2014/]\s*\d{1,4})?\)?\]?$/, // 1917, (1917), 1914–1918, 1917/18, [15]
   /^\[?\(?\d{1,3}\s*(?:-\s*)?marks?\)?\]?$/i, // [15 marks], 15-mark
   /^(?:e\.g\.|i\.e\.|U\.S\.|U\.K\.|c\.|p\.|pp\.)$/i,
   /^\d+(?:\.\d+)?$/, // decimals and plain numbers

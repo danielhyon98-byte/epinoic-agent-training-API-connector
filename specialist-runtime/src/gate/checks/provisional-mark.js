@@ -50,7 +50,7 @@ const CONTEXT_DEPENDENT = Object.freeze([
   /\b\d{1,3}(?:\.\d+)?\s+out\s+of\s+\d{1,3}\b/i,
   /\blevel\s*\d/i,
   /\b(?:top|highest|lowest|upper|lower|middle|bottom)\s+(?:mark\s*)?band\b/i,
-  /\b\d{1,2}\s*[-–—]\s*\d{1,2}\s+(?:mark\s*)?band\b/i,
+  /\b\d{1,2}\s*[-\u2013\u2014]\s*\d{1,2}\s+(?:mark\s*)?band\b/i,
 ]);
 
 const ASSESSMENT_CUE = new RegExp(

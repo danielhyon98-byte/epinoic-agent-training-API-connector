@@ -4,10 +4,10 @@
  * @module gate/text-scan
  */
 
-const ZERO_WIDTH = /[­​-‍⁠﻿]/g;
-const ALL_HYPHENS = /[‐-―−﹘﹣－]/g;
-const WORD_HYPHENS = /[‐‑]/g;
-const LINE_BREAK = /\r\n|\r|\n| | /;
+const ZERO_WIDTH = /[\u00AD\u200B-\u200D\u2060\uFEFF]/g;
+const ALL_HYPHENS = /[\u2010-\u2015\u2212\uFE58\uFE63\uFF0D]/g;
+const WORD_HYPHENS = /[\u2010\u2011]/g;
+const LINE_BREAK = /\r\n|\r|\n|\u2028|\u2029/;
 
 /**
  * NFKC-normalise and drop zero-width characters, so full-width or
@@ -50,12 +50,12 @@ const ABBREVIATIONS = new Set([
   "d.", "r.", "ch.", "sec.",
 ]);
 
-const BOUNDARY = /[.!?]+["'’”)\]]*(?=\s|$)/g;
+const BOUNDARY = /[.!?]+["'\u2019\u201D)\]]*(?=\s|$)/g;
 
 function endsWithAbbreviation(line, dotIndex) {
   let start = dotIndex;
   while (start > 0 && !/\s/.test(line[start - 1])) start--;
-  const token = line.slice(start, dotIndex + 1).replace(/^[("'‘“[]+/, "");
+  const token = line.slice(start, dotIndex + 1).replace(/^[("'\u2018\u201C[]+/, "");
   if (/^[A-Z]\.$/.test(token)) return true; // an initial, as in "J. F. Kennedy"
   return ABBREVIATIONS.has(token.toLowerCase());
 }

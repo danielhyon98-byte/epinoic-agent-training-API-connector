@@ -50,7 +50,6 @@ export function isWellFormed(text) {
  */
 export function codePointLength(text) {
   let n = 0;
-  // eslint-disable-next-line no-unused-vars
   for (const _ of text) n++;
   return n;
 }
