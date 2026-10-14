@@ -1,0 +1,107 @@
+{
+  "schema": "epinoic.z3-answer-check.v1",
+  "mode": "dispatch",
+  "slug": "computer-science",
+  "subject": "Computer Science",
+  "ok": true,
+  "status": "ACCEPTED",
+  "branch": "computer_science",
+  "request": {
+    "task_type": "short_answer",
+    "course_level": "unknown",
+    "items": [
+      {
+        "item_id": "i1",
+        "text": "For networks my teacher set a homework \"mini-essay\" on packet switching (which I have to write myself, so I'm not asking you to write it) and she's strict that we say WHO claimed WHAT and give evidence instead of \"it is known that\".",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i2",
+        "text": "Who is actually right?",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i3",
+        "text": "Is this genuinely disputed between historians, and if so what does each of them actually have (reports, dates, what they built)?",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i4",
+        "text": "Please tell me which bits you're sure about and which you're not, because I'd rather write \"this is contested\" than get marked down for stating something wrong confidently.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i5",
+        "text": "(a) Calculate the one-way propagation delay and the round-trip time (RTT). [2 marks]",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "calculate",
+        "level": 2
+      },
+      {
+        "item_id": "i6",
+        "text": "(b) How many packets are needed, how many bytes in total are actually transmitted including headers, and what percentage of that is overhead? [3 marks]",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i7",
+        "text": "(c) Calculate the time to push the whole file through the 50 Mbit/s link, then the total time until the last packet arrives (include one propagation delay). [3 marks]",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "calculate",
+        "level": 2
+      },
+      {
+        "item_id": "i8",
+        "text": "(d) My teacher said \"in reality it takes much longer because of TCP\". Suppose the sender can only have 64 KB (65 536 bytes) sent-but-unacknowledged at any time and has to wait for the acknowledgement before sending any more. What is the maximum throughput, and how long does the file take at that rate? Is \"much longer\" fair? [4 marks]",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i9",
+        "text": "(e) Using your numbers from (c) and (d), explain why packet switching rather than circuit switching made sense for ARPANET, and give one real historical event that shows the robustness of packet-switched networks mattering (or failing). [4 marks]",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "explain",
+        "level": 2
+      },
+      {
+        "item_id": "i10",
+        "text": "Last thing: when was the first ARPANET message actually sent, between which two computers, and what was the message?",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i11",
+        "text": "Please show all working for the calculation and say where each historical fact comes from.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      }
+    ],
+    "constraints": [],
+    "supplied_texts": [],
+    "user_input_sha256": "7c5c0ae92060a7850daba1ca19ae654da3568fb0936dfa5d296f0d13f4e499b5"
+  },
+  "findings": []
+}

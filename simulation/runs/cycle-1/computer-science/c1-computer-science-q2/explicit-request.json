@@ -1,0 +1,84 @@
+{
+  "schema": "epinoic.z3-answer-check.v1",
+  "mode": "dispatch",
+  "slug": "computer-science",
+  "subject": "Computer Science",
+  "ok": true,
+  "status": "ACCEPTED",
+  "branch": "computer_science",
+  "request": {
+    "task_type": "short_answer",
+    "course_level": "unknown",
+    "items": [
+      {
+        "item_id": "i1",
+        "text": "Source A below is the bit of my IA development write-up where I justify writing my own sort for my leaderboard app (it's a Python project but I've written the algorithm in IB pseudocode like we're supposed to).",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "justify",
+        "level": 3
+      },
+      {
+        "item_id": "i2",
+        "text": "My teacher handed it back with \"trace it\", \"check your maths\" and \"source?\" written next to the bit about Knuth, and that's all the feedback I got.",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i3",
+        "text": "Can you:",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i4",
+        "text": "1. Trace my SORT procedure by hand on A = [7, 3, 9, 1, 5] (so N = 5), showing the array after every pass of the outer loop and how many comparisons and swaps happen. Does it actually work as written? If something's wrong, show me exactly which line and what the fix is, don't just rewrite the whole thing.",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i5",
+        "text": "2. Check my complexity claim against my timing table with actual working. What does the data say the growth rate is, and what would the time really be for the 100 000-player leaderboard I mention? Also is the \"O(n) when nearly sorted\" claim correct?",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i6",
+        "text": "3. Go through every claim in Source A and tell me which ones are justified, which are wrong, and which are just unsupported, including the history bit about Knuth and the bit about real languages using bubble sort. If you something, say what it is and how sure you are, because my teacher checks.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i7",
+        "text": "4. Give me a provisional mark for this section against the Development criterion (12 marks in the rubric we were given) and say what would move it up. Please don't rewrite the section for me, I'm not allowed to submit anything I didn't write myself, I just need to understand what's wrong.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      }
+    ],
+    "constraints": [
+      {
+        "constraint_id": "c1",
+        "kind": "must_cite_supplied_text",
+        "value": null,
+        "text": "cite"
+      }
+    ],
+    "supplied_texts": [
+      "source-a-ia-sort-justification"
+    ],
+    "user_input_sha256": "19319d5e7f0eb43be876d5238675bad50d803718c30e9239fc84e9695d69570e"
+  },
+  "findings": []
+}
