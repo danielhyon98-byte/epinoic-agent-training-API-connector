@@ -1,0 +1,43 @@
+{
+  "schema": "epinoic.z3-answer-check.v1",
+  "mode": "dispatch",
+  "slug": "mathematics-ai",
+  "subject": "Mathematics: Applications and Interpretation",
+  "ok": true,
+  "status": "ACCEPTED",
+  "branch": "mathematics",
+  "request": {
+    "task_type": "short_answer",
+    "course_level": "unknown",
+    "items": [
+      {
+        "item_id": "i1",
+        "text": "Can you explain properly what each coefficient actually measures and where they came from (who introduced them and roughly when), and say which of those two claims is right?",
+        "kind": "question",
+        "required": true,
+        "command_term": "explain",
+        "level": 2
+      },
+      {
+        "item_id": "i2",
+        "text": "Calculate both r and r_s by hand with the working shown (we aren't allowed the GDC for this homework), explain why they come out different for the same data, and tell me which word I should use to describe the strength.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "calculate",
+        "level": 2
+      },
+      {
+        "item_id": "i3",
+        "text": "Our textbook says anything above 0.7 is \"strong\" but my teacher said \"it depends\" - is 0.7 an actual IB rule or just a guideline, and where does it come from? [8 marks]",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      }
+    ],
+    "constraints": [],
+    "supplied_texts": [],
+    "user_input_sha256": "594043480fa1e630fad42a7e4bb8d06dfe50b8995730fd0c658f1a5200acc775"
+  },
+  "findings": []
+}

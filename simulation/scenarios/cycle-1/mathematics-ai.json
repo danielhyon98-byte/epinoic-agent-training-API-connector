@@ -1,0 +1,73 @@
+{
+  "slug": "mathematics-ai",
+  "cycle": 1,
+  "questions": [
+    {
+      "qid": "c1-mathematics-ai-q1",
+      "slug": "mathematics-ai",
+      "cycle": 1,
+      "kind": "explain-with-evidence",
+      "course_level": "SL",
+      "request": "Hi, I'm in Maths AI SL and I'm confused about Pearson's r vs Spearman's rank correlation. My teacher said \"use Spearman when the data isn't linear\", but a friend in my class said Spearman's was \"invented by a psychologist in the 1900s so it's not proper maths and examiners prefer Pearson\". Can you explain properly what each coefficient actually measures and where they came from (who introduced them and roughly when), and say which of those two claims is right?\n\nThen show me on this practice set our teacher gave us: six students recorded hours revised (x) and their test score (y): (2, 44), (3, 52), (5, 48), (6, 60), (8, 66), (12, 72). Calculate both r and r_s by hand with the working shown (we aren't allowed the GDC for this homework), explain why they come out different for the same data, and tell me which word I should use to describe the strength. Our textbook says anything above 0.7 is \"strong\" but my teacher said \"it depends\" - is 0.7 an actual IB rule or just a guideline, and where does it come from? [8 marks]",
+      "supplied_texts": [],
+      "strong_answer_must": [
+        "Define Pearson's product-moment r as a measure of the strength and direction of a LINEAR relationship between two quantitative variables (range -1 to 1), computed from the deviations/covariance and standard deviations, and sensitive to outliers.",
+        "Define Spearman's r_s as Pearson's r applied to the RANKS of the data, so it measures the strength of a MONOTONIC (not any non-linear) relationship; it suits ordinal data and non-linear but monotonic patterns and is less affected by outliers; give the formula r_s = 1 - 6*sum(d^2)/(n(n^2-1)) and note it assumes no tied ranks (with ties, average the ranks and ideally compute Pearson on the ranks).",
+        "Attribute the history with hedged, recalled attribution rather than invented citations: Karl Pearson developed the product-moment coefficient in the mid-1890s (around 1895-96), building on Francis Galton's work on correlation in the late 1880s; Charles Spearman, a psychologist, published the rank correlation in 1904 (paper on the measurement of association between two things, in the American Journal of Psychology). Any date must be stated as recalled, with an invitation to verify.",
+        "Evaluate the two claims: the teacher's 'use Spearman when the data isn't linear' is roughly right but needs the qualifier 'monotonic'; the friend's claim is wrong on two counts: a method's origin in psychology does not affect its mathematical validity (it is Pearson's formula on ranks), and there is no basis for saying examiners 'prefer' Pearson; the choice depends on the data type and the scatter diagram. Any statement about which coefficients are in the AI SL syllabus must be hedged and referred to the teacher/current guide.",
+        "Pearson working shown line by line: n = 6, mean x = 36/6 = 6, mean y = 342/6 = 57; deviations x: -4, -3, -1, 0, 2, 6 and y: -13, -5, -9, 3, 9, 15; Sxy = 52 + 15 + 9 + 0 + 18 + 90 = 184; Sxx = 16 + 9 + 1 + 0 + 4 + 36 = 66; Syy = 169 + 25 + 81 + 9 + 81 + 225 = 590; r = 184 / sqrt(66 x 590) = 184 / sqrt(38940) = 184 / 197.3 = 0.932 (3 s.f.). Equivalent raw-sum route: sum x = 36, sum y = 342, sum xy = 2236, sum x^2 = 282, sum y^2 = 20084.",
+        "Spearman working shown: ranks of x are 1, 2, 3, 4, 5, 6; ranks of y are 1, 3, 2, 4, 5, 6 (because 52 > 48); d = 0, -1, 1, 0, 0, 0; sum d^2 = 2; r_s = 1 - (6 x 2)/(6 x 35) = 1 - 12/210 = 0.943 (3 s.f.).",
+        "Explain the difference with evidence from the data: r_s is higher because the ranks are almost perfectly monotonic (only one swap, the 52 and 48 scores), whereas r is lowered because the points are not on a straight line (gains flatten: 8 to 12 hours adds only 6 marks while 2 to 3 hours adds 8), so r measures departure from linearity and r_s measures departure from monotonic order.",
+        "State that 0.7 is a textbook/teaching convention for a verbal descriptor, not a rule in the IB guide that the specialist can cite; different textbooks use different bands; a descriptor should accompany the value, the sign and the scatter diagram, and 'it depends' is fair because with n = 6 any descriptor is tentative and the coefficient is sensitive to a single point. Both values here would conventionally be called strong positive.",
+        "Interpret in context (more hours revised is associated with higher scores among these six students) and warn that correlation is not causation and that six data points are a very small sample; advise confirming the hand values on a GDC when allowed.",
+        "If marks are awarded for the student's eventual answer they must be provisional and labelled so in the same sentence; end with one tagged Sources line (e.g. recalled, not consulted / course notes) and no URLs."
+      ],
+      "pitfalls": [
+        "Arithmetic slips in Sxy, Sxx or Syy (correct values 184, 66, 590), or early rounding that gives r = 0.93 or 0.94 instead of 0.932; mixing n and n-1 inconsistently.",
+        "Ranking error: claiming r_s = 1 by not noticing that y = 52 at x = 3 is above y = 48 at x = 5, or miscounting n(n^2 - 1) = 210.",
+        "Fabricated history: a wrong journal, a false precise date, an invented title, or presenting Pearson's 1890s work as a single dated paper without hedging; inventing a named study or textbook as the origin of the 0.7 threshold.",
+        "Claiming the IB guide or markscheme defines 'strong' as r > 0.7, or stating syllabus placement (SL vs HL) of Spearman/Pearson as certain fact without hedging.",
+        "Saying Spearman detects any non-linear relationship (it only handles monotonic ones), or that Pearson's r cannot be computed unless the data are normally distributed (confusing calculation with inference).",
+        "Agreeing with or failing to rebut the 'not proper maths / examiners prefer Pearson' claim, or rebutting it with assertion rather than reasoning.",
+        "Interpreting r^2 = 0.869 as '87% of the score is caused by revision' or otherwise implying causation.",
+        "No interpretation in context, no comment on the tiny sample, or awarding marks without the word 'provisional' in the same sentence.",
+        "Padding with a regression line the student did not ask for while omitting the requested explanation of why r and r_s differ."
+      ]
+    },
+    {
+      "qid": "c1-mathematics-ai-q2",
+      "slug": "mathematics-ai",
+      "cycle": 1,
+      "kind": "analyse-supplied-material",
+      "course_level": "HL",
+      "request": "I'm in Maths AI HL. Source A below is my full draft answer to a practice question on exponential models that my teacher set for homework (the question and the marks for each part are at the top of the draft, then my working for each part). Can you go through my draft part by part, check every number I wrote, and tell me exactly where I would lose marks and why? For part (d) I want to know if my comment is actually good enough for 2 marks or whether I need to do some calculation with the table. Please give me a provisional mark for each part and a total out of 8, and show the correct working wherever mine is wrong so I can see the difference. Don't just say it looks fine - I want the actual errors.",
+      "supplied_texts": [
+        {
+          "document_id": "src-a",
+          "title": "Source A: my draft answer to the exponential drug-model homework",
+          "text": "Practice question. A patient is given a single 80 mg dose of a drug. The amount A mg of the drug remaining in the patient's blood t hours after the dose is modelled by A = 80 x 0.75^t.\n(a) Find the amount of the drug remaining after 3 hours. [2 marks]\n(b) Write down the percentage of the drug that leaves the blood each hour. [1 mark]\n(c) Find how long it takes for the amount remaining to fall below 10 mg. [3 marks]\n(d) The amounts actually measured in the patient's blood are given in the table. Comment on how well the model fits the measured data. [2 marks]\n\nt (hours):        0  | 1  | 2  | 3  | 4  | 5\nA measured (mg):  80 | 61 | 44 | 35 | 24 | 20\n\nMy answer:\n(a) 0.75^3 = 0.42, so A = 80 x 0.42 = 33.6 mg.\n(b) 75% of the drug leaves the blood each hour, because the base is 0.75.\n(c) 80 x 0.75^t = 10, so 0.75^t = 10/80 = 0.125. Then t = 0.125 / 0.75 = 0.167 hours, so it takes about 10 minutes.\n(d) The model fits perfectly because all the numbers in the table are very close to the model, which proves the drug leaves the blood at exactly 25% per hour for ever."
+        }
+      ],
+      "strong_answer_must": [
+        "Part (a): quote the draft line '0.75^3 = 0.42, so A = 80 x 0.42 = 33.6 mg' and identify premature rounding as the error; show 0.75^3 = 0.421875 exactly, so A = 80 x 0.421875 = 33.75 mg (33.8 mg to 3 s.f.); explain the method is right but the accuracy is lost.",
+        "Part (b): explain that a multiplier of 0.75 means 75% REMAINS each hour, so 25% leaves; the draft's 75% is wrong, and point out that the draft's own part (d) says '25% per hour', so the two parts contradict each other.",
+        "Part (c): explain that dividing 0.125 by 0.75 is not a valid way to solve 0.75^t = 0.125; the correct set-up 0.75^t = 0.125 earns credit, then t = ln(0.125)/ln(0.75) (or log of any base) = (-2.079)/(-0.2877) = 7.23 hours (3 s.f.), about 7 hours 14 minutes; show the hand route via ln 0.125 = -3 ln 2 and ln 0.75 = ln 3 - 2 ln 2, or say a GDC solver/table would give the same; verify by evaluating A(7) = 80 x 0.75^7 = 10.7 mg (still above 10) and A(8) = 8.01 mg (below 10); note the draft's '10 minutes' fails a sanity check because almost all 80 mg would still be present after 10 minutes.",
+        "Part (d): actually compute the model values 80, 60, 45, 33.75, 25.3, 19.0 (3 s.f.) for t = 0 to 5 and compare them with the measured 80, 61, 44, 35, 24, 20; residuals are within about 1 to 1.3 mg and percentage differences roughly 1.6% to 5.5%, so the model fits well over the measured 0 to 5 hours but not 'perfectly'; explain that data consistent with a model do not 'prove' it, that 'exactly 25% for ever' is extrapolation beyond the measured range, that the model never reaches zero (asymptote at A = 0) which is unrealistic in the long run, and that the measurements are rounded to the nearest mg. State that a comment with no comparison of numbers would be thin for 2 marks.",
+        "Give a provisional mark for each part and a total out of 8 on an explicitly illustrative scheme, with the word 'provisional' in the same sentence as every mark, and say that only the teacher and the IB award real marks; a reasonable illustrative outcome is roughly 3 out of 8 (e.g. (a) 1/2 method, (b) 0/1, (c) 1/3 for the set-up, (d) 0-1/2).",
+        "Say explicitly what would earn the missing credit in each part (exact or 3 s.f. value in (a); 25% in (b); logarithm or solver step and a value near 7.23 h in (c); a numerical comparison plus a limitation in (d)).",
+        "Keep the hand computation honest: state which values were computed by hand and ask the student to confirm the logarithm values on the GDC; do not invent any GDC regression output (for example an r or r^2 for an exponential fit) that was not supplied.",
+        "Quote the student's own lines when locating each error, address the parts in order, and end with one tagged Sources line (supplied text for the draft and table; recalled or course notes for the rest) and no URLs."
+      ],
+      "pitfalls": [
+        "Accepting 33.6 mg in part (a) as correct, or calling it 'wrong' without explaining that the only error is rounding 0.421875 to 0.42.",
+        "Agreeing that 75% leaves per hour, or not noticing the contradiction between the draft's (b) and (d).",
+        "Part (c): arithmetic slips in the logarithms (correct t = 7.23 h), giving 'about 7 hours' or '8 hours' without explaining the continuous versus whole-hour reading, or failing to show how t was obtained (a bare number with no working).",
+        "Part (d): inventing an exponential-regression coefficient 'from the GDC', or commenting on fit without computing a single model value or residual.",
+        "Claiming the IB markscheme awards specific marks, inventing an official scheme, or giving marks that are not labelled provisional in the same sentence.",
+        "Saying the model is simply 'wrong' because of the asymptote without nuance, or conversely endorsing 'the model is exact'.",
+        "Not quoting the draft's lines, skipping a part, or giving a total that does not match the per-part marks.",
+        "Giving the correct values but with the wrong accuracy convention and no note (e.g. presenting 33.75 and 33.8 as if one is wrong), or rounding intermediate values and then compounding the error."
+      ]
+    }
+  ]
+}

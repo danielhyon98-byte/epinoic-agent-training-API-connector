@@ -1,0 +1,82 @@
+{
+  "schema": "epinoic.z3-answer-check.v1",
+  "mode": "dispatch",
+  "slug": "english-a-literature",
+  "subject": "English A: Literature",
+  "ok": true,
+  "status": "ACCEPTED",
+  "branch": "english",
+  "request": {
+    "task_type": "short_answer",
+    "course_level": "unknown",
+    "items": [
+      {
+        "item_id": "i1",
+        "text": "I want to know what I can actually state as fact in an essay versus what is just someone's claim, so can you explain this properly:",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "state",
+        "level": 1
+      },
+      {
+        "item_id": "i2",
+        "text": "1. What free indirect discourse actually is, and how it is different from direct speech and indirect (reported) speech. Please show the same sentence written all three ways so I can see the difference (make up the sentence rather than taking one from the novel).",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i3",
+        "text": "2. Where the term comes from and roughly when: who named it, in what language, and how sure anyone is about that.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i4",
+        "text": "3. Is it true that Austen invented it? If that is contested, say who or what the other candidates are and how confident I should be in an essay.",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i5",
+        "text": "4. What is the Flaubert trial thing actually about, with the date and the outcome, and is it accurate to say the trial happened \"because of\" free indirect discourse?",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i6",
+        "text": "5. What are the actual signs on the page that tell me a sentence is free indirect discourse rather than the narrator's own opinion? Give at least three and show each one in a made-up example.",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i7",
+        "text": "6. Why does any of this matter for how I write about irony in Emma? I need to be able to revise from this, so please be exact about what is established and what is debated. Thanks!",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      }
+    ],
+    "constraints": [
+      {
+        "constraint_id": "c1",
+        "kind": "max_words",
+        "value": "650",
+        "text": "no more than 650 words"
+      }
+    ],
+    "supplied_texts": [],
+    "user_input_sha256": "024ad8ffcff66654aef36aecc3d0bdfc6dd3c1c0e4b7aa4cedbeab50afc7ef41"
+  },
+  "findings": []
+}

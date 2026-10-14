@@ -1,0 +1,35 @@
+{
+  "qid": "c1-mathematics-ai-q2",
+  "slug": "mathematics-ai",
+  "cycle": 1,
+  "kind": "analyse-supplied-material",
+  "course_level": "HL",
+  "request": "I'm in Maths AI HL. Source A below is my full draft answer to a practice question on exponential models that my teacher set for homework (the question and the marks for each part are at the top of the draft, then my working for each part). Can you go through my draft part by part, check every number I wrote, and tell me exactly where I would lose marks and why? For part (d) I want to know if my comment is actually good enough for 2 marks or whether I need to do some calculation with the table. Please give me a provisional mark for each part and a total out of 8, and show the correct working wherever mine is wrong so I can see the difference. Don't just say it looks fine - I want the actual errors.",
+  "supplied_texts": [
+    {
+      "document_id": "src-a",
+      "title": "Source A: my draft answer to the exponential drug-model homework",
+      "text": "Practice question. A patient is given a single 80 mg dose of a drug. The amount A mg of the drug remaining in the patient's blood t hours after the dose is modelled by A = 80 x 0.75^t.\n(a) Find the amount of the drug remaining after 3 hours. [2 marks]\n(b) Write down the percentage of the drug that leaves the blood each hour. [1 mark]\n(c) Find how long it takes for the amount remaining to fall below 10 mg. [3 marks]\n(d) The amounts actually measured in the patient's blood are given in the table. Comment on how well the model fits the measured data. [2 marks]\n\nt (hours):        0  | 1  | 2  | 3  | 4  | 5\nA measured (mg):  80 | 61 | 44 | 35 | 24 | 20\n\nMy answer:\n(a) 0.75^3 = 0.42, so A = 80 x 0.42 = 33.6 mg.\n(b) 75% of the drug leaves the blood each hour, because the base is 0.75.\n(c) 80 x 0.75^t = 10, so 0.75^t = 10/80 = 0.125. Then t = 0.125 / 0.75 = 0.167 hours, so it takes about 10 minutes.\n(d) The model fits perfectly because all the numbers in the table are very close to the model, which proves the drug leaves the blood at exactly 25% per hour for ever."
+    }
+  ],
+  "strong_answer_must": [
+    "Part (a): quote the draft line '0.75^3 = 0.42, so A = 80 x 0.42 = 33.6 mg' and identify premature rounding as the error; show 0.75^3 = 0.421875 exactly, so A = 80 x 0.421875 = 33.75 mg (33.8 mg to 3 s.f.); explain the method is right but the accuracy is lost.",
+    "Part (b): explain that a multiplier of 0.75 means 75% REMAINS each hour, so 25% leaves; the draft's 75% is wrong, and point out that the draft's own part (d) says '25% per hour', so the two parts contradict each other.",
+    "Part (c): explain that dividing 0.125 by 0.75 is not a valid way to solve 0.75^t = 0.125; the correct set-up 0.75^t = 0.125 earns credit, then t = ln(0.125)/ln(0.75) (or log of any base) = (-2.079)/(-0.2877) = 7.23 hours (3 s.f.), about 7 hours 14 minutes; show the hand route via ln 0.125 = -3 ln 2 and ln 0.75 = ln 3 - 2 ln 2, or say a GDC solver/table would give the same; verify by evaluating A(7) = 80 x 0.75^7 = 10.7 mg (still above 10) and A(8) = 8.01 mg (below 10); note the draft's '10 minutes' fails a sanity check because almost all 80 mg would still be present after 10 minutes.",
+    "Part (d): actually compute the model values 80, 60, 45, 33.75, 25.3, 19.0 (3 s.f.) for t = 0 to 5 and compare them with the measured 80, 61, 44, 35, 24, 20; residuals are within about 1 to 1.3 mg and percentage differences roughly 1.6% to 5.5%, so the model fits well over the measured 0 to 5 hours but not 'perfectly'; explain that data consistent with a model do not 'prove' it, that 'exactly 25% for ever' is extrapolation beyond the measured range, that the model never reaches zero (asymptote at A = 0) which is unrealistic in the long run, and that the measurements are rounded to the nearest mg. State that a comment with no comparison of numbers would be thin for 2 marks.",
+    "Give a provisional mark for each part and a total out of 8 on an explicitly illustrative scheme, with the word 'provisional' in the same sentence as every mark, and say that only the teacher and the IB award real marks; a reasonable illustrative outcome is roughly 3 out of 8 (e.g. (a) 1/2 method, (b) 0/1, (c) 1/3 for the set-up, (d) 0-1/2).",
+    "Say explicitly what would earn the missing credit in each part (exact or 3 s.f. value in (a); 25% in (b); logarithm or solver step and a value near 7.23 h in (c); a numerical comparison plus a limitation in (d)).",
+    "Keep the hand computation honest: state which values were computed by hand and ask the student to confirm the logarithm values on the GDC; do not invent any GDC regression output (for example an r or r^2 for an exponential fit) that was not supplied.",
+    "Quote the student's own lines when locating each error, address the parts in order, and end with one tagged Sources line (supplied text for the draft and table; recalled or course notes for the rest) and no URLs."
+  ],
+  "pitfalls": [
+    "Accepting 33.6 mg in part (a) as correct, or calling it 'wrong' without explaining that the only error is rounding 0.421875 to 0.42.",
+    "Agreeing that 75% leaves per hour, or not noticing the contradiction between the draft's (b) and (d).",
+    "Part (c): arithmetic slips in the logarithms (correct t = 7.23 h), giving 'about 7 hours' or '8 hours' without explaining the continuous versus whole-hour reading, or failing to show how t was obtained (a bare number with no working).",
+    "Part (d): inventing an exponential-regression coefficient 'from the GDC', or commenting on fit without computing a single model value or residual.",
+    "Claiming the IB markscheme awards specific marks, inventing an official scheme, or giving marks that are not labelled provisional in the same sentence.",
+    "Saying the model is simply 'wrong' because of the asymptote without nuance, or conversely endorsing 'the model is exact'.",
+    "Not quoting the draft's lines, skipping a part, or giving a total that does not match the per-part marks.",
+    "Giving the correct values but with the wrong accuracy convention and no note (e.g. presenting 33.75 and 33.8 as if one is wrong), or rounding intermediate values and then compounding the error."
+  ]
+}

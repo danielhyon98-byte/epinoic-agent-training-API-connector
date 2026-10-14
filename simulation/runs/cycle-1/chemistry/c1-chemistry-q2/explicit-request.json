@@ -1,0 +1,68 @@
+{
+  "schema": "epinoic.z3-answer-check.v1",
+  "mode": "dispatch",
+  "slug": "chemistry",
+  "subject": "Chemistry",
+  "ok": true,
+  "status": "ACCEPTED",
+  "branch": "sciences",
+  "request": {
+    "task_type": "short_answer",
+    "course_level": "unknown",
+    "items": [
+      {
+        "item_id": "i1",
+        "text": "Can you:",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i2",
+        "text": "1. Go through my calculation line by line and tell me exactly where it's wrong (if it is) and redo it properly with working, including the percentage uncertainty and the percentage error done the right way. I used Ar(Zn) = 65.38 and c = 4.18 J g⁻¹ K⁻¹.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i3",
+        "text": "2. Evaluate my evaluation paragraph: which statements are actually justified by my data and which aren't, and why. I especially want to know if my claim about the error being random is right.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "evaluate",
+        "level": 3
+      },
+      {
+        "item_id": "i4",
+        "text": "3. Give me provisional marks for the Data analysis and Evaluation criteria (6 marks each in the rubric we were given) with a sentence on what would move each one up.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i5",
+        "text": "4. Where does the −217 kJ mol⁻¹ literature value even come from? I copied it from a classmate and I need to something real, or at least show how it can be worked out from data-booklet values. Don't rewrite the extract for me, I know that's not allowed, I just need to understand what's wrong.",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      }
+    ],
+    "constraints": [
+      {
+        "constraint_id": "c1",
+        "kind": "must_cite_supplied_text",
+        "value": null,
+        "text": "cite"
+      }
+    ],
+    "supplied_texts": [
+      "doc-a"
+    ],
+    "user_input_sha256": "4bbc208bc58d6f11b4081ce6b40f5b88f53a73948cac2d161f3da8058f763341"
+  },
+  "findings": []
+}

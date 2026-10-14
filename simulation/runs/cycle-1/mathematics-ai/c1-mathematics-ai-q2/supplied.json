@@ -1,0 +1,7 @@
+[
+  {
+    "document_id": "src-a",
+    "title": "Source A: my draft answer to the exponential drug-model homework",
+    "text": "Practice question. A patient is given a single 80 mg dose of a drug. The amount A mg of the drug remaining in the patient's blood t hours after the dose is modelled by A = 80 x 0.75^t.\n(a) Find the amount of the drug remaining after 3 hours. [2 marks]\n(b) Write down the percentage of the drug that leaves the blood each hour. [1 mark]\n(c) Find how long it takes for the amount remaining to fall below 10 mg. [3 marks]\n(d) The amounts actually measured in the patient's blood are given in the table. Comment on how well the model fits the measured data. [2 marks]\n\nt (hours):        0  | 1  | 2  | 3  | 4  | 5\nA measured (mg):  80 | 61 | 44 | 35 | 24 | 20\n\nMy answer:\n(a) 0.75^3 = 0.42, so A = 80 x 0.42 = 33.6 mg.\n(b) 75% of the drug leaves the blood each hour, because the base is 0.75.\n(c) 80 x 0.75^t = 10, so 0.75^t = 10/80 = 0.125. Then t = 0.125 / 0.75 = 0.167 hours, so it takes about 10 minutes.\n(d) The model fits perfectly because all the numbers in the table are very close to the model, which proves the drug leaves the blood at exactly 25% per hour for ever."
+  }
+]

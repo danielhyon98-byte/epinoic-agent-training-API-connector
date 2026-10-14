@@ -1,0 +1,37 @@
+{
+  "schema": "epinoic.z3-answer-check.v1",
+  "mode": "dispatch",
+  "slug": "mathematics-ai",
+  "subject": "Mathematics: Applications and Interpretation",
+  "ok": true,
+  "status": "ACCEPTED",
+  "branch": "mathematics",
+  "request": {
+    "task_type": "short_answer",
+    "course_level": "unknown",
+    "items": [
+      {
+        "item_id": "i1",
+        "text": "Can you go through my draft part by part, check every number I wrote, and tell me exactly where I would lose marks and why?",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i2",
+        "text": "Please give me a provisional mark for each part and a total out of 8, and show the correct working wherever mine is wrong so I can see the difference.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      }
+    ],
+    "constraints": [],
+    "supplied_texts": [
+      "src-a"
+    ],
+    "user_input_sha256": "abb1935b7b33cd5d03fb81a6587954d345f02d6557eaee5eb81977caced318af"
+  },
+  "findings": []
+}

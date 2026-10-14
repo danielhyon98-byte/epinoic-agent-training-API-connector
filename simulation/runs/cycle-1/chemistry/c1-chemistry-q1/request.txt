@@ -1,0 +1,9 @@
+Hi, I'm in HL chemistry and for our "chemistry in context" task we each have to write a short piece (about a page) on how chemists worked out that CFCs damage the ozone layer. I don't want you to write it, I want to actually get it so I can write it myself. Could you explain:
+
+(a) the radical mechanism: how ozone is made and destroyed naturally in the stratosphere (my notes call it the Chapman cycle but don't give the steps), and then how a Cl atom from a CFC like CCl₂F₂ catalyses ozone destruction. Please give the actual equations and show why Cl counts as a catalyst.
+
+(b) what the key evidence actually was and who found it, with dates. I know there was a paper in the 1970s and then the Antarctic measurements in the 80s, but every website gives a slightly different story and my teacher says we have to say WHO claimed WHAT rather than "scientists discovered". Which bits are well established and which bits are still argued about?
+
+(c) a calculation: our data booklet gives average bond enthalpies C–Cl = 324 kJ mol⁻¹ and C–F = 492 kJ mol⁻¹. Work out the longest wavelength of light that can break one bond of each type (h = 6.63 × 10⁻³⁴ J s, c = 3.00 × 10⁸ m s⁻¹, L = 6.02 × 10²³ mol⁻¹), say which region of the spectrum each is in, and explain what this tells us about which bond breaks in the stratosphere. Show every step please. [4 marks]
+
+(d) is it actually settled that the ozone layer is recovering because of the Montreal Protocol, or is that still debated? If there's a disagreement I'd rather know where it is than get marked down for stating something contested as fact.

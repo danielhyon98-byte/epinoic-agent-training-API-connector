@@ -1,0 +1,77 @@
+{
+  "schema": "epinoic.z3-answer-check.v1",
+  "mode": "dispatch",
+  "slug": "mathematics-aa",
+  "subject": "Mathematics: Analysis and Approaches",
+  "ok": true,
+  "status": "ACCEPTED",
+  "branch": "mathematics",
+  "request": {
+    "task_type": "short_answer",
+    "course_level": "unknown",
+    "items": [
+      {
+        "item_id": "i1",
+        "text": "My topic is modelling how a cup of tea cools using Newton's law of cooling.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i2",
+        "text": "My teacher only wrote \"check your k and your claims\" on it and I honestly don't know what she means, it all looked fine to me.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i3",
+        "text": "Can you go through Source A line by line and:",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i4",
+        "text": "1. check my calculations (I used the t = 0 and t = 10 points to find k) and redo anything that's wrong with the actual numbers;",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "find",
+        "level": 2
+      },
+      {
+        "item_id": "i5",
+        "text": "2. tell me which of my claims I can't actually justify from the data, and why;",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "justify",
+        "level": 3
+      },
+      {
+        "item_id": "i6",
+        "text": "3. say what I'd need to add to make the mathematics and the reflection stronger;",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i7",
+        "text": "4. give me a provisional idea of what the mathematics and communication would score, out of 20, if I handed it in as it is. Please be specific with numbers rather than just saying \"be more rigorous\". I need to redo this section by Friday.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      }
+    ],
+    "constraints": [],
+    "supplied_texts": [
+      "source-a-ia-draft-cooling"
+    ],
+    "user_input_sha256": "b229752d49471a507f20a1fcabe9bef1ed62e7d9f2e38d8231d2b7aec2661823"
+  },
+  "findings": []
+}

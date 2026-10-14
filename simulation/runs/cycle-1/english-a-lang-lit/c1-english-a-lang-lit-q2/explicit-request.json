@@ -1,0 +1,46 @@
+{
+  "schema": "epinoic.z3-answer-check.v1",
+  "mode": "dispatch",
+  "slug": "english-a-lang-lit",
+  "subject": "English A: Language and Literature",
+  "ok": true,
+  "status": "ACCEPTED",
+  "branch": "english",
+  "request": {
+    "task_type": "short_answer",
+    "course_level": "unknown",
+    "items": [
+      {
+        "item_id": "i1",
+        "text": "The guiding question was: \"How does the text use language to build trust in the brand?\" She marks practice paragraphs out of 10: 5 marks for understanding of the text and 5 marks for analysis of language choices.",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i2",
+        "text": "Can you tell me honestly whether my paragraph is actual analysis or just description, point out anything I've got factually wrong about what the text says (she's strict about misquoting), tell me the most important thing I've missed, and give me a provisional mark out of 10 with reasons?",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i3",
+        "text": "Please don't rewrite the paragraph, I'm going to redo it myself.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      }
+    ],
+    "constraints": [],
+    "supplied_texts": [
+      "source-a",
+      "source-b"
+    ],
+    "user_input_sha256": "00ec9f253abe4053953384c4b663d8750680baf6bad8d54ee11856cbb534f675"
+  },
+  "findings": []
+}

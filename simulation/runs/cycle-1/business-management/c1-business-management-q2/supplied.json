@@ -1,0 +1,12 @@
+[
+  {
+    "document_id": "src-a",
+    "title": "Source A: Marrowbank Bakery Ltd case data",
+    "text": "Marrowbank Bakery Ltd (fictional case for practice)\n\nMarrowbank Bakery Ltd is a private limited company in a coastal town. It bakes bread and pastries for about 30 cafes and runs one retail shop, employing 14 people. The directors have $150,000 available for investment: $90,000 of retained profit and a $60,000 five-year bank loan at 7% interest, repayable in equal annual instalments starting in Year 1. They are considering two mutually exclusive options.\n\nOption A: an automated oven and proofing line costing $120,000. It would reduce labour costs (two of the 14 staff would be made redundant) and allow Marrowbank to bid for supermarket wholesale contracts.\n\nOption B: a second retail shop in a nearby tourist town costing $150,000. Sales are expected to be strong in the first two years but to fall from Year 3, when a national bakery chain has announced it will open nearby.\n\nForecast net cash flows ($):\nYear | Option A | Option B\n1 | 25,000 | 60,000\n2 | 40,000 | 55,000\n3 | 50,000 | 45,000\n4 | 60,000 | 30,000\n\nBoth options have a four-year life and no residual value. The directors use a discount rate of 6%. Discount factors at 6%: Year 1 = 0.943, Year 2 = 0.890, Year 3 = 0.840, Year 4 = 0.792."
+  },
+  {
+    "document_id": "src-b",
+    "title": "Source B: student's draft answer",
+    "text": "My draft answer\n\n(a) Option A: Total returns = 25,000 + 40,000 + 50,000 + 60,000 = 175,000. ARR = 175,000 / 4 = 43,750; 43,750 / 120,000 x 100 = 36.5%. Payback: 25 + 40 + 50 = 115, so payback is 3 years. NPV: 175,000 x 0.792 = 138,600; 138,600 - 120,000 = 18,600.\n\nOption B: Total returns = 60,000 + 55,000 + 45,000 + 30,000 = 190,000. ARR = 190,000 / 4 = 47,500; 47,500 / 150,000 x 100 = 31.7%. Payback: 60 + 55 = 115, so about 2.5 years. NPV: 190,000 x 0.792 = 150,480; 150,480 - 150,000 = 480.\n\n(b) Option A has the higher ARR (36.5% vs 31.7%) and the higher NPV (18,600 vs 480), so it is more profitable. Option B pays back faster, which matters because of the bank loan. Overall I recommend Option A because its NPV is much higher and NPV is the most reliable method because it uses the time value of money. Option B's NPV of 480 is basically zero so it isn't really worth doing. The redundancies under Option A are a negative but it is only two people."
+  }
+]

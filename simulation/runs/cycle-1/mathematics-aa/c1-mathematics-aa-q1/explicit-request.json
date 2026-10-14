@@ -1,0 +1,75 @@
+{
+  "schema": "epinoic.z3-answer-check.v1",
+  "mode": "dispatch",
+  "slug": "mathematics-aa",
+  "subject": "Mathematics: Analysis and Approaches",
+  "ok": true,
+  "status": "ACCEPTED",
+  "branch": "mathematics",
+  "request": {
+    "task_type": "short_answer",
+    "course_level": "unknown",
+    "items": [
+      {
+        "item_id": "i1",
+        "text": "I don't really get how changing the unit can change a derivative, and the only explanation I got was \"radians are natural\", which isn't an explanation.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i2",
+        "text": "Can you explain it properly with actual evidence?",
+        "kind": "question",
+        "required": true,
+        "command_term": "explain",
+        "level": 2
+      },
+      {
+        "item_id": "i3",
+        "text": "(a) Show me numerically what happens to sin(h)/h as h gets small. Use h = 0.1, 0.01 and 0.001 in radians, then h = 1, 0.1 and 0.01 in degrees. What are the two limits and why are they different? [4 marks]",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i4",
+        "text": "(b) Using the first principles definition, estimate the gradient of y = sin x at x = π/3 with h = 0.01 and compare it with cos(π/3). Explain why there is a gap and how I could make it smaller. [4 marks]",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "estimate",
+        "level": 2
+      },
+      {
+        "item_id": "i5",
+        "text": "(c) Where does lim (h→0) sin h / h = 1 actually come from? My notes have a \"sandwich/squeeze\" argument with areas on the unit circle but I can't see where radians get used. Also, can I just use L'Hôpital's rule for this limit instead, since we've done it in HL? [4 marks]",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i6",
+        "text": "(d) What is d/dx sin(x°) actually equal to? And briefly, where did radians even come from, who introduced them and when, and why does the IB make us use them in calculus? [3 marks]",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i7",
+        "text": "Please give the actual numbers for each step and say where any historical claims come from.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      }
+    ],
+    "constraints": [],
+    "supplied_texts": [],
+    "user_input_sha256": "036df35d5d1e7693dd9ffdd552a0816030aa848d8173930e636bffc35a0cca75"
+  },
+  "findings": []
+}

@@ -1,0 +1,70 @@
+{
+  "schema": "epinoic.z3-answer-check.v1",
+  "mode": "dispatch",
+  "slug": "economics",
+  "subject": "Economics",
+  "ok": true,
+  "status": "ACCEPTED",
+  "branch": "economics",
+  "request": {
+    "task_type": "short_answer",
+    "course_level": "unknown",
+    "items": [
+      {
+        "item_id": "i1",
+        "text": "(a) Using Table 1, calculate the rate of growth of real GDP in Marenia between Year 2 and Year 3. [2 marks]",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "calculate",
+        "level": 2
+      },
+      {
+        "item_id": "i2",
+        "text": "(b) Using Table 1, calculate the unemployment rate in Year 3 and, using information from Extract B, explain one reason why it has changed since Year 1. [4 marks]",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "calculate",
+        "level": 2
+      },
+      {
+        "item_id": "i3",
+        "text": "(c) Using an AD/AS diagram, explain the likely effect of the central bank's decision on real GDP and the price level in Marenia. [4 marks]",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "explain",
+        "level": 2
+      },
+      {
+        "item_id": "i4",
+        "text": "(d) Using information from Extract B and your knowledge of economics, discuss whether the central bank was right to raise its policy rate. [8 marks]",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "discuss",
+        "level": 3
+      },
+      {
+        "item_id": "i5",
+        "text": "Can you check my working for (a), (b) and (c), tell me exactly where I went wrong with the correct numbers shown step by step, and give me a provisional mark for each of those three parts?",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i6",
+        "text": "For (d) please don't write it for me, just tell me which evaluation points from the extract and the table I should use and what my judgement should depend on.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      }
+    ],
+    "constraints": [],
+    "supplied_texts": [
+      "extract-b",
+      "my-draft-answer"
+    ],
+    "user_input_sha256": "363be53bf8e201d41d7166318ea0de57f9be64cdabc8f1302d2659a89fe6726c"
+  },
+  "findings": []
+}

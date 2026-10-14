@@ -1,0 +1,39 @@
+{
+  "qid": "c1-geography-q2",
+  "slug": "geography",
+  "cycle": 1,
+  "kind": "analyse-supplied-material",
+  "course_level": "SL",
+  "request": "I'm SL and we're on the oceans and coastal margins option. My teacher wrote her own data-response question using Source A below (she says it's made up - the town and the company aren't real) and I have to hand it in tomorrow. The questions are:\n\n(a) Analyse what the data in Source A show about the effects of the Saltmarsh Point realignment scheme. [4 marks]\n(b) Evaluate the reliability of Source A as evidence that managed realignment is a better option than hard engineering for Port Harrow. [6 marks]\n\nCould you go through what the data actually show, with the numbers worked out (percentage changes, anything that doesn't fit the trend), and then evaluate the source - who wrote it, how the data were collected, what's missing? I think the Company's claim that the maintenance bill \"more than halved\" is wrong but I'm not sure how to prove it, and I don't know if their other two claims are right either.\n\nAlso can you give me one real managed realignment scheme with actual figures (where, when, cost, area) that I could compare Port Harrow with, and be honest about how sure you are of those numbers. Please don't write the answers for me - I'll write them up myself - but tell me what a full-mark answer to (b) would have to include.\n",
+  "supplied_texts": [
+    {
+      "document_id": "source-a",
+      "title": "Source A: extract from the Vale Estuary Shoreline Review 2025 (fictional)",
+      "text": "Extract from the Vale Estuary Shoreline Review 2025, published by the Harrowmouth Harbour Company, which operates the port at Port Harrow.\n\nIn autumn 2019 the Company breached 1.4 km of the sea wall at Saltmarsh Point, allowing 95 hectares of low-grade farmland to flood on each tide. The scheme cost £6.2 million, against £19 million for the rock revetment originally planned. The results speak for themselves: saltmarsh area has grown sixfold, the number of properties flooded in Port Harrow has fallen by 85 per cent and the estuary-wide maintenance bill has more than halved. The Company therefore recommends that the £19 million revetment proposed for North Quay be cancelled and the land behind it realigned in the same way.\n\nTable 1. Monitoring data, Vale Estuary\nYear | Saltmarsh area at Saltmarsh Point (ha) | Properties flooded in Port Harrow | Sea-wall maintenance, whole estuary (£ thousand) | Mean winter wave height at Port Harrow gauge (m)\n2016 | 12 | 41 | 820 | 1.1\n2018 | 11 | 38 | 870 | 1.2\n2020 | 38 | 9 | 640 | 1.0\n2022 | 61 | 4 | 590 | 1.3\n2024 | 74 | 6 | 560 | 1.4\n\nNote: figures compiled by the Company from its own tide gauge and from the Port Harrow Residents' Association flood log. Wave data for 2020 were partly estimated because the gauge was offline for eleven weeks."
+    }
+  ],
+  "strong_answer_must": [
+    "Reads Table 1 accurately and works the three Company claims: saltmarsh 12 to 74 ha is about 6.2 times, so 'sixfold' is fair; properties flooded 41 to 6 is a fall of about 85 per cent against 2016 (about 84 per cent against 2018), so '85 per cent' is correct; maintenance 820 to 560 (thousand pounds) is a fall of only about 32 per cent, so 'more than halved' is false (halving would need 410 or less). Two claims true, one false, each shown with working.",
+    "Splits the data correctly around the scheme (breach in autumn 2019: 2016 and 2018 are before, 2020 to 2024 after) and names the anomalies: properties flooded rose from 4 (2022) to 6 (2024) in the year with the highest mean winter wave height (1.4 m); the big 2020 drop coincided with the calmest and partly estimated winter (1.0 m); maintenance rose from 820 to 870 before the scheme.",
+    "Separates correlation from causation: wave climate, other works, or changed reporting could explain the changes; there is no control site, only two pre-scheme and three post-scheme points at two-year intervals, and a count of flooded properties says nothing about flood depth or damage.",
+    "Evaluates provenance and purpose: the author is a private port operator with a financial stake in cancelling a 19 million pound revetment in favour of a 6.2 million pound approach; persuasive wording ('The results speak for themselves'); data compiled by the Company itself; the residents' flood log is self-reported; the tide gauge was offline for eleven weeks in 2020 so 2020 wave data are partly estimated.",
+    "Identifies what is missing: who lost the 95 hectares of farmland and whether they were compensated, habitat quality, flood depth and damage costs, and any data at all about North Quay, so the recommendation to realign North Quay is a spatial transfer the source does not support.",
+    "Uses correct coastal terminology: managed realignment (managed retreat), hard engineering and rock revetment, wave-energy dissipation by saltmarsh, coastal squeeze, cost-benefit analysis, shoreline management.",
+    "Gives at least one real managed realignment scheme with approximately correct located figures and explicit hedging, for example Medmerry, West Sussex, England (Environment Agency; breach completed 2013; cost about 28 million pounds; roughly 180 hectares of new intertidal habitat; about 7 km of new embankment), or Alkborough Flats on the Humber (2006, about 440 ha) or Abbotts Hall Farm, Essex (2002, about 84 ha), with the figures tagged 'recalled, not consulted'.",
+    "Any direct quotation uses only words that appear verbatim in Source A.",
+    "Does not write answers (a) or (b) for the student; gives analysis, evaluation points and a checklist of what a full-mark answer to (b) must include; any mark or level estimate carries the word 'provisional' in the same sentence.",
+    "Ends with a tagged Sources line covering the supplied text and anything recalled."
+  ],
+  "pitfalls": [
+    "Percentage-change errors: reporting 560/820 = 68 per cent as a '68 per cent fall', calling a 32 per cent fall 'about a third' and then agreeing it 'more than halved', or using the wrong baseline year without saying so.",
+    "Accepting all three Company claims or dismissing all three; the correct finding is two accurate, one false.",
+    "Treating 2018 as a post-scheme year, or forgetting the scheme date is autumn 2019.",
+    "Missing the 2022-2024 rise in flooded properties and the wave-height confound, or the partly estimated 2020 wave data.",
+    "Inventing details absent from Source A (a population for Port Harrow, named storms, numbers of farmers, a county) or quoting phrases that are not verbatim in the extract.",
+    "Treating the fictional town or company as real, or placing Port Harrow in a real location.",
+    "Real-example errors: wrong date, cost or area for Medmerry or another scheme (for example Medmerry 'opened in 2008' or 'cost 100 million pounds'), an invented scheme, or figures with false precision and no hedging.",
+    "Generic source evaluation ('it might be biased') without tying the bias to the Company's financial interest and its own role in compiling the data.",
+    "Writing the student's (a) and (b) answers in full despite the request not to, or giving a mark without 'provisional'.",
+    "Omitting the tagged Sources line or using an untagged one."
+  ]
+}

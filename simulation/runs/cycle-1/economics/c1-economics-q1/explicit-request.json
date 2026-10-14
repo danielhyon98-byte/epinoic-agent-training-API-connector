@@ -1,0 +1,83 @@
+{
+  "schema": "epinoic.z3-answer-check.v1",
+  "mode": "dispatch",
+  "slug": "economics",
+  "subject": "Economics",
+  "ok": true,
+  "status": "ACCEPTED",
+  "branch": "economics",
+  "request": {
+    "task_type": "short_answer",
+    "course_level": "unknown",
+    "items": [
+      {
+        "item_id": "i1",
+        "text": "We did minimum wages as a price floor this week and my teacher said the textbook diagram is \"only half the story\" because a famous study in the 1990s found the opposite of what the diagram predicts, and then other economists pushed back on it.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i2",
+        "text": "Please answer each part:",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i3",
+        "text": "(a) Explain, with the diagram described in words, why a minimum wage set above the equilibrium wage in a competitive labour market is predicted to cause unemployment. [4 marks]",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "explain",
+        "level": 2
+      },
+      {
+        "item_id": "i4",
+        "text": "(b) Explain what that famous study did and what it found. I want the specifics: who wrote it, which year, which places were compared, which industry, what the minimum wage changed from and to, and roughly what the result was. Then explain who disagreed with it, what data they used instead and what they found. [6 marks]",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "explain",
+        "level": 2
+      },
+      {
+        "item_id": "i5",
+        "text": "(c) Explain the monopsony argument that is used to account for the result, and the condition under which a minimum wage could raise employment. [3 marks]",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "explain",
+        "level": 2
+      },
+      {
+        "item_id": "i6",
+        "text": "(d) In a town the demand for fast-food labour is Ld = 600 - 40W and the supply is Ls = -100 + 60W, where W is the wage in dollars per hour and L is thousands of workers. Calculate the equilibrium wage and employment, then the employment and the excess supply of labour if a minimum wage of $8 per hour is imposed, then the wage elasticity of demand for labour between those two points, and comment on what it means for the size of the job losses. [6 marks]",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "calculate",
+        "level": 2
+      },
+      {
+        "item_id": "i7",
+        "text": "(e) To what extent does the evidence undermine the price-floor prediction? [6 marks]",
+        "kind": "question",
+        "required": true,
+        "command_term": "to what extent",
+        "level": 3
+      },
+      {
+        "item_id": "i8",
+        "text": "Please say clearly which parts are settled theory and which are still argued about, and say where your figures for the studies come from, because I'll get asked about that if I use them in an essay.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      }
+    ],
+    "constraints": [],
+    "supplied_texts": [],
+    "user_input_sha256": "4de260921640a66a5aa62807211987368772c72463c3cbfbb523ef61544082a5"
+  },
+  "findings": []
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "epinoic.z3-answer-check.v1",
+  "mode": "dispatch",
+  "slug": "english-a-lang-lit",
+  "subject": "English A: Language and Literature",
+  "ok": true,
+  "status": "ACCEPTED",
+  "branch": "english",
+  "request": {
+    "task_type": "short_answer",
+    "course_level": "unknown",
+    "items": [
+      {
+        "item_id": "i1",
+        "text": "hi, I'm HL and for my HL essay I'm thinking of comparing how two newspapers reported the same protest.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i2",
+        "text": "Can you explain properly: (1) what an agentless passive and a nominalisation actually do to a reader, with a made-up headline example for each so I can see the difference, (2) who first argued that this is ideological, when, and what the actual newspaper example they used was (if you know it), (3) whether it's true that the passive ALWAYS hides who did something, because my dad says that's nonsense and that there are perfectly normal reasons to use it, and (4) which of these ideas are generally agreed and which are just one school of linguists' opinion, because I want to put real names and dates in the essay and not just write \"linguists say\".",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "explain",
+        "level": 2
+      },
+      {
+        "item_id": "i3",
+        "text": "Please say if you aren't sure about a name or a date rather than guessing, I'd rather check it myself.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i4",
+        "text": "Don't write any of the essay for me, I just need the background sorted.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      }
+    ],
+    "constraints": [],
+    "supplied_texts": [],
+    "user_input_sha256": "70ac2bc0587eb63583fcc47dec09e8b85391644cce6b18e50d18f271cc3de638"
+  },
+  "findings": []
+}

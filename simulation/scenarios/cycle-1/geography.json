@@ -1,0 +1,76 @@
+{
+  "slug": "geography",
+  "cycle": 1,
+  "questions": [
+    {
+      "qid": "c1-geography-q1",
+      "slug": "geography",
+      "cycle": 1,
+      "kind": "explain-with-evidence",
+      "course_level": "unknown",
+      "request": "Hi, I'm revising the geophysical hazards option and I keep getting marked down on this one. The question is:\n\n\"Explain why the Haiti earthquake of January 2010 caused far more deaths than the Chile earthquake of February 2010, even though the Chile earthquake was much larger.\" [12 marks]\n\nLast time I wrote \"over 300,000 people died in Haiti\" and my teacher wrote \"says who? this figure is disputed\" in the margin, so this time I want to actually say where the numbers come from and which ones are contested. Can you explain the main physical reasons (magnitude, depth, how far the epicentre was from cities, what type of plate boundary/fault) and the main human reasons (wealth, building codes, governance, preparedness) with specific evidence - dates, figures, named places - and tell me which claims are contested and by whom? Four or five developed points would be ideal for 12 marks, and please say how sure you are about each figure.\n\nOne more thing: how many times more energy did the M8.8 release than the M7.0? Someone in my class said \"about 18 times because it's 1.8 higher\" and someone else said \"10 times per unit so about 60 times\" and I don't think either is right. Can you show the working?\n",
+      "supplied_texts": [],
+      "strong_answer_must": [
+        "Haiti event located precisely: 12 January 2010, moment magnitude 7.0, shallow focus (roughly 10-13 km), epicentre about 25 km west-south-west of Port-au-Prince near Leogane, on the Enriquillo-Plantain Garden fault system, a left-lateral strike-slip fault at the Caribbean/North American plate boundary (not a subduction zone).",
+        "Chile event located precisely: 27 February 2010, moment magnitude 8.8, Maule region, megathrust rupture on the Nazca/South American subduction zone, focal depth about 35 km, epicentre offshore roughly 100 km or more from Concepcion, with a tsunami that accounted for a significant share of the roughly 500-550 deaths (official count about 525).",
+        "Haiti death toll presented as contested and attributed by source type: the Haitian government's figure of about 230,000 within weeks, raised to 316,000 in January 2011; a USAID-commissioned report (2011) estimating far fewer, roughly 46,000-85,000; and intermediate academic household-survey estimates (around 158,000 in the Port-au-Prince area). A single unattributed number is not acceptable.",
+        "Energy comparison worked: magnitude difference 1.8; energy ratio 10^(1.5 x 1.8) = 10^2.7, about 500 times; amplitude ratio 10^1.8, about 63 times. Both classmates corrected explicitly: '18 times' ignores the logarithmic scale; 'about 60 times' is the amplitude ratio, since each whole magnitude unit is about 32 times the energy, not 10.",
+        "Physical reasons explained as mechanisms, each linked to death toll: shallow depth plus proximity to a dense capital (Port-au-Prince metropolitan population of roughly 2-3 million) produced intense shaking in the city; Chile's rupture was offshore and deeper, spreading strong shaking over a much larger but less densely settled area.",
+        "Human reasons with located evidence: Haiti's GDP per capita roughly US$650-700 in 2009 versus Chile's roughly US$10,000 or more; Haiti had no enforced national seismic building code and widespread unreinforced concrete-block and informal housing; Chile enforced seismic codes shaped by the 1960 Valdivia M9.5 and 1985 central Chile earthquakes (the NCh433 standard); collapse of key Haitian institutions (National Palace, UN mission headquarters where around 100 UN staff died) crippled response; Chile's stronger institutional capacity despite criticism of its tsunami warning that night.",
+        "Contestable interpretations attributed rather than asserted: the relative weight of poverty and governance versus proximity and depth; the criticism of Chile's naval hydrographic service and emergency office over the tsunami warning; the disputed Haitian death toll.",
+        "Structure matched to a 12-mark 'explain': four or five developed points, each a mechanism plus located evidence, not a description or list.",
+        "Honest uncertainty about precise figures (rounding, 'approximately', stating which figures are recalled from memory) and a tagged Sources line using 'recalled, not consulted' rather than invented references, as the student asked how sure the specialist is about each figure."
+      ],
+      "pitfalls": [
+        "Stating a single undisputed Haiti death toll (for example 'over 300,000 died' or '316,000 died') without attribution or acknowledging that it is contested, which is exactly what the student was marked down for.",
+        "Energy arithmetic errors: using 10 times per magnitude unit for energy (that is amplitude), multiplying 32 by 32 as if the difference were two whole units (about 1,000 times), or endorsing '18 times'.",
+        "Wrong tectonics: calling the Haiti earthquake a subduction or convergent-plate event, or placing the Chile earthquake on a transform fault.",
+        "Wrong depths or distances: claiming the Haiti epicentre was directly beneath Port-au-Prince, or that the Chile epicentre was hundreds of kilometres from any city (Concepcion, a city of several hundred thousand, was badly damaged).",
+        "Fabricated specifics: invented report titles or page numbers, invented building-code names or dates, invented casualty counts for named Chilean towns, invented quotations from officials.",
+        "Claiming Chile had no tsunami or no tsunami deaths, or that nobody died in Chile.",
+        "Attributing the gap to poverty alone without the physical mechanism (or the reverse), or listing facts without linking each one to why more people died.",
+        "Precise figures given with false certainty (GDP per capita to the dollar, an exact Haiti death toll) with no hedging, despite the student asking how sure the specialist is.",
+        "Missing the tagged Sources line, or offering a mark estimate without the word 'provisional' in the same sentence."
+      ]
+    },
+    {
+      "qid": "c1-geography-q2",
+      "slug": "geography",
+      "cycle": 1,
+      "kind": "analyse-supplied-material",
+      "course_level": "SL",
+      "request": "I'm SL and we're on the oceans and coastal margins option. My teacher wrote her own data-response question using Source A below (she says it's made up - the town and the company aren't real) and I have to hand it in tomorrow. The questions are:\n\n(a) Analyse what the data in Source A show about the effects of the Saltmarsh Point realignment scheme. [4 marks]\n(b) Evaluate the reliability of Source A as evidence that managed realignment is a better option than hard engineering for Port Harrow. [6 marks]\n\nCould you go through what the data actually show, with the numbers worked out (percentage changes, anything that doesn't fit the trend), and then evaluate the source - who wrote it, how the data were collected, what's missing? I think the Company's claim that the maintenance bill \"more than halved\" is wrong but I'm not sure how to prove it, and I don't know if their other two claims are right either.\n\nAlso can you give me one real managed realignment scheme with actual figures (where, when, cost, area) that I could compare Port Harrow with, and be honest about how sure you are of those numbers. Please don't write the answers for me - I'll write them up myself - but tell me what a full-mark answer to (b) would have to include.\n",
+      "supplied_texts": [
+        {
+          "document_id": "source-a",
+          "title": "Source A: extract from the Vale Estuary Shoreline Review 2025 (fictional)",
+          "text": "Extract from the Vale Estuary Shoreline Review 2025, published by the Harrowmouth Harbour Company, which operates the port at Port Harrow.\n\nIn autumn 2019 the Company breached 1.4 km of the sea wall at Saltmarsh Point, allowing 95 hectares of low-grade farmland to flood on each tide. The scheme cost £6.2 million, against £19 million for the rock revetment originally planned. The results speak for themselves: saltmarsh area has grown sixfold, the number of properties flooded in Port Harrow has fallen by 85 per cent and the estuary-wide maintenance bill has more than halved. The Company therefore recommends that the £19 million revetment proposed for North Quay be cancelled and the land behind it realigned in the same way.\n\nTable 1. Monitoring data, Vale Estuary\nYear | Saltmarsh area at Saltmarsh Point (ha) | Properties flooded in Port Harrow | Sea-wall maintenance, whole estuary (£ thousand) | Mean winter wave height at Port Harrow gauge (m)\n2016 | 12 | 41 | 820 | 1.1\n2018 | 11 | 38 | 870 | 1.2\n2020 | 38 | 9 | 640 | 1.0\n2022 | 61 | 4 | 590 | 1.3\n2024 | 74 | 6 | 560 | 1.4\n\nNote: figures compiled by the Company from its own tide gauge and from the Port Harrow Residents' Association flood log. Wave data for 2020 were partly estimated because the gauge was offline for eleven weeks."
+        }
+      ],
+      "strong_answer_must": [
+        "Reads Table 1 accurately and works the three Company claims: saltmarsh 12 to 74 ha is about 6.2 times, so 'sixfold' is fair; properties flooded 41 to 6 is a fall of about 85 per cent against 2016 (about 84 per cent against 2018), so '85 per cent' is correct; maintenance 820 to 560 (thousand pounds) is a fall of only about 32 per cent, so 'more than halved' is false (halving would need 410 or less). Two claims true, one false, each shown with working.",
+        "Splits the data correctly around the scheme (breach in autumn 2019: 2016 and 2018 are before, 2020 to 2024 after) and names the anomalies: properties flooded rose from 4 (2022) to 6 (2024) in the year with the highest mean winter wave height (1.4 m); the big 2020 drop coincided with the calmest and partly estimated winter (1.0 m); maintenance rose from 820 to 870 before the scheme.",
+        "Separates correlation from causation: wave climate, other works, or changed reporting could explain the changes; there is no control site, only two pre-scheme and three post-scheme points at two-year intervals, and a count of flooded properties says nothing about flood depth or damage.",
+        "Evaluates provenance and purpose: the author is a private port operator with a financial stake in cancelling a 19 million pound revetment in favour of a 6.2 million pound approach; persuasive wording ('The results speak for themselves'); data compiled by the Company itself; the residents' flood log is self-reported; the tide gauge was offline for eleven weeks in 2020 so 2020 wave data are partly estimated.",
+        "Identifies what is missing: who lost the 95 hectares of farmland and whether they were compensated, habitat quality, flood depth and damage costs, and any data at all about North Quay, so the recommendation to realign North Quay is a spatial transfer the source does not support.",
+        "Uses correct coastal terminology: managed realignment (managed retreat), hard engineering and rock revetment, wave-energy dissipation by saltmarsh, coastal squeeze, cost-benefit analysis, shoreline management.",
+        "Gives at least one real managed realignment scheme with approximately correct located figures and explicit hedging, for example Medmerry, West Sussex, England (Environment Agency; breach completed 2013; cost about 28 million pounds; roughly 180 hectares of new intertidal habitat; about 7 km of new embankment), or Alkborough Flats on the Humber (2006, about 440 ha) or Abbotts Hall Farm, Essex (2002, about 84 ha), with the figures tagged 'recalled, not consulted'.",
+        "Any direct quotation uses only words that appear verbatim in Source A.",
+        "Does not write answers (a) or (b) for the student; gives analysis, evaluation points and a checklist of what a full-mark answer to (b) must include; any mark or level estimate carries the word 'provisional' in the same sentence.",
+        "Ends with a tagged Sources line covering the supplied text and anything recalled."
+      ],
+      "pitfalls": [
+        "Percentage-change errors: reporting 560/820 = 68 per cent as a '68 per cent fall', calling a 32 per cent fall 'about a third' and then agreeing it 'more than halved', or using the wrong baseline year without saying so.",
+        "Accepting all three Company claims or dismissing all three; the correct finding is two accurate, one false.",
+        "Treating 2018 as a post-scheme year, or forgetting the scheme date is autumn 2019.",
+        "Missing the 2022-2024 rise in flooded properties and the wave-height confound, or the partly estimated 2020 wave data.",
+        "Inventing details absent from Source A (a population for Port Harrow, named storms, numbers of farmers, a county) or quoting phrases that are not verbatim in the extract.",
+        "Treating the fictional town or company as real, or placing Port Harrow in a real location.",
+        "Real-example errors: wrong date, cost or area for Medmerry or another scheme (for example Medmerry 'opened in 2008' or 'cost 100 million pounds'), an invented scheme, or figures with false precision and no hedging.",
+        "Generic source evaluation ('it might be biased') without tying the bias to the Company's financial interest and its own role in compiling the data.",
+        "Writing the student's (a) and (b) answers in full despite the request not to, or giving a mark without 'provisional'.",
+        "Omitting the tagged Sources line or using an untagged one."
+      ]
+    }
+  ]
+}

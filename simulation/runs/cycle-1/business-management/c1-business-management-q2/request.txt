@@ -1,0 +1,6 @@
+HL student here, practising Paper 2 quantitative questions. My teacher gave us a made-up company (Source A below) and I've written my calculations and recommendation in my draft (Source B below). The questions were:
+
+(a) Calculate the payback period, average rate of return (ARR) and net present value (NPV) for both options. [8 marks]
+(b) Using your results from (a) and the information in Source A, recommend which option Marrowbank Bakery should choose. [10 marks]
+
+Can you check every number in my draft and show the correct working step by step where I've gone wrong (I think my ARR might be too high but I'm not sure why), then give me honest provisional feedback on part (b): what's actually wrong with my reasoning, what I'm missing from Source A, and roughly how far off a top answer it is. Be straight with me rather than just saying "good effort". Also, is NPV really "the most reliable method" like I wrote, or is that something I'd get picked up on?

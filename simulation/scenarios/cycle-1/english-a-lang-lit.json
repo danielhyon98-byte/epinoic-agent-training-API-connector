@@ -1,0 +1,76 @@
+{
+  "slug": "english-a-lang-lit",
+  "cycle": 1,
+  "questions": [
+    {
+      "qid": "c1-english-a-lang-lit-q1",
+      "slug": "english-a-lang-lit",
+      "cycle": 1,
+      "kind": "explain-with-evidence",
+      "course_level": "HL",
+      "request": "hi, I'm HL and for my HL essay I'm thinking of comparing how two newspapers reported the same protest. My teacher keeps saying that the passive voice and \"nominalisation\" in headlines are \"ideological\" and that a linguist basically proved this using British newspaper headlines in the 1970s, but she couldn't remember the details when I asked. Can you explain properly: (1) what an agentless passive and a nominalisation actually do to a reader, with a made-up headline example for each so I can see the difference, (2) who first argued that this is ideological, when, and what the actual newspaper example they used was (if you know it), (3) whether it's true that the passive ALWAYS hides who did something, because my dad says that's nonsense and that there are perfectly normal reasons to use it, and (4) which of these ideas are generally agreed and which are just one school of linguists' opinion, because I want to put real names and dates in the essay and not just write \"linguists say\". Please say if you aren't sure about a name or a date rather than guessing, I'd rather check it myself. Don't write any of the essay for me, I just need the background sorted.\n",
+      "supplied_texts": [],
+      "strong_answer_must": [
+        "Define the agentless passive precisely: a passive clause with no 'by' phrase, so the agent is not stated (e.g. an invented headline such as 'Protesters injured in city centre'); contrast it with a passive that keeps the agent in a by-phrase and with the active version that names the agent first.",
+        "Define nominalisation as turning a process (verb) into a noun ('police shot protesters' becomes 'the shooting'), which lets the writer drop the participants and the tense; give an invented headline example and explain that the two devices are different things that are often used together.",
+        "Attribute the 'ideological' argument to critical linguistics: Roger Fowler, Bob Hodge, Gunther Kress and Tony Trew, Language and Control (1979), and specifically Tony Trew's analysis of how British newspapers reported the shooting of demonstrators by police in Salisbury, Rhodesia, in June 1975: one paper's headline put the demonstrators first as 'rioting' and the police in an agentless or by-phrase position, another's used an active clause with the police as the agent; later reports nominalised the event so the agent vanished. Exact headline wording may be described rather than quoted, and if quoted should be flagged as needing verification against Trew's chapter.",
+        "Attribute the grammatical toolkit (transitivity: process, participants, circumstances) to M. A. K. Halliday's systemic functional grammar (An Introduction to Functional Grammar, 1985, with earlier work in the 1970s) and the later, broader movement to Norman Fairclough, Language and Power (1989), and critical discourse analysis; mark any further names as uncertain if the answer is unsure.",
+        "Answer (3) correctly: the passive does not always hide the agent; only the agentless passive omits it, and agentless passives are normal when the agent is unknown, obvious, or irrelevant, or when the affected participant is the topic (given information first). So a single passive proves nothing; the argument depends on patterns across a text and on comparing the choice with available alternatives.",
+        "Distinguish what is generally agreed (the grammar: how passives and nominalisations work; that they can omit agency; that headlines foreground whatever comes first) from what is contested (that such choices are necessarily ideological or intentional). Name a dissenting position, for example Geoffrey Pullum's argument that condemnation of the passive is overdone and that George Orwell's 1946 essay 'Politics and the English Language' attacks the passive while using it; label it as a counter-position with attribution.",
+        "Be honest about uncertainty: say which names, dates and headline wordings the student should verify in a library copy or school database, rather than presenting everything with equal confidence.",
+        "Give the student a method for the HL essay without writing it: compare headline and first paragraph of two reports of the same event, tabulate who is the grammatical agent, count agentless passives and nominalisations, and link the pattern to each paper's audience; treat the HL essay's rules (word limit, choice of text) as something to confirm with the teacher or the current IB guide rather than asserting them.",
+        "End with one tagged Sources line; the theorists must be tagged 'recalled, not consulted' (nothing was retrieved), and no URLs anywhere."
+      ],
+      "pitfalls": [
+        "Misattribution: crediting the 1975 headline study to Fairclough, Halliday, Chomsky or Orwell; giving Language and Control as 1989 or Language and Power as 1979; calling Fowler et al. 'critical discourse analysis' (that label came later, with Fairclough).",
+        "Fabrication: inventing a different newspaper, country or year for the example, inventing exact headline wording with full confidence, inventing a 'study' with a percentage ('70% of headlines use the passive'), or quoting Orwell, Fairclough or Trew verbatim from memory.",
+        "Grammar errors: treating every passive as agent-hiding; counting 'there were deaths' or 'the protest turned violent' as passives; conflating nominalisation with the passive; calling an adjective ('the injured') a passive.",
+        "A leap from 'the passive can hide agency' to 'the newspaper intended to protect the police' without saying this is an interpretation that needs the comparison with the other paper and the rest of the text.",
+        "Answering (4) with 'linguists agree' or 'most scholars think' without naming who, or presenting the ideological reading as settled fact.",
+        "Writing the essay: supplying a thesis statement, a paragraph, or a 'you could write...' passage the student could paste; or stating HL essay requirements (word count, text choice) as fact without a hedge.",
+        "Format failures: a missing or untagged Sources line, a URL, or revealing any internal code."
+      ]
+    },
+    {
+      "qid": "c1-english-a-lang-lit-q2",
+      "slug": "english-a-lang-lit",
+      "cycle": 1,
+      "kind": "analyse-supplied-material",
+      "course_level": "SL",
+      "request": "My teacher gave us a text for unseen practice (Source A below, it's the sustainability page from a clothing brand's website, text only, she said ignore the pictures) and I've written my first body paragraph (Source B below). The guiding question was: \"How does the text use language to build trust in the brand?\" She marks practice paragraphs out of 10: 5 marks for understanding of the text and 5 marks for analysis of language choices. Can you tell me honestly whether my paragraph is actual analysis or just description, point out anything I've got factually wrong about what the text says (she's strict about misquoting), tell me the most important thing I've missed, and give me a provisional mark out of 10 with reasons? Please don't rewrite the paragraph, I'm going to redo it myself. I'm SL btw. [10 marks]\n",
+      "supplied_texts": [
+        {
+          "document_id": "source-a",
+          "title": "Source A: 'Our Planet Promise' web page text, Harrowgate Mills (invented clothing brand)",
+          "text": "OUR PLANET PROMISE\n\nWe've always believed that great clothes shouldn't cost the earth. That's why, since 2019, every Harrowgate Mills jacket has been made with up to 40% less water*, and why we're aiming for a 50% reduction in packaging emissions by 2030.\n\nWe know we're not perfect. Nobody is. But we're learning, and we're listening: to you, and to the planet.\n\nLast year, 2.3 million garments found a second life through our Re-Wear scheme. That's 2.3 million reasons to keep going.\n\nProgress is made one choice at a time. Yours matters.\n\nJoin the journey. #WearItWell\n\n*Compared with the 2018 Harrowgate Mills standard jacket. Figures independently verified; see our Impact Report for details."
+        },
+        {
+          "document_id": "source-b",
+          "title": "Source B: the student's own draft body paragraph",
+          "text": "The web page uses lots of persuasive techniques to make the reader trust the brand. Firstly, the use of statistics such as 'up to 40% less water' and '2.3 million garments' makes it sound very scientific and grabs the reader's attention. Secondly, the brand uses anaphora with 'we' at the start of every sentence, which makes the reader feel included. The writer also admits that they have cut their emissions by 50%, which shows they are honest and so the reader will believe them. The short sentences like 'Nobody is.' create a sense of urgency. Finally, the hashtag at the end shows the advert is aimed at teenagers who use social media, which is effective because it persuades them to buy the clothes."
+        }
+      ],
+      "strong_answer_must": [
+        "Lead with a short verdict: the paragraph is mostly description and feature-spotting with generic effects, with a couple of factual misreadings of Source A.",
+        "Catch the factual error about emissions: Source A says 'we're aiming for a 50% reduction in packaging emissions by 2030', a future target limited to packaging; the draft's 'admits that they have cut their emissions by 50%' is wrong in tense, scope and modality, and the hedged verb 'aiming' is itself worth analysing as a trust device that commits to nothing.",
+        "Catch the false feature claim: Source A does not use 'anaphora with \"we\" at the start of every sentence'. Sentences such as 'Nobody is.', 'Last year, 2.3 million garments...', 'Progress is made one choice at a time.', 'Yours matters.' and 'Join the journey.' do not begin with 'we'. The real pattern is the repeated inclusive 'we' plus direct address ('to you', 'Yours matters'), which should be named accurately.",
+        "Identify the most important omission: the asterisk and small print. 'up to 40% less water*' is a ceiling, not a figure, and the note '*Compared with the 2018 Harrowgate Mills standard jacket' makes the comparison against the brand's own earlier product; 'Figures independently verified' names no verifier. The draft treats the numbers as 'scientific' instead of analysing how qualifications are moved to where readers look last.",
+        "Analyse at least two further choices with exact quotation: the agentless passive 'Progress is made one choice at a time.' and 'Yours matters.' shift responsibility to the consumer; the imperative 'Join the journey.' and the hashtag '#WearItWell' invite participation; the confessional 'We know we're not perfect. Nobody is.' pre-empts criticism (a concession that builds trust by sounding humble); '2.3 million reasons to keep going' turns a count of garments into a count of justifications; 'found a second life' personifies garments and avoids naming the process.",
+        "Challenge the draft's 'sense of urgency' for 'Nobody is.' as a doubtful effect (the fragment creates an intimate, humble register, not urgency) and the leap from a hashtag to 'aimed at teenagers'; note that the text is a brand sustainability page whose purpose includes reputation and trust, not only selling jackets, and that the draft calls it an 'advert'.",
+        "Comment on organisation: 'Firstly, ... Secondly, ... Finally' lists devices; advise grouping by trust strategies that answer the guiding question (for example quantified-but-qualified claims, humility, shared responsibility) without supplying rewritten sentences.",
+        "Quote the student's own words exactly when praising or flagging (for example 'makes it sound very scientific and grabs the reader's attention' as a generic effect to replace), and quote Source A exactly, including 'up to' and the asterisk.",
+        "Give a provisional mark on the student's own scale (understanding out of 5, analysis out of 5, total out of 10), with the word 'provisional' in the same sentence as each mark or sub-mark, reasons tied to the issues above, and an explicit note that this is not an official IB mark; a defensible range is roughly 2/5 understanding and 2/5 analysis, so about 4/10, though 3 to 5 overall with reasons is acceptable.",
+        "Give one next step (for example, re-plan the paragraph around the guiding question starting from the small print) and do not rewrite the paragraph; end with one tagged Sources line citing Source A and Source B as 'supplied text', and no URLs."
+      ],
+      "pitfalls": [
+        "Misquoting the supplied texts: '40% less water' without 'up to', '50% less emissions', 'we aim to', or inventing text that is not there (images, colours, a logo, a price, a product name other than the jacket, a 'buy now' button).",
+        "Missing or endorsing the draft's errors: accepting that the brand 'has cut' emissions by 50%, accepting the anaphora claim, or agreeing that 'Nobody is.' creates urgency without question.",
+        "Ignoring the asterisk and footnote entirely, or asserting as fact that the brand's figures are false or that the page is 'greenwashing'; the specialist cannot verify the figures and should analyse how they are presented, not rule on their truth.",
+        "Marking failures: a mark or sub-mark without 'provisional' in the same sentence, inventing official IB Paper 1 criteria or descriptors, giving a mark out of 20 instead of the student's 10, or praising without quoting the student's words.",
+        "Rewriting the paragraph or handing back model sentences the student can paste, despite the request not to.",
+        "Generic feedback ('add more analysis', 'good use of quotations') with no quoted evidence from either source; or claiming the audience is teenagers because of the hashtag.",
+        "Format failures: a missing or untagged Sources line (the texts must be tagged 'supplied text'), a URL, or revealing any internal code."
+      ]
+    }
+  ]
+}

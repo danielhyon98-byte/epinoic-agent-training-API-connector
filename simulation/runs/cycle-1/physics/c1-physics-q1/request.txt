@@ -1,0 +1,9 @@
+HL physics, quantum topic. My teacher keeps saying "the photoelectric effect proved light comes in photons" but when I asked HOW physicists actually got convinced she just said "Einstein, 1905". I'm writing this up for a reflection in my physics journal so I need actual evidence and who showed what, not vibes. Can you do these:
+
+(a) Explain, with dates and names, the sequence of experiments and ideas from the first observation of the effect up to the photon idea being accepted. For each person say what they actually measured or claimed (e.g. what exactly did Lenard find, what did Millikan measure, what value of h did he get and how close is it to today's value, when did most physicists actually come round). If any of it is disputed by historians, say who says what rather than just stating it as fact. [6 marks]
+
+(b) Why can't the wave model explain it? Give the three specific observations it fails on, and for the time-delay one use these numbers: work function of sodium 2.28 eV, light intensity 2.0 x 10^-4 W m^-2, assume one atom collects energy over an area of 1.0 x 10^-19 m^2. How long would a classical wave take to deliver the energy to one electron, and what is the measured upper limit on the actual delay? [4 marks]
+
+(c) Our class data for a sodium cathode: f = 6.0 x 10^14 Hz gives stopping voltage 0.20 V; f = 7.5 x 10^14 Hz gives 0.82 V; f = 9.0 x 10^14 Hz gives 1.44 V. Find h, the work function in eV and in J, the threshold frequency and threshold wavelength, and the percentage difference between our h and the accepted value. Show working, not just answers. [5 marks]
+
+(d) My teacher also said Millikan "spent ten years trying to prove Einstein wrong and accidentally proved him right". Is that actually true? Where does that story come from? [2 marks]

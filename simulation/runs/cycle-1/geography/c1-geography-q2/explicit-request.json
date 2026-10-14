@@ -1,0 +1,69 @@
+{
+  "schema": "epinoic.z3-answer-check.v1",
+  "mode": "dispatch",
+  "slug": "geography",
+  "subject": "Geography",
+  "ok": true,
+  "status": "ACCEPTED",
+  "branch": "generic",
+  "request": {
+    "task_type": "short_answer",
+    "course_level": "unknown",
+    "items": [
+      {
+        "item_id": "i1",
+        "text": "(a) Analyse what the data in Source A show about the effects of the Saltmarsh Point realignment scheme. [4 marks]",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "analyse",
+        "level": 3
+      },
+      {
+        "item_id": "i2",
+        "text": "(b) Evaluate the reliability of Source A as evidence that managed realignment is a better option than hard engineering for Port Harrow. [6 marks]",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "evaluate",
+        "level": 3
+      },
+      {
+        "item_id": "i3",
+        "text": "Could you go through what the data actually show, with the numbers worked out (percentage changes, anything that doesn't fit the trend), and then evaluate the source - who wrote it, how the data were collected, what's missing?",
+        "kind": "question",
+        "required": true,
+        "command_term": "evaluate",
+        "level": 3
+      },
+      {
+        "item_id": "i4",
+        "text": "I think the Company's claim that the maintenance bill \"more than halved\" is wrong but I'm not sure how to prove it, and I don't know if their other two claims are right either.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "prove",
+        "level": 3
+      },
+      {
+        "item_id": "i5",
+        "text": "Also can you give me one real managed realignment scheme with actual figures (where, when, cost, area) that I could compare Port Harrow with, and be honest about how sure you are of those numbers.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "compare",
+        "level": 2
+      },
+      {
+        "item_id": "i6",
+        "text": "Please don't write the answers for me - I'll write them up myself - but tell me what a full-mark answer to (b) would have to include.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      }
+    ],
+    "constraints": [],
+    "supplied_texts": [
+      "source-a"
+    ],
+    "user_input_sha256": "1ccce0bed2a0b1c69d2b09bea11c05cb4705b12fe91de34eb04a7ff2864d743c"
+  },
+  "findings": []
+}

@@ -1,0 +1,40 @@
+{
+  "qid": "c1-mathematics-aa-q2",
+  "slug": "mathematics-aa",
+  "cycle": 1,
+  "kind": "analyse-supplied-material",
+  "course_level": "SL",
+  "request": "I'm in AA SL and this is the \"Exploring the model\" section of my IA draft (Source A below: my data table and my working). My topic is modelling how a cup of tea cools using Newton's law of cooling. My teacher only wrote \"check your k and your claims\" on it and I honestly don't know what she means, it all looked fine to me.\n\nCan you go through Source A line by line and:\n1. check my calculations (I used the t = 0 and t = 10 points to find k) and redo anything that's wrong with the actual numbers;\n2. tell me which of my claims I can't actually justify from the data, and why;\n3. say what I'd need to add to make the mathematics and the reflection stronger;\n4. give me a provisional idea of what the mathematics and communication would score, out of 20, if I handed it in as it is.\n\nPlease be specific with numbers rather than just saying \"be more rigorous\". I need to redo this section by Friday.",
+  "supplied_texts": [
+    {
+      "document_id": "source-a-ia-draft-cooling",
+      "title": "Source A: IA draft extract, section 4 \"Exploring the model\" (student's own draft)",
+      "text": "Section 4: Exploring the model\n\nI measured the temperature of a cup of tea every five minutes with a kitchen thermometer. The room temperature was 21 °C throughout.\n\nTable 1. Temperature of the tea\nt (minutes): 0, 5, 10, 15, 20, 30\nT (°C): 85, 71, 60, 51, 45, 35.5\n\nNewton's law of cooling, which Newton proved in the Principia in 1687, states that T(t) = T_room + A e^(−kt). Since the graph of T against t curves downwards, the data is clearly exponential. At t = 0, A = 85 − 21 = 64. To find k I used the points t = 0 and t = 10:\nk = −ln(60/85) ÷ 10 = 0.0348 ≈ 0.035\nSo my model is T(t) = 21 + 64e^(−0.035t).\n\nTesting the model: at t = 20 the model gives T = 52.8 °C, which is a percentage error of only 1.1% compared with the measured 45 °C, so the model is accurate. My calculator gave r² = 0.97, which proves that the data follows Newton's law of cooling. Using the model, the tea reaches a drinkable 40 °C when t = ln(19/64) ÷ (−0.035) = 34.7 minutes, so the half-life of the tea is 34.7 minutes.\n\nReflection: this exploration proves that Newton's law is correct, and the model can be used to predict the temperature of the tea at any time in the future."
+    }
+  ],
+  "strong_answer_must": [
+    "Spot the main error in k: the student divided raw temperatures (60/85) instead of excess temperatures above the room (39/64). Recompute k = −ln(39/64)/10 = 0.0495 (≈ 0.05), not 0.0348, and show that the two-point value using t = 0 and t = 30, −ln(14.5/64)/30 = 0.0495, agrees.",
+    "Recommend and ideally show the linearisation test: ln(T − 21) at t = 0, 5, 10, 15, 20, 30 is 4.159, 3.912, 3.664, 3.401, 3.178, 2.674, which is close to linear; a least-squares line gives gradient ≈ −0.0494 (k ≈ 0.049), intercept ≈ 4.157 (A ≈ 63.9) and r² ≈ 0.9998. Linearity of ln(T − T_room) against t is the evidence for an exponential model, not 'the graph curves downwards'.",
+    "Check the t = 20 test honestly: with the student's k = 0.035 the prediction 21 + 64e^(−0.7) = 52.8 °C is arithmetically correct, but the percentage error against the measured 45 °C is (52.8 − 45)/45 ≈ 17%, not 1.1%. With k = 0.0495 the prediction is 44.8 °C (error ≈ 0.5%).",
+    "Show the wrong k fails at the end of the data: at t = 30 the student's model predicts 21 + 64e^(−1.05) ≈ 43.4 °C against 35.5 °C measured (about 22% error), while k ≈ 0.0495 predicts 35.5 °C.",
+    "Correct the 40 °C prediction: t = −ln(19/64)/k gives ≈ 24.5 min with k = 0.0495 (≈ 24.3 min with k = 0.05); note that 34.7 min is consistent with the student's own wrong k, so the slip is in k, not in this step.",
+    "Correct the half-life claim: a half-life here is the time for the excess temperature T − 21 to halve, equal to ln 2 / k ≈ 14 min (k = 0.0495) or ≈ 13.9 min (k = 0.05); 34.7 min is a time to reach 40 °C, not a half-life, and 'half-life of the tea' is not a meaningful phrase.",
+    "Correct the attribution: Newton's law of cooling was not 'proved in the Principia in 1687'; it is an empirical relationship published in an anonymous 1701 paper in the Philosophical Transactions that is generally attributed to Newton. Tag this as recalled knowledge and hedge accordingly; do not invent a page or title the specialist cannot verify.",
+    "Challenge 'r² = 0.97 proves Newton's law': r² measures the fit of a particular regression, not the truth of a physical law; ask which regression the calculator performed (on raw T, or on ln(T − 21)?) and note that a linearised fit on the correct model gives r² ≈ 0.9998, which is also not a 'proof'.",
+    "Challenge 'the model proves Newton's law is correct' and 'predicts the temperature at any time in the future': a model is validated within its data range (0 to 30 min), the exponential tends to 21 °C and can never go below room temperature, and the reflection should state assumptions (constant room temperature, uniform temperature in the cup, thermometer resolution, no evaporation or stirring) and limitations.",
+    "Give concrete additions for the mathematics: the linearised regression with residuals, a comparison table of measured vs predicted temperatures for both k values, the derivation of T = T_room + A e^(−kt) from dT/dt = −k(T − T_room) (separable differential equation; derivation may be above SL, so hedge or state it as context), and a sensitivity check of the 40 °C prediction to k.",
+    "Give a provisional, hedged judgement of the current standard rather than a definite score: state that IA criteria and mark bands should be verified against the current IB subject guide and the teacher, that the arithmetic error in k and the unjustified claims would currently cost marks for use of mathematics and reflection, and keep the word 'provisional' in every sentence that awards or estimates a mark.",
+    "Include a single Sources line in which the supplied draft is tagged 'supplied text' and any recalled history is tagged 'recalled, not consulted'."
+  ],
+  "pitfalls": [
+    "Accepting k = 0.035 as correct, or 'correcting' it to another wrong value (e.g. ln(85/60)/10 = 0.0348, or using 39/64 but forgetting the minus sign).",
+    "Claiming the student's 52.8 °C is arithmetically wrong (it is right for k = 0.035; the wrong part is the 1.1% error claim), or recomputing the percentage error incorrectly.",
+    "Calling 34.7 minutes a half-life, or giving a half-life that is not ln 2 / k for the chosen k.",
+    "Fabricating IA criterion names, descriptors or exact mark bands as certain fact, or stating a definite score without the word 'provisional'.",
+    "Inventing a citation for Newton's law of cooling (e.g. a Principia proposition number, or a precise 1701 page or issue), or asserting the 1701 attribution as certain with no hedge.",
+    "Saying r² = 0.97 shows the model is valid, or the opposite error of dismissing r² as meaningless without explaining what it measures.",
+    "Altering the student's data values, or substituting the specialist's own invented data.",
+    "Missing the room-temperature subtraction error entirely and instead commenting only on presentation.",
+    "Leaving a logical leap in the answer itself, e.g. 'the linearised r² is 0.9998 so the law is proven'."
+  ]
+}

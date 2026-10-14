@@ -1,0 +1,9 @@
+hi, I'm doing AA HL. My teacher said today that d/dx (sin x) = cos x is only true when x is in radians and that if we work in degrees "the formula breaks". I don't really get how changing the unit can change a derivative, and the only explanation I got was "radians are natural", which isn't an explanation. Can you explain it properly with actual evidence?
+
+Specifically:
+(a) Show me numerically what happens to sin(h)/h as h gets small. Use h = 0.1, 0.01 and 0.001 in radians, then h = 1, 0.1 and 0.01 in degrees. What are the two limits and why are they different? [4 marks]
+(b) Using the first principles definition, estimate the gradient of y = sin x at x = π/3 with h = 0.01 and compare it with cos(π/3). Explain why there is a gap and how I could make it smaller. [4 marks]
+(c) Where does lim (h→0) sin h / h = 1 actually come from? My notes have a "sandwich/squeeze" argument with areas on the unit circle but I can't see where radians get used. Also, can I just use L'Hôpital's rule for this limit instead, since we've done it in HL? [4 marks]
+(d) What is d/dx sin(x°) actually equal to? And briefly, where did radians even come from, who introduced them and when, and why does the IB make us use them in calculus? [3 marks]
+
+Please give the actual numbers for each step and say where any historical claims come from. My teacher is strict about us saying where every fact comes from, so don't just make up a name and a date.

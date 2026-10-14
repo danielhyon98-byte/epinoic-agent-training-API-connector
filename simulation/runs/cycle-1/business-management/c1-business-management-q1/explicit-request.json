@@ -1,0 +1,67 @@
+{
+  "schema": "epinoic.z3-answer-check.v1",
+  "mode": "dispatch",
+  "slug": "business-management",
+  "subject": "Business Management",
+  "ok": true,
+  "status": "ACCEPTED",
+  "branch": "business_management",
+  "request": {
+    "task_type": "short_answer",
+    "course_level": "unknown",
+    "items": [
+      {
+        "item_id": "i1",
+        "text": "My teacher keeps saying Herzberg's two-factor theory is \"contested\" but our notes just give the hygiene-factors-vs-motivators list and move on.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "list",
+        "level": 1
+      },
+      {
+        "item_id": "i2",
+        "text": "Can you explain it properly: what the actual study was (who did it, when, roughly how many people, what method), what it found, and why he says satisfaction and dissatisfaction aren't opposites?",
+        "kind": "question",
+        "required": true,
+        "command_term": "explain",
+        "level": 2
+      },
+      {
+        "item_id": "i3",
+        "text": "Then the part I'm actually stuck on: is pay a motivator or not?",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i4",
+        "text": "Who is right, and what is the real evidence either way?",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i5",
+        "text": "Please also tell me which bits are genuinely disputed vs settled, and who says what, so I don't write something a marker crosses out.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i6",
+        "text": "It's for a 10-mark \"Discuss\" question on whether financial rewards are the best way to motivate crew in a fast-food chain, so finish with how I'd structure that answer (I only need the plan, not a full essay).",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "discuss",
+        "level": 3
+      }
+    ],
+    "constraints": [],
+    "supplied_texts": [],
+    "user_input_sha256": "3d8e8f6d95cf45d241d3a9e3171c8b3d476c99fa60fc051920e541443417799d"
+  },
+  "findings": []
+}

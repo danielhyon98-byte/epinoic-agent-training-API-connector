@@ -1,0 +1,11 @@
+Hi, SL chem. Document A below is a draft extract from my IA, the data analysis and evaluation part for the zinc + copper(II) sulfate enthalpy experiment. My teacher wrote "check your calculation and your reasoning about errors" on it and nothing else, which isn't very helpful. Can you:
+
+1. Go through my calculation line by line and tell me exactly where it's wrong (if it is) and redo it properly with working, including the percentage uncertainty and the percentage error done the right way. I used Ar(Zn) = 65.38 and c = 4.18 J g⁻¹ K⁻¹.
+
+2. Evaluate my evaluation paragraph: which statements are actually justified by my data and which aren't, and why. I especially want to know if my claim about the error being random is right.
+
+3. Give me provisional marks for the Data analysis and Evaluation criteria (6 marks each in the rubric we were given) with a sentence on what would move each one up.
+
+4. Where does the −217 kJ mol⁻¹ literature value even come from? I copied it from a classmate and I need to cite something real, or at least show how it can be worked out from data-booklet values.
+
+Don't rewrite the extract for me, I know that's not allowed, I just need to understand what's wrong.

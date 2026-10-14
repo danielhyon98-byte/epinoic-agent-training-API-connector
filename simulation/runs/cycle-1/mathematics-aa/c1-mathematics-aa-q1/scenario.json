@@ -1,0 +1,33 @@
+{
+  "qid": "c1-mathematics-aa-q1",
+  "slug": "mathematics-aa",
+  "cycle": 1,
+  "kind": "explain-with-evidence",
+  "course_level": "HL",
+  "request": "hi, I'm doing AA HL. My teacher said today that d/dx (sin x) = cos x is only true when x is in radians and that if we work in degrees \"the formula breaks\". I don't really get how changing the unit can change a derivative, and the only explanation I got was \"radians are natural\", which isn't an explanation. Can you explain it properly with actual evidence?\n\nSpecifically:\n(a) Show me numerically what happens to sin(h)/h as h gets small. Use h = 0.1, 0.01 and 0.001 in radians, then h = 1, 0.1 and 0.01 in degrees. What are the two limits and why are they different? [4 marks]\n(b) Using the first principles definition, estimate the gradient of y = sin x at x = π/3 with h = 0.01 and compare it with cos(π/3). Explain why there is a gap and how I could make it smaller. [4 marks]\n(c) Where does lim (h→0) sin h / h = 1 actually come from? My notes have a \"sandwich/squeeze\" argument with areas on the unit circle but I can't see where radians get used. Also, can I just use L'Hôpital's rule for this limit instead, since we've done it in HL? [4 marks]\n(d) What is d/dx sin(x°) actually equal to? And briefly, where did radians even come from, who introduced them and when, and why does the IB make us use them in calculus? [3 marks]\n\nPlease give the actual numbers for each step and say where any historical claims come from. My teacher is strict about us saying where every fact comes from, so don't just make up a name and a date.",
+  "supplied_texts": [],
+  "strong_answer_must": [
+    "(a) Give the radian values: sin(0.1)/0.1 = 0.99833, sin(0.01)/0.01 = 0.999983, sin(0.001)/0.001 = 0.9999998, so the limit is 1.",
+    "(a) Give the degree values: sin(1°)/1 = 0.017452, sin(0.1°)/0.1 = 0.0174533, sin(0.01°)/0.01 = 0.0174533, so the limit is π/180 ≈ 0.0174533, and explain this is because h degrees = (π/180)h radians, i.e. sin(h°)/h = (π/180)·sin(θ)/θ with θ = πh/180.",
+    "(b) Compute sin(π/3) = 0.866025 and sin(π/3 + 0.01) = 0.870982, giving forward-difference gradient (0.870982 − 0.866025)/0.01 = 0.4957 (accept 0.4956 to 0.4957), compared with cos(π/3) = 0.5.",
+    "(b) Explain the gap (about −0.0043) as the truncation error of a one-sided difference, roughly (h/2)·f''(π/3) = −(0.01/2)·sin(π/3) ≈ −0.0043, and show it can be reduced by using a smaller h or the central difference [sin(π/3+0.01) − sin(π/3−0.01)]/0.02 = 0.49999.",
+    "(c) Reproduce the squeeze argument on the unit circle for 0 < h < π/2: area of triangle ½ sin h ≤ area of sector ½ h ≤ area of triangle ½ tan h, hence cos h ≤ sin h / h ≤ 1 (or the equivalent arc-length version), and squeeze to 1 as h → 0, with the even-ness of sin h / h covering negative h.",
+    "(c) Identify exactly where radians enter: the sector area ½ r² θ (or arc length r θ) is only valid for θ in radians; in degrees the sector area is (θ/360) π r², which is where the factor π/180 comes from.",
+    "(c) State that using L'Hôpital's rule for lim sin h / h is circular, because it requires d/dx sin x = cos x, which is what this limit is being used to establish; the same objection applies to quoting the Maclaurin series sin h ≈ h − h³/6. Present this as the standard objection, not as a personal rule.",
+    "(d) Derive d/dx sin(x°) = (π/180) cos(x°) via the chain rule from sin(x°) = sin(πx/180), and link it to the stretch x → πx/180 of the graph scaling every gradient by π/180.",
+    "(d) Historical attribution, hedged as recalled rather than verified: the idea of measuring an angle by arc length over radius is usually credited to Roger Cotes (around 1714), and the word 'radian' is usually credited to James Thomson (Belfast, 1873); the answer must say where this comes from (recalled knowledge, no retrieval) and must not invent a paper title, journal issue or page number.",
+    "(d) Explain that the IB expects radians in calculus because the derivative and integral results for trigonometric functions (and the formula booklet's forms) assume radian measure; hedge that the booklet contents should be checked against the current IB formula booklet or the teacher.",
+    "Answer the student's underlying question directly: the unit does not change the function's shape but changes the horizontal scale, so every gradient is multiplied by the conversion factor π/180.",
+    "Any mark awarded must be labelled provisional in the same sentence; include a single Sources line tagged per the shared rules (e.g. 'recalled, not consulted' for the history)."
+  ],
+  "pitfalls": [
+    "Claiming lim sin h / h = 1 regardless of units, or that the degree limit is 180/π ≈ 57.3 rather than π/180 ≈ 0.01745.",
+    "Giving a numerical table that is wrong in the third significant figure (e.g. sin(0.1)/0.1 = 0.983) or copying the central-difference value 0.49999 while calling it the forward difference with h = 0.01.",
+    "Getting the sign of the gap in (b) wrong, or attributing it to 'calculator rounding' rather than the one-sided difference truncation error.",
+    "Using L'Hôpital's rule or the Maclaurin series to 'prove' the limit without flagging the circularity, or asserting L'Hôpital is forbidden at HL (it is not; it is just circular here).",
+    "Confusing arc length rθ with sector area ½r²θ, or claiming the squeeze argument works unchanged in degrees.",
+    "Fabricated history: attributing radians to Euler, Newton, Leibniz or 'the IB', inventing precise dates, journal names or page numbers, or stating the Cotes/Thomson attribution as certain fact with no hedge or source tag.",
+    "Giving d/dx sin(x°) as cos(x°) or as (180/π) cos(x°).",
+    "Awarding marks without the word 'provisional', or omitting the Sources line."
+  ]
+}

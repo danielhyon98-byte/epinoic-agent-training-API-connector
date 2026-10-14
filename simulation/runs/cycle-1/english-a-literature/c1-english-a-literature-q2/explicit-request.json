@@ -1,0 +1,86 @@
+{
+  "schema": "epinoic.z3-answer-check.v1",
+  "mode": "dispatch",
+  "slug": "english-a-literature",
+  "subject": "English A: Literature",
+  "ok": true,
+  "status": "ACCEPTED",
+  "branch": "english",
+  "request": {
+    "task_type": "short_answer",
+    "course_level": "unknown",
+    "items": [
+      {
+        "item_id": "i1",
+        "text": "My teacher gave us the poem (Source A below) and we each wrote a paragraph on how the poet presents grief.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i2",
+        "text": "It does count towards my class grade so please don't rewrite it, just tell me what is wrong with it, so can you:",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i3",
+        "text": "1. Check every in my paragraph against the poem and tell me exactly which ones are not word-for-word, and what the poem actually says.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i4",
+        "text": "2. Tell me whether my point that the poem is a sonnet is actually right, and whether my point about the radio is right. Show me using the actual lines.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i5",
+        "text": "3. Give me a provisional mark out of 5 on her scale and say which descriptor I am sitting in and why.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i6",
+        "text": "4. Give me the two most important things to fix, in order, and one thing I should keep.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i7",
+        "text": "5. My teacher says never to use the poet's life, but I thought the 1959 thing made my point stronger. Is it OK to keep that sentence?",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      }
+    ],
+    "constraints": [
+      {
+        "constraint_id": "c1",
+        "kind": "must_cite_supplied_text",
+        "value": null,
+        "text": "quotation"
+      }
+    ],
+    "supplied_texts": [
+      "src-a-poem",
+      "src-b-draft",
+      "src-c-scale"
+    ],
+    "user_input_sha256": "3967f3d6b1be5421fd87dc9a0b85028e1f69a4911b2f44b4031f8baa65eebe78"
+  },
+  "findings": []
+}

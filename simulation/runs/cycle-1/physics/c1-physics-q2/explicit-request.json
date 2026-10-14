@@ -1,0 +1,62 @@
+{
+  "schema": "epinoic.z3-answer-check.v1",
+  "mode": "dispatch",
+  "slug": "physics",
+  "subject": "Physics",
+  "ok": true,
+  "status": "ACCEPTED",
+  "branch": "sciences",
+  "request": {
+    "task_type": "short_answer",
+    "course_level": "unknown",
+    "items": [
+      {
+        "item_id": "i1",
+        "text": "My teacher gave it back with \"intercept??\", \"is reaction time really the cause?\", \"uncertainty in k far too small\" and \"what does the static check actually tell you\" written in the margin and I honestly don't get what she wants.",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i2",
+        "text": "Can you go through it properly: redo the numbers yourself (T and T squared for each mass, the gradient, k, the intercept, and a realistic uncertainty in k with working), then tell me specifically which of my sentences are wrong and why.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i3",
+        "text": "If the intercept is not reaction time then what is it physically, and can I actually use it for something?",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i4",
+        "text": "Also she said this section is marked on Data analysis and Conclusion (6 marks each) so roughly where would mine sit at the moment?",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i5",
+        "text": "Please don't just say \"add more detail\", I need to know what is actually wrong.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      }
+    ],
+    "constraints": [],
+    "supplied_texts": [
+      "table-1",
+      "draft-analysis"
+    ],
+    "user_input_sha256": "da0a0c100185b598281f4361ef8868a0fe6ae903acc8f0216668c8ebfdfff4e7"
+  },
+  "findings": []
+}

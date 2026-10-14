@@ -1,0 +1,9 @@
+I'm in AA SL and this is the "Exploring the model" section of my IA draft (Source A below: my data table and my working). My topic is modelling how a cup of tea cools using Newton's law of cooling. My teacher only wrote "check your k and your claims" on it and I honestly don't know what she means, it all looked fine to me.
+
+Can you go through Source A line by line and:
+1. check my calculations (I used the t = 0 and t = 10 points to find k) and redo anything that's wrong with the actual numbers;
+2. tell me which of my claims I can't actually justify from the data, and why;
+3. say what I'd need to add to make the mathematics and the reflection stronger;
+4. give me a provisional idea of what the mathematics and communication would score, out of 20, if I handed it in as it is.
+
+Please be specific with numbers rather than just saying "be more rigorous". I need to redo this section by Friday.

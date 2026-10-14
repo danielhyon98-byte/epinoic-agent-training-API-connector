@@ -1,0 +1,41 @@
+{
+  "qid": "c1-english-a-lang-lit-q2",
+  "slug": "english-a-lang-lit",
+  "cycle": 1,
+  "kind": "analyse-supplied-material",
+  "course_level": "SL",
+  "request": "My teacher gave us a text for unseen practice (Source A below, it's the sustainability page from a clothing brand's website, text only, she said ignore the pictures) and I've written my first body paragraph (Source B below). The guiding question was: \"How does the text use language to build trust in the brand?\" She marks practice paragraphs out of 10: 5 marks for understanding of the text and 5 marks for analysis of language choices. Can you tell me honestly whether my paragraph is actual analysis or just description, point out anything I've got factually wrong about what the text says (she's strict about misquoting), tell me the most important thing I've missed, and give me a provisional mark out of 10 with reasons? Please don't rewrite the paragraph, I'm going to redo it myself. I'm SL btw. [10 marks]\n",
+  "supplied_texts": [
+    {
+      "document_id": "source-a",
+      "title": "Source A: 'Our Planet Promise' web page text, Harrowgate Mills (invented clothing brand)",
+      "text": "OUR PLANET PROMISE\n\nWe've always believed that great clothes shouldn't cost the earth. That's why, since 2019, every Harrowgate Mills jacket has been made with up to 40% less water*, and why we're aiming for a 50% reduction in packaging emissions by 2030.\n\nWe know we're not perfect. Nobody is. But we're learning, and we're listening: to you, and to the planet.\n\nLast year, 2.3 million garments found a second life through our Re-Wear scheme. That's 2.3 million reasons to keep going.\n\nProgress is made one choice at a time. Yours matters.\n\nJoin the journey. #WearItWell\n\n*Compared with the 2018 Harrowgate Mills standard jacket. Figures independently verified; see our Impact Report for details."
+    },
+    {
+      "document_id": "source-b",
+      "title": "Source B: the student's own draft body paragraph",
+      "text": "The web page uses lots of persuasive techniques to make the reader trust the brand. Firstly, the use of statistics such as 'up to 40% less water' and '2.3 million garments' makes it sound very scientific and grabs the reader's attention. Secondly, the brand uses anaphora with 'we' at the start of every sentence, which makes the reader feel included. The writer also admits that they have cut their emissions by 50%, which shows they are honest and so the reader will believe them. The short sentences like 'Nobody is.' create a sense of urgency. Finally, the hashtag at the end shows the advert is aimed at teenagers who use social media, which is effective because it persuades them to buy the clothes."
+    }
+  ],
+  "strong_answer_must": [
+    "Lead with a short verdict: the paragraph is mostly description and feature-spotting with generic effects, with a couple of factual misreadings of Source A.",
+    "Catch the factual error about emissions: Source A says 'we're aiming for a 50% reduction in packaging emissions by 2030', a future target limited to packaging; the draft's 'admits that they have cut their emissions by 50%' is wrong in tense, scope and modality, and the hedged verb 'aiming' is itself worth analysing as a trust device that commits to nothing.",
+    "Catch the false feature claim: Source A does not use 'anaphora with \"we\" at the start of every sentence'. Sentences such as 'Nobody is.', 'Last year, 2.3 million garments...', 'Progress is made one choice at a time.', 'Yours matters.' and 'Join the journey.' do not begin with 'we'. The real pattern is the repeated inclusive 'we' plus direct address ('to you', 'Yours matters'), which should be named accurately.",
+    "Identify the most important omission: the asterisk and small print. 'up to 40% less water*' is a ceiling, not a figure, and the note '*Compared with the 2018 Harrowgate Mills standard jacket' makes the comparison against the brand's own earlier product; 'Figures independently verified' names no verifier. The draft treats the numbers as 'scientific' instead of analysing how qualifications are moved to where readers look last.",
+    "Analyse at least two further choices with exact quotation: the agentless passive 'Progress is made one choice at a time.' and 'Yours matters.' shift responsibility to the consumer; the imperative 'Join the journey.' and the hashtag '#WearItWell' invite participation; the confessional 'We know we're not perfect. Nobody is.' pre-empts criticism (a concession that builds trust by sounding humble); '2.3 million reasons to keep going' turns a count of garments into a count of justifications; 'found a second life' personifies garments and avoids naming the process.",
+    "Challenge the draft's 'sense of urgency' for 'Nobody is.' as a doubtful effect (the fragment creates an intimate, humble register, not urgency) and the leap from a hashtag to 'aimed at teenagers'; note that the text is a brand sustainability page whose purpose includes reputation and trust, not only selling jackets, and that the draft calls it an 'advert'.",
+    "Comment on organisation: 'Firstly, ... Secondly, ... Finally' lists devices; advise grouping by trust strategies that answer the guiding question (for example quantified-but-qualified claims, humility, shared responsibility) without supplying rewritten sentences.",
+    "Quote the student's own words exactly when praising or flagging (for example 'makes it sound very scientific and grabs the reader's attention' as a generic effect to replace), and quote Source A exactly, including 'up to' and the asterisk.",
+    "Give a provisional mark on the student's own scale (understanding out of 5, analysis out of 5, total out of 10), with the word 'provisional' in the same sentence as each mark or sub-mark, reasons tied to the issues above, and an explicit note that this is not an official IB mark; a defensible range is roughly 2/5 understanding and 2/5 analysis, so about 4/10, though 3 to 5 overall with reasons is acceptable.",
+    "Give one next step (for example, re-plan the paragraph around the guiding question starting from the small print) and do not rewrite the paragraph; end with one tagged Sources line citing Source A and Source B as 'supplied text', and no URLs."
+  ],
+  "pitfalls": [
+    "Misquoting the supplied texts: '40% less water' without 'up to', '50% less emissions', 'we aim to', or inventing text that is not there (images, colours, a logo, a price, a product name other than the jacket, a 'buy now' button).",
+    "Missing or endorsing the draft's errors: accepting that the brand 'has cut' emissions by 50%, accepting the anaphora claim, or agreeing that 'Nobody is.' creates urgency without question.",
+    "Ignoring the asterisk and footnote entirely, or asserting as fact that the brand's figures are false or that the page is 'greenwashing'; the specialist cannot verify the figures and should analyse how they are presented, not rule on their truth.",
+    "Marking failures: a mark or sub-mark without 'provisional' in the same sentence, inventing official IB Paper 1 criteria or descriptors, giving a mark out of 20 instead of the student's 10, or praising without quoting the student's words.",
+    "Rewriting the paragraph or handing back model sentences the student can paste, despite the request not to.",
+    "Generic feedback ('add more analysis', 'good use of quotations') with no quoted evidence from either source; or claiming the audience is teenagers because of the hashtag.",
+    "Format failures: a missing or untagged Sources line (the texts must be tagged 'supplied text'), a URL, or revealing any internal code."
+  ]
+}

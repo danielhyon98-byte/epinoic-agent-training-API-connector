@@ -1,0 +1,51 @@
+{
+  "schema": "epinoic.z3-answer-check.v1",
+  "mode": "dispatch",
+  "slug": "history",
+  "subject": "History",
+  "ok": true,
+  "status": "ACCEPTED",
+  "branch": "history",
+  "request": {
+    "task_type": "short_answer",
+    "course_level": "unknown",
+    "items": [
+      {
+        "item_id": "i1",
+        "text": "Can you explain what actually caused the famine during the Great Leap Forward (1958-62) and how bad it was, but with proper specifics I can use: dates, grain output figures, the actual policies (communes, backyard furnaces, the farming methods etc), named events like the conference where Mao's critic got purged, and the 1962 meeting where someone said it was mostly man-made (who said it?).",
+        "kind": "question",
+        "required": true,
+        "command_term": "explain",
+        "level": 2
+      },
+      {
+        "item_id": "i2",
+        "text": "Most importantly I need the different death toll estimates and WHO gives each one, because I want to write \"according to X\" instead of just \"millions\".",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i3",
+        "text": "Also where do historians actually disagree about whose fault it was - Mao personally, the system, local cadres, the weather?",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i4",
+        "text": "Please flag anything that's contested rather than giving me one number as if it's settled.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      }
+    ],
+    "constraints": [],
+    "supplied_texts": [],
+    "user_input_sha256": "021d0c937ab1b313fd99c1f394e405321bd3b546ad2031d698534f00fe9addec"
+  },
+  "findings": []
+}

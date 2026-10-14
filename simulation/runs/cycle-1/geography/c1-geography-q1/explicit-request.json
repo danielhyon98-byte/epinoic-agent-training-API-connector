@@ -1,0 +1,59 @@
+{
+  "schema": "epinoic.z3-answer-check.v1",
+  "mode": "dispatch",
+  "slug": "geography",
+  "subject": "Geography",
+  "ok": true,
+  "status": "ACCEPTED",
+  "branch": "generic",
+  "request": {
+    "task_type": "short_answer",
+    "course_level": "unknown",
+    "items": [
+      {
+        "item_id": "i1",
+        "text": "The question is:\n\n\"Explain why the Haiti earthquake of January 2010 caused far more deaths than the Chile earthquake of February 2010, even though the Chile earthquake was much larger.\" [12 marks]\n\nLast time I wrote \"over 300,000 people died in Haiti\" and my teacher wrote \"says who? this figure is disputed\" in the margin, so this time I want to actually say where the numbers come from and which ones are contested.",
+        "kind": "question",
+        "required": true,
+        "command_term": "explain",
+        "level": 2
+      },
+      {
+        "item_id": "i2",
+        "text": "Can you explain the main physical reasons (magnitude, depth, how far the epicentre was from cities, what type of plate boundary/fault) and the main human reasons (wealth, building codes, governance, preparedness) with specific evidence - dates, figures, named places - and tell me which claims are contested and by whom?",
+        "kind": "question",
+        "required": true,
+        "command_term": "explain",
+        "level": 2
+      },
+      {
+        "item_id": "i3",
+        "text": "Four or five developed points would be ideal for 12 marks, and please say how sure you are about each figure.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i4",
+        "text": "One more thing: how many times more energy did the M8.8 release than the M7.0?",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i5",
+        "text": "Can you show the working?",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      }
+    ],
+    "constraints": [],
+    "supplied_texts": [],
+    "user_input_sha256": "5d11d13b89269c87d3d4a87d9c0146c57aa3a0be9fe7a9548766f9830ec53d6e"
+  },
+  "findings": []
+}

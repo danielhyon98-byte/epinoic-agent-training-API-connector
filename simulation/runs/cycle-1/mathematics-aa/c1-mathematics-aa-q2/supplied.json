@@ -1,0 +1,7 @@
+[
+  {
+    "document_id": "source-a-ia-draft-cooling",
+    "title": "Source A: IA draft extract, section 4 \"Exploring the model\" (student's own draft)",
+    "text": "Section 4: Exploring the model\n\nI measured the temperature of a cup of tea every five minutes with a kitchen thermometer. The room temperature was 21 °C throughout.\n\nTable 1. Temperature of the tea\nt (minutes): 0, 5, 10, 15, 20, 30\nT (°C): 85, 71, 60, 51, 45, 35.5\n\nNewton's law of cooling, which Newton proved in the Principia in 1687, states that T(t) = T_room + A e^(−kt). Since the graph of T against t curves downwards, the data is clearly exponential. At t = 0, A = 85 − 21 = 64. To find k I used the points t = 0 and t = 10:\nk = −ln(60/85) ÷ 10 = 0.0348 ≈ 0.035\nSo my model is T(t) = 21 + 64e^(−0.035t).\n\nTesting the model: at t = 20 the model gives T = 52.8 °C, which is a percentage error of only 1.1% compared with the measured 45 °C, so the model is accurate. My calculator gave r² = 0.97, which proves that the data follows Newton's law of cooling. Using the model, the tea reaches a drinkable 40 °C when t = ln(19/64) ÷ (−0.035) = 34.7 minutes, so the half-life of the tea is 34.7 minutes.\n\nReflection: this exploration proves that Newton's law is correct, and the model can be used to predict the temperature of the tea at any time in the future."
+  }
+]

@@ -1,0 +1,12 @@
+[
+  {
+    "document_id": "table-1",
+    "title": "Table 1: raw data, period of a mass on a spring",
+    "text": "Apparatus notes. Spring: steel extension spring, unstretched length 7.2 cm, mass of spring 31 g (weighed on a digital balance, +/-1 g). Masses: slotted masses labelled 100 g each, not weighed. Amplitude: pulled down about 2 cm and released. Timing: digital stopwatch, resolution 0.01 s. 20 oscillations timed, 3 trials for each mass.\n\nmass m / kg | 20T trial 1 / s | 20T trial 2 / s | 20T trial 3 / s\n0.100 | 8.41 | 8.28 | 8.35\n0.200 | 11.47 | 11.59 | 11.50\n0.300 | 14.06 | 13.91 | 14.00\n0.400 | 16.03 | 16.18 | 16.07\n0.500 | 17.88 | 18.01 | 17.96\n0.600 | 19.70 | 19.57 | 19.62\n\nStatic check: with 0.300 kg hanging at rest, the extension from the unstretched length was 0.118 m (+/-0.002 m, metre rule)."
+  },
+  {
+    "document_id": "draft-analysis",
+    "title": "Draft: Analysis and conclusion section (student's own words)",
+    "text": "Analysis. I averaged the three times for each mass, divided by 20 to get T and squared it. The theory is T = 2 pi sqrt(m/k), so T^2 = (4 pi^2 / k) m, so T^2 against m should be a straight line through the origin with gradient 4 pi^2 / k. Excel gave gradient 1.58 s^2 kg^-1, intercept 0.016 s^2 and R^2 = 0.9999. The intercept should be zero in theory, so it is probably just my reaction time, and I have ignored it. Therefore k = 4 pi^2 / 1.58 = 25.0 N m^-1. The stopwatch reads to 0.01 s, so the uncertainty in each 20T is +/-0.01 s, which makes T uncertain by +/-0.0005 s and k uncertain by about +/-0.03 N m^-1. The static check gave k = (0.300 x 9.81) / 0.118 = 24.9 N m^-1, which is different from 25.0 N m^-1, so one of the two methods must be wrong.\n\nConclusion. The graph was a straight line with R^2 = 0.9999, which proves that the spring obeys Hooke's law for all masses and that there were no systematic errors in the experiment. My final value is k = 25.0 +/- 0.03 N m^-1. The biggest source of error was reaction time, which is a systematic error because it happened every time I pressed the stopwatch. To improve the experiment I would use a stiffer spring so that the oscillations are slower and easier to time, and a lighter spring so that the intercept disappears."
+  }
+]

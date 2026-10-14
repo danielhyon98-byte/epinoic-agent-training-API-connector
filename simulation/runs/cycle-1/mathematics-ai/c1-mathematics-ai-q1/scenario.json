@@ -1,0 +1,32 @@
+{
+  "qid": "c1-mathematics-ai-q1",
+  "slug": "mathematics-ai",
+  "cycle": 1,
+  "kind": "explain-with-evidence",
+  "course_level": "SL",
+  "request": "Hi, I'm in Maths AI SL and I'm confused about Pearson's r vs Spearman's rank correlation. My teacher said \"use Spearman when the data isn't linear\", but a friend in my class said Spearman's was \"invented by a psychologist in the 1900s so it's not proper maths and examiners prefer Pearson\". Can you explain properly what each coefficient actually measures and where they came from (who introduced them and roughly when), and say which of those two claims is right?\n\nThen show me on this practice set our teacher gave us: six students recorded hours revised (x) and their test score (y): (2, 44), (3, 52), (5, 48), (6, 60), (8, 66), (12, 72). Calculate both r and r_s by hand with the working shown (we aren't allowed the GDC for this homework), explain why they come out different for the same data, and tell me which word I should use to describe the strength. Our textbook says anything above 0.7 is \"strong\" but my teacher said \"it depends\" - is 0.7 an actual IB rule or just a guideline, and where does it come from? [8 marks]",
+  "supplied_texts": [],
+  "strong_answer_must": [
+    "Define Pearson's product-moment r as a measure of the strength and direction of a LINEAR relationship between two quantitative variables (range -1 to 1), computed from the deviations/covariance and standard deviations, and sensitive to outliers.",
+    "Define Spearman's r_s as Pearson's r applied to the RANKS of the data, so it measures the strength of a MONOTONIC (not any non-linear) relationship; it suits ordinal data and non-linear but monotonic patterns and is less affected by outliers; give the formula r_s = 1 - 6*sum(d^2)/(n(n^2-1)) and note it assumes no tied ranks (with ties, average the ranks and ideally compute Pearson on the ranks).",
+    "Attribute the history with hedged, recalled attribution rather than invented citations: Karl Pearson developed the product-moment coefficient in the mid-1890s (around 1895-96), building on Francis Galton's work on correlation in the late 1880s; Charles Spearman, a psychologist, published the rank correlation in 1904 (paper on the measurement of association between two things, in the American Journal of Psychology). Any date must be stated as recalled, with an invitation to verify.",
+    "Evaluate the two claims: the teacher's 'use Spearman when the data isn't linear' is roughly right but needs the qualifier 'monotonic'; the friend's claim is wrong on two counts: a method's origin in psychology does not affect its mathematical validity (it is Pearson's formula on ranks), and there is no basis for saying examiners 'prefer' Pearson; the choice depends on the data type and the scatter diagram. Any statement about which coefficients are in the AI SL syllabus must be hedged and referred to the teacher/current guide.",
+    "Pearson working shown line by line: n = 6, mean x = 36/6 = 6, mean y = 342/6 = 57; deviations x: -4, -3, -1, 0, 2, 6 and y: -13, -5, -9, 3, 9, 15; Sxy = 52 + 15 + 9 + 0 + 18 + 90 = 184; Sxx = 16 + 9 + 1 + 0 + 4 + 36 = 66; Syy = 169 + 25 + 81 + 9 + 81 + 225 = 590; r = 184 / sqrt(66 x 590) = 184 / sqrt(38940) = 184 / 197.3 = 0.932 (3 s.f.). Equivalent raw-sum route: sum x = 36, sum y = 342, sum xy = 2236, sum x^2 = 282, sum y^2 = 20084.",
+    "Spearman working shown: ranks of x are 1, 2, 3, 4, 5, 6; ranks of y are 1, 3, 2, 4, 5, 6 (because 52 > 48); d = 0, -1, 1, 0, 0, 0; sum d^2 = 2; r_s = 1 - (6 x 2)/(6 x 35) = 1 - 12/210 = 0.943 (3 s.f.).",
+    "Explain the difference with evidence from the data: r_s is higher because the ranks are almost perfectly monotonic (only one swap, the 52 and 48 scores), whereas r is lowered because the points are not on a straight line (gains flatten: 8 to 12 hours adds only 6 marks while 2 to 3 hours adds 8), so r measures departure from linearity and r_s measures departure from monotonic order.",
+    "State that 0.7 is a textbook/teaching convention for a verbal descriptor, not a rule in the IB guide that the specialist can cite; different textbooks use different bands; a descriptor should accompany the value, the sign and the scatter diagram, and 'it depends' is fair because with n = 6 any descriptor is tentative and the coefficient is sensitive to a single point. Both values here would conventionally be called strong positive.",
+    "Interpret in context (more hours revised is associated with higher scores among these six students) and warn that correlation is not causation and that six data points are a very small sample; advise confirming the hand values on a GDC when allowed.",
+    "If marks are awarded for the student's eventual answer they must be provisional and labelled so in the same sentence; end with one tagged Sources line (e.g. recalled, not consulted / course notes) and no URLs."
+  ],
+  "pitfalls": [
+    "Arithmetic slips in Sxy, Sxx or Syy (correct values 184, 66, 590), or early rounding that gives r = 0.93 or 0.94 instead of 0.932; mixing n and n-1 inconsistently.",
+    "Ranking error: claiming r_s = 1 by not noticing that y = 52 at x = 3 is above y = 48 at x = 5, or miscounting n(n^2 - 1) = 210.",
+    "Fabricated history: a wrong journal, a false precise date, an invented title, or presenting Pearson's 1890s work as a single dated paper without hedging; inventing a named study or textbook as the origin of the 0.7 threshold.",
+    "Claiming the IB guide or markscheme defines 'strong' as r > 0.7, or stating syllabus placement (SL vs HL) of Spearman/Pearson as certain fact without hedging.",
+    "Saying Spearman detects any non-linear relationship (it only handles monotonic ones), or that Pearson's r cannot be computed unless the data are normally distributed (confusing calculation with inference).",
+    "Agreeing with or failing to rebut the 'not proper maths / examiners prefer Pearson' claim, or rebutting it with assertion rather than reasoning.",
+    "Interpreting r^2 = 0.869 as '87% of the score is caused by revision' or otherwise implying causation.",
+    "No interpretation in context, no comment on the tiny sample, or awarding marks without the word 'provisional' in the same sentence.",
+    "Padding with a regression line the student did not ask for while omitting the requested explanation of why r and r_s differ."
+  ]
+}

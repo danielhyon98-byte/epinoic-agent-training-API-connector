@@ -1,0 +1,54 @@
+{
+  "schema": "epinoic.z3-answer-check.v1",
+  "mode": "dispatch",
+  "slug": "business-management",
+  "subject": "Business Management",
+  "ok": true,
+  "status": "ACCEPTED",
+  "branch": "business_management",
+  "request": {
+    "task_type": "short_answer",
+    "course_level": "unknown",
+    "items": [
+      {
+        "item_id": "i1",
+        "text": "(a) Calculate the payback period, average rate of return (ARR) and net present value (NPV) for both options. [8 marks]",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "calculate",
+        "level": 2
+      },
+      {
+        "item_id": "i2",
+        "text": "(b) Using your results from (a) and the information in Source A, recommend which option Marrowbank Bakery should choose. [10 marks]",
+        "kind": "instruction",
+        "required": true,
+        "command_term": "recommend",
+        "level": 3
+      },
+      {
+        "item_id": "i3",
+        "text": "Can you check every number in my draft and show the correct working step by step where I've gone wrong (I think my ARR might be too high but I'm not sure why), then give me honest provisional feedback on part (b): what's actually wrong with my reasoning, what I'm missing from Source A, and roughly how far off a top answer it is.",
+        "kind": "instruction",
+        "required": true,
+        "command_term": null,
+        "level": null
+      },
+      {
+        "item_id": "i4",
+        "text": "Also, is NPV really \"the most reliable method\" like I wrote, or is that something I'd get picked up on?",
+        "kind": "question",
+        "required": true,
+        "command_term": null,
+        "level": null
+      }
+    ],
+    "constraints": [],
+    "supplied_texts": [
+      "src-a",
+      "src-b"
+    ],
+    "user_input_sha256": "4519a57e952ee824cc7c6e85a6a283b3c51a667dc115f5cdc90f9070e310c3b2"
+  },
+  "findings": []
+}
