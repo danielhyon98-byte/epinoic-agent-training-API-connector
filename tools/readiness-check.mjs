@@ -57,7 +57,7 @@ const z3Installed = Boolean(py && existsSync(py));
 add("z3", "Translator installed and importable", z3Installed, z3Installed ? `EPINOIC_Z3_PYTHON = ${py}` : "set EPINOIC_Z3_PYTHON to a venv with the translator installed");
 if (z3Installed) {
   const probe = (answer) => {
-    const r = spawnSync(py, ["-I", new URL("../integration/z3/check_answer.py", import.meta.url).pathname], {
+    const r = spawnSync(py, ["-I", "-B", new URL("../integration/z3/check_answer.py", import.meta.url).pathname], {
       input: JSON.stringify({ slug: "physics", request: "A trolley accelerates uniformly from rest to 20 m s^-1 in 4.0 s. Calculate its acceleration.", answer }),
       encoding: "utf8", timeout: 60000,
     });

@@ -21,7 +21,7 @@ if (py && existsSync(py)) {
     answer: "-",
     supplied_texts: opt.supplied ? JSON.parse(readFileSync(opt.supplied, "utf8")) : [],
   });
-  const r = spawnSync(py, ["-I", new URL("../../integration/z3/check_answer.py", import.meta.url).pathname, "--mode", "dispatch"], {
+  const r = spawnSync(py, ["-I", "-B", new URL("../../integration/z3/check_answer.py", import.meta.url).pathname, "--mode", "dispatch"], {
     input, encoding: "utf8", timeout: 60000,
   });
   try { result = JSON.parse(r.stdout); } catch { result = { ok: false, status: "ERROR", reason: `no JSON (exit ${r.status})` }; }

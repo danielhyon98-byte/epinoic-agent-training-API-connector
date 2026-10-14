@@ -65,7 +65,7 @@ let z3 = { status: "not_run", reason: "EPINOIC_Z3_PYTHON not set or missing" };
 const py = process.env.EPINOIC_Z3_PYTHON;
 if (py && existsSync(py)) {
   const input = JSON.stringify({ slug: opt.slug, request, answer, supplied_texts: supplied });
-  const r = spawnSync(py, ["-I", new URL("../../integration/z3/check_answer.py", import.meta.url).pathname], {
+  const r = spawnSync(py, ["-I", "-B", new URL("../../integration/z3/check_answer.py", import.meta.url).pathname], {
     input, encoding: "utf8", timeout: 120000, maxBuffer: 16 * 1024 * 1024,
   });
   try {
