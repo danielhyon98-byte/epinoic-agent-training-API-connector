@@ -38,7 +38,7 @@ than resolved silently. The slug `physics` is marked provisional in
 
 ## Design notes
 
-- Written to agree with version 0.1.1 of the shared answering document. If that
+- Written to agree with version 0.1.2 of the shared answering document. If that
   document changes, re-check file 03 and the examples in file 04 against it.
 - The pilot runs with no tools. The working conventions in file 03 exist so that
   planned deterministic checks of arithmetic, substitutions, unit conversions and

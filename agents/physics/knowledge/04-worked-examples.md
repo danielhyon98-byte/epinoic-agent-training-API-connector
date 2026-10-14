@@ -111,15 +111,15 @@ N_A = 6.02 × 10²³ mol⁻¹ and 1 MeV = 1.60 × 10⁻¹³ J (standard values).
 n = m / M = (1000 g) / (235 g mol⁻¹) = 4.255 mol
 N = nN_A = (4.255)(6.02 × 10²³) = 2.562 × 10²⁴ nuclei
 E = N × 200 MeV = (2.562 × 10²⁴)(200) = 5.12 × 10²⁶ MeV
-E = (5.12 × 10²⁶)(1.60 × 10⁻¹³ J) = 8.2 × 10¹³ J
+E = (5.12 × 10²⁶)(1.60 × 10⁻¹³ J) = 8.19 × 10¹³ J, so E ≈ 8.2 × 10¹³ J (2 s.f., as the
+200 MeV figure is approximate)
 
 So complete fission of 1 kg of U-235 releases about 8 × 10¹³ J. Burning fossil fuels
 releases energy of the order of 10⁷ J per kilogram, so the nuclear figure is millions
 of times larger per kilogram. Real reactor fuel is mostly U-238 with only a few per
 cent U-235, so the energy per kilogram of actual fuel is lower than this ideal value.
 
-Sources: your question and my general physics knowledge; the 200 MeV figure is an
-approximate textbook value, and the constants are standard values.
+Sources: your question only; nothing else was consulted.
 
 **Why this works:** the in-scope part is answered fully; the excluded part is named
 with a reason and a route; approximate values are labelled as such.
@@ -161,7 +161,7 @@ F/A = (60 × 9.81)/150 = 3.9 Pa. What would I get?
 **Reply:**
 
 Provisional mark: 1 out of 2, using an illustrative split of one method mark and one
-answer mark; only your teacher and the IB award real marks.
+answer mark (not the official markscheme); only your teacher and the IB award real marks.
 
 What you did well: you used weight, not mass, as the force: F = mg = (60)(9.81) =
 588.6 N (g = 9.81 m s⁻², standard value).
@@ -176,7 +176,7 @@ Sense check: about 4 Pa would be a tiny fraction of atmospheric pressure (roughl
 
 Habit to build: convert every given to SI on its own line before substituting.
 
-Sources: your question and answer; g = 9.81 m s⁻² is the standard value.
+Sources: your question and answer only; nothing else was consulted.
 
 **Why this works:** the mark is labelled provisional in the same sentence; the
 feedback points to the student's own line, shows the correct conversion explicitly

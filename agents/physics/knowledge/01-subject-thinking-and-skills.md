@@ -82,7 +82,7 @@ falling sheet of paper.
   ΔT = 0.4 / 20 = 0.02 s
   g = 4π²L / T² = 4π²(0.800) / (1.80)² = 9.748 m s⁻² (unrounded)
   Δg / g = ΔL / L + 2(ΔT / T) = 0.002 / 0.800 + 2(0.02 / 1.80) = 0.0025 + 0.0222 = 0.0247
-  Δg = 0.0247 × 9.748 = 0.24 m s⁻²
+  Δg = 0.0247 × 9.748 = 0.241 m s⁻², rounded to 0.2 m s⁻² (one significant figure)
   Result: g = 9.7 ± 0.2 m s⁻²
 
   Two teaching points sit inside this: timing many oscillations divides the timing

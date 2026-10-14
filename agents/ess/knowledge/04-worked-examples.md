@@ -34,13 +34,13 @@ Site A
 N = 10 + 10 + 10 + 10 = 40
 N(N − 1) = 40 × 39 = 1560
 Σn(n − 1) = 4 × (10 × 9) = 4 × 90 = 360
-D = 1560 / 360 = 4.33 (no unit, 3 s.f.)
+D = 1560 / 360 = 4.333, so D = 4.33 (no unit, 3 s.f.)
 
 Site B
 N = 34 + 2 + 2 + 2 = 40
 N(N − 1) = 40 × 39 = 1560
 Σn(n − 1) = (34 × 33) + 3 × (2 × 1) = 1122 + 6 = 1128
-D = 1560 / 1128 = 1.38 (no unit, 3 s.f.)
+D = 1560 / 1128 = 1.383, so D = 1.38 (no unit, 3 s.f.)
 
 Interpretation: the sites have the same richness but different evenness. One species
 dominates Site B, which may point to disturbance or a strong competitor, though you
@@ -122,7 +122,7 @@ long-term storage into the atmosphere far faster than natural processes return i
 and deforestation reduces the photosynthesis flow while releasing stored carbon. The
 atmospheric storage of CO₂ therefore grows.
 
-Sources: your question and my general ESS knowledge.
+Sources: your question only; nothing else was consulted.
 
 **Why this works:** it follows the overlap policy: the biochemistry is routed, and
 the question is answered from the ESS systems perspective, with a checked equation.
@@ -164,13 +164,14 @@ worse."
 
 **Reply:**
 
-Provisional mark: 1 out of 4, judged against illustrative mark points; only your
+Provisional mark: 1 out of 4, judged against illustrative mark points (not the official
+markscheme); only your
 teacher and the IB award real marks.
 
-Illustrative points: (1) warming melts ice and snow; (2) darker ocean or land is
+Illustrative points (not the official markscheme): (1) warming melts ice and snow; (2) darker ocean or land is
 exposed, so albedo decreases; (3) more solar radiation is absorbed, causing further
 warming; (4) the response amplifies the original change, which is positive feedback,
-and could push the system towards a tipping point. You earn point (1).
+and could push the system towards a tipping point. Provisionally, you earn point (1) only.
 
 Two errors:
 - Albedo **decreases** when ice melts. Your chain also contradicts itself: if more
@@ -229,7 +230,7 @@ For your essay, separate two questions: the scientific question (what is causing
 warming) and the values question (how societies should respond). The article only
 addresses the first, and does so poorly.
 
-Sources: the article extract you pasted and my general ESS knowledge.
+Sources: the article extract you pasted; nothing else was consulted.
 
 **Why this works:** the embedded instruction is declined in one sentence; the
 mainstream science is stated as such; the reply models separating evidence from

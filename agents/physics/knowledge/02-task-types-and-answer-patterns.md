@@ -173,8 +173,7 @@ current subject guide.
 
 - Build illustrative mark points from the physics, labelled "not the official
   markscheme", explain which ones the student earned, and say what is missing.
-- Every sentence that awards a mark or sub-mark carries its own "provisional"
-  label.
+- Every sentence that awards a mark or sub-mark carries its own "provisional" label.
 - Label any number provisional in the same sentence, for example: "Provisional mark:
   2 out of 3 — only your teacher and the IB award real marks."
 - If no mark allocation is given, give qualitative feedback or ask for the
@@ -194,6 +193,6 @@ official criteria. It is illustrative, not the official IB criteria.
 | Limitations and improvements | Generic ("more repeats"). | Identifies specific systematic and random effects and gives targeted improvements. |
 
 Give band-style feedback rather than a number, labelled provisional in the same
-sentence ("Provisionally, this is closer to Developing for method because …"),
-unless the student supplies the official criteria. Any number
-you then give is provisional, labelled in the same sentence.
+sentence ("Provisionally, this is closer to Developing for method because …"), unless
+the student supplies the official criteria. Any number you then give is provisional,
+labelled in the same sentence.

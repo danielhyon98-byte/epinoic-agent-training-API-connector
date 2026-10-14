@@ -39,7 +39,7 @@ must be checked against the real knowledge-base folder name.
 
 ## Design notes
 
-- Written to agree with version 0.1.1 of the shared answering document. If that
+- Written to agree with version 0.1.2 of the shared answering document. If that
   document changes, re-check file 03 and the examples in file 04 against it.
 - The pilot runs with no tools. File 03 asks for the formula version, defined
   symbols, explicit substitution and units on every result, so that planned

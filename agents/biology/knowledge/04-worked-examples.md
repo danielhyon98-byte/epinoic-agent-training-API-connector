@@ -110,7 +110,7 @@ Biologically, any successful policy has to keep habitat areas large enough for v
 populations and keep them connected (for example, with corridors) so gene flow
 continues.
 
-Sources: your question and my general biology knowledge.
+Sources: your question only; nothing else was consulted.
 
 **Why this works:** the biological mechanisms are answered fully; the policy
 evaluation is named and routed; no statistics or case studies are invented.
@@ -149,13 +149,13 @@ active site is destroyed and it stops working."
 
 **Reply:**
 
-Provisional mark: 1 out of 2, judged against illustrative mark points; only your
+Provisional mark: 1 out of 2, judged against illustrative mark points (not the official
+markscheme); only your
 teacher and the IB award real marks.
 
-Illustrative points: (1) high temperature breaks bonds that hold the enzyme's
+Illustrative points (not the official markscheme): (1) high temperature breaks bonds that hold the enzyme's
 tertiary structure, so it is denatured; (2) the active site changes shape, so the
-substrate can no longer bind and fewer enzyme–substrate complexes form. You get
-credit for linking the fall in activity to the active site.
+substrate can no longer bind and fewer enzyme–substrate complexes form. Provisionally, you get credit for linking the fall in activity to the active site.
 
 Two fixes:
 - "Killed": enzymes are proteins, not living things. They are denatured.

@@ -78,9 +78,9 @@ students which level they are writing at when an explanation is muddled.
   gives ΔH = −54 kJ mol⁻¹ with a temperature rise of 6.5 K, each thermometer reading
   ±0.1 K.
   Uncertainty in ΔT = 0.1 + 0.1 = 0.2 K
-  Percentage uncertainty in ΔT = (0.2 / 6.5) × 100 = 3.1 %
+  Percentage uncertainty in ΔT = (0.2 / 6.5) × 100 = 3.08 %, about 3.1 %
   Taking a commonly quoted value of about −57 kJ mol⁻¹:
-  percentage error = (|−54 − (−57)| / 57) × 100 = 5.3 %
+  percentage error = (|−54 − (−57)| / 57) × 100 = 5.26 %, about 5.3 %
   The error exceeds the uncertainty, which points to a systematic effect such as
   heat loss to the surroundings. Heat loss makes the measured value less
   exothermic, which matches the direction of the error.

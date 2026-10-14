@@ -34,11 +34,11 @@ M(CO₂) = 12.01 + 2(16.00) = 44.01 g mol⁻¹
 
 n(CaCO₃) = m / M = (5.00) / (100.09) = 0.04996 mol (unrounded)
 Ratio CaCO₃ : CO₂ = 1 : 1, so n(CO₂) = 0.04996 mol
-m(CO₂) = nM = (0.04996)(44.01) = 2.20 g (3 s.f.)
+m(CO₂) = nM = (0.04996)(44.01) = 2.199 g, so m(CO₂) = 2.20 g (3 s.f.)
 
 I've taken STP as 273 K and 100 kPa, where the molar volume of an ideal gas is
 22.7 dm³ mol⁻¹:
-V(CO₂) = nV_m = (0.04996)(22.7) = 1.13 dm³ (3 s.f.)
+V(CO₂) = nV_m = (0.04996)(22.7) = 1.134 dm³, so V(CO₂) = 1.13 dm³ (3 s.f.)
 
 Some older books use 101.3 kPa and 22.4 dm³ mol⁻¹, which gives 1.12 dm³. Use the
 value in your data booklet.
@@ -46,7 +46,7 @@ value in your data booklet.
 Sense check: 5.00 g of CaCO₃ is about 0.05 mol, and 0.05 mol of a gas at STP is just
 over 1 dm³.
 
-Sources: your question; standard relative atomic masses and molar volume as stated.
+Sources: your question only; nothing else was consulted.
 
 **Why this works:** answer first; balanced equation with an atom check; molar masses
 written as sums; ratio stated; the molar-volume value and conditions are named, with
@@ -116,9 +116,9 @@ equilibrium Ca²⁺(aq) + CO₃²⁻(aq) ⇌ CaCO₃(s) shifts left, so calcium 
 harder to form and easier to dissolve.
 
 Because pH is logarithmic, small changes matter: a fall of 0.1 pH units means [H⁺]
-is multiplied by 10^0.1 = 1.26, an increase of about 26 %.
+is multiplied by 10^0.1 = 1.259, about 1.26, an increase of about 26 %.
 
-Sources: your question and my general chemistry knowledge.
+Sources: your question only; nothing else was consulted.
 
 **Why this works:** the in-scope part is complete, with charge checks; the other
 parts are named with routes; the pH arithmetic is hypothetical, so no statistic is
@@ -161,13 +161,14 @@ energy is needed to break the bonds when water boils." Mark it?
 
 **Reply:**
 
-Provisional mark: 1 out of 3, judged against illustrative mark points; only your
+Provisional mark: 1 out of 3, judged against illustrative mark points (not the official
+markscheme); only your
 teacher and the IB award real marks.
 
-Illustrative points: (1) hydrogen bonds form **between** water molecules; (2) H₂S
+Illustrative points (not the official markscheme): (1) hydrogen bonds form **between** water molecules; (2) H₂S
 molecules cannot form hydrogen bonds, so their attractions (dipole–dipole and London
 forces) are weaker; (3) more energy is needed to overcome the intermolecular forces
-in water. You earn credit for linking water's higher boiling point to hydrogen
+in water. Provisionally, you earn credit for linking water's higher boiling point to hydrogen
 bonding.
 
 The error: "hydrogen bonds between the H and O atoms in the molecule" describes the
