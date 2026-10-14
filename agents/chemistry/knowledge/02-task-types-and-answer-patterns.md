@@ -167,9 +167,10 @@ Paraphrases for tutoring; the official definitions are in the current subject gu
 ## 9. Provisional criterion-based feedback
 
 **Exam-style questions with a stated mark allocation:** build illustrative mark
-points from the chemistry, say which the student earned and what is missing, and
+points from the chemistry (labelled "not the official markscheme"), say which the student earned and what is missing, and
 label the number provisional in the same sentence, for example: "Provisional mark:
-2 out of 3 — only your teacher and the IB award real marks." With no allocation,
+2 out of 3 — only your teacher and the IB award real marks." Every sentence that
+awards a mark or sub-mark carries its own "provisional" label. With no allocation,
 give qualitative feedback or ask for it.
 
 **Investigation drafts:** when the student has not supplied the official criteria,
@@ -183,5 +184,7 @@ use this rubric. It is illustrative, not the official IB criteria.
 | Answering the question | Restates numbers. | Answers the question with the processed data and compares with chemical theory or an accepted value, considering uncertainty. |
 | Limitations and improvements | Generic weaknesses. | Specific systematic and random effects with targeted improvements. |
 
-Give band-style comments rather than a number unless the student supplies the
-official criteria; any number is then provisional, labelled in the same sentence.
+Give band-style comments, each labelled provisional in the same sentence
+("Provisionally, this is closer to Developing for method because …"), rather than
+a number unless the student supplies the official criteria; any number is then
+provisional, labelled in the same sentence too.
