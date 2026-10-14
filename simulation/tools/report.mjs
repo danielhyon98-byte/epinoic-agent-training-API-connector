@@ -33,7 +33,7 @@ const dirs = (p) => (existsSync(p) ? readdirSync(p).filter((d) => statSync(join(
 const oneLine = (s) => String(s ?? "").replace(/\s+/g, " ").trim();
 const cell = (s) => oneLine(s).replace(/\|/g, "\\|");
 
-const totals = { questions: 0, accepted: 0, rounds: 0, firstTry: 0, flags: { a_lacking_detail: 0, b_logic_or_false: 0, c_no_source: 0, d_no_evidence: 0 }, major: 0, detBlocking: 0, z3Errors: 0 };
+const totals = { questions: 0, accepted: 0, rounds: 0, firstTry: 0, fresh: 0, freshAccepted: 0, firstTryFlags: 0, freshFlags: 0, flags: { a_lacking_detail: 0, b_logic_or_false: 0, c_no_source: 0, d_no_evidence: 0 }, major: 0, detBlocking: 0, z3Errors: 0 };
 const bySubject = [];
 const body = [];
 
@@ -74,6 +74,26 @@ for (const slug of dirs(RUNS)) {
       for (const d of diag?.diagnosis ?? []) flagLines.push(`- Round ${r} diagnosis: ${oneLine(d.flag).slice(0, 120)}. *Root cause:* ${oneLine(d.root_cause)} *Change:* ${oneLine(d.change)}`);
     }
     if (accepted) { totals.accepted++; subj.accepted++; }
+    // Fresh-instance retests (fresh-<tag>): a new specialist instance with no feedback,
+    // answering the same question once from the knowledge base as curated after this cycle.
+    const verdictOf = (rdir) => {
+      const det = readJson(join(rdir, "deterministic.json"));
+      const oa = readJson(join(rdir, "overseer-a.json"));
+      const ob = readJson(join(rdir, "overseer-b.json"));
+      const flags = [...(oa?.flags ?? []), ...(ob?.flags ?? [])];
+      return { ok: Boolean(det && !det.blocking && oa?.verdict === "accept" && ob?.verdict === "accept"), flags, det, major: flags.filter((f) => f.severity === "major").length };
+    };
+    const first = existsSync(join(qdir, "round-1", "answer.md")) ? verdictOf(join(qdir, "round-1")) : null;
+    if (first) totals.firstTryFlags += first.flags.length;
+    for (const fd of dirs(qdir).filter((d) => /^fresh-/.test(d))) {
+      if (!existsSync(join(qdir, fd, "answer.md"))) continue;
+      const v = verdictOf(join(qdir, fd));
+      totals.fresh++; totals.freshFlags += v.flags.length; if (v.ok) totals.freshAccepted++;
+      const cnt = (fl) => CATS.map(([k]) => fl.filter((f) => f.category === k).length).join(" / ");
+      roundLines.push(`| ${fd} (fresh instance, curated KB) | ${v.ok ? "**accepted**" : "rejected"} | ${v.det ? (v.det.blocking ? cell(v.det.blockingReasons.join(", ")) : "pass") : "missing"} | ${v.det?.z3?.status ?? "–"} | – | – | ${cnt(v.flags)} | – |`);
+      if (first) roundLines.push(`| change vs first attempt | ${first.ok ? "accepted" : "rejected"} → ${v.ok ? "accepted" : "rejected"} | | | | | flags ${first.flags.length} → ${v.flags.length}; major ${first.major} → ${v.major} | |`);
+      for (const [k, label] of CATS) for (const f of v.flags.filter((x) => x.category === k)) flagLines.push(`- ${fd}, ${label}, ${f.severity}: "${oneLine(f.excerpt).slice(0, 300)}". ${oneLine(f.explanation)} *Fix:* ${oneLine(f.required_fix)}`);
+    }
     body.push(`### ${qid} (${sc?.kind ?? "?"}): ${accepted ? "accepted" : "not accepted"} after ${rounds.length} round(s)\n`);
     body.push(`> ${oneLine(sc?.request).slice(0, 400)}\n`);
     body.push("| Round | Result | Deterministic gate | Z3 RouterHub | Overseer A | Overseer B | Flags a / b / c / d | Diagnoses |\n| --- | --- | --- | --- | --- | --- | --- | --- |");
@@ -94,6 +114,7 @@ const head = [
   `- Questions: ${totals.questions}; accepted: ${totals.accepted}; accepted on the first answer: ${totals.firstTry}; specialist rounds: ${totals.rounds}`,
   `- Flags: (a) lacking detail ${totals.flags.a_lacking_detail}, (b) logic/false ${totals.flags.b_logic_or_false}, (c) no source ${totals.flags.c_no_source}, (d) no evidence ${totals.flags.d_no_evidence}; major ${totals.major}`,
   `- Deterministic blocking rounds: ${totals.detBlocking}; Z3 error findings: ${totals.z3Errors}`,
+  `- Fresh-instance retests (new instance, curated knowledge base, no feedback): ${totals.fresh}; accepted ${totals.freshAccepted}. First attempts before curation: accepted ${totals.firstTry} of ${totals.questions}, ${totals.firstTryFlags} flags; fresh attempts after curation: ${totals.freshFlags} flags.`,
   "",
   "| Specialist | Questions | Accepted | Rounds | Flags |",
   "| --- | --- | --- | --- | --- |",

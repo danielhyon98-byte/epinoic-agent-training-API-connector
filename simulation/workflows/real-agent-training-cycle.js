@@ -18,6 +18,11 @@ const MAX_ROUNDS = A.maxRounds
 const NAMES = A.names
 const MODEL = A.model
 if (!MODEL || !WT || !TOOLS) throw new Error('args.model, args.worktree and args.tools are required')
+// mode "train" (default): scenarios -> answers with feedback revisions -> curation.
+// mode "retest": a FRESH specialist instance (no feedback, no memory) answers the given
+// cycle's questions once from the rebuilt bundle; the same overseers judge it. This shows
+// whether the improvement lives in the knowledge documents themselves.
+const MODE = A.mode || 'train'
 
 const FLAG = {
   type: 'object',
@@ -113,7 +118,7 @@ const CURATOR_SCHEMA = {
 const NO_NET = 'Self-contained environment: do NOT use web search, web fetch or any network tool.'
 const KB = `${WT}/knowledge-bases`
 const qdirOf = (slug, qid) => `${WT}/training/runs/cycle-${N}/${slug}/${qid}`
-const rdirOf = (slug, qid, r) => `${qdirOf(slug, qid)}/round-${r}`
+const rdirOf = (slug, qid, r) => `${qdirOf(slug, qid)}/${MODE === 'retest' ? `fresh-${A.retestTag}` : `round-${r}`}`
 const bundleOf = (slug) => `${KB}/_bundles/${slug}.full-context.txt`
 
 function writerPrompt(slug) {
@@ -214,11 +219,11 @@ Your job: change the REAL knowledge base so the next cycle starts better, in the
 Return files_changed, lessons (one line each), factual_corrections, shared_rule_proposals (cross-subject or owner-level), open_issues, check_knowledge_passed (true when validate_kb.py reports 0 errors).`
 }
 
-async function runQuestion(slug, q) {
+async function runQuestion(slug, q, maxRounds = MAX_ROUNDS) {
   const rounds = []
   let feedback = null
   let accepted = false
-  for (let r = 1; r <= MAX_ROUNDS; r++) {
+  for (let r = 1; r <= maxRounds; r++) {
     const ans = await agent(specialistPrompt(slug, q.qid, r, feedback), {
       label: `specialist:${q.qid}:r${r}`, phase: 'Simulate', schema: ANSWER_SCHEMA, model: MODEL,
     })
@@ -261,6 +266,20 @@ async function runQuestion(slug, q) {
   return { qid: q.qid, kind: q.kind, accepted, rounds }
 }
 
+if (MODE === 'retest') {
+  if (!A.retestTag || !A.questions) throw new Error('retest needs args.retestTag and args.questions {slug: [{qid, kind}]}')
+  log(`REAL AGENTS | FRESH-INSTANCE RETEST ${A.retestTag} | model ${MODEL} | cycle ${N}, cluster ${A.cluster}: ${A.slugs.join(', ')}`)
+  phase('Simulate')
+  const fresh = await pipeline(
+    A.slugs,
+    async (slug) => {
+      const qs = A.questions[slug] || []
+      const out = await parallel(qs.map((q) => () => runQuestion(slug, q, 1)))
+      return { slug, questions: out.filter(Boolean) }
+    },
+  )
+  return { cycle: N, cluster: A.cluster, mode: 'retest', retestTag: A.retestTag, subjects: fresh.filter(Boolean) }
+}
 log(`REAL AGENTS | model ${MODEL} | cycle ${N}, cluster ${A.cluster}: ${A.slugs.join(', ')} | ${Q} questions each, up to ${MAX_ROUNDS} rounds`)
 phase('Scenarios')
 const results = await pipeline(
