@@ -35,7 +35,7 @@ const ACTIVE_KEYS = Object.freeze({
   "url-policy": ["status", "policy", "note"],
   "internal-code-leakage": ["status", "codes", "note"],
   "provisional-mark": ["status", "labelPattern", "note"],
-  "sources-line": ["status", "prefix", "required", "allowedValues", "note"],
+  "sources-line": ["status", "prefix", "required", "allowedValues", "mode", "itemTags", "note"],
 });
 const PENDING_KEYS = Object.freeze(["status", "pendingOn", "note"]);
 const ALLOWED_REGEX_FLAGS = /^[imsu]*$/;
@@ -88,6 +88,19 @@ function checkActive(id, cfg, add) {
         values.length > 0 &&
         values.every((v) => isNonEmptyString(v) && v === v.trim() && !/[\r\n]/.test(v) && !containsUrl(v));
       if (!valuesOk) add(`${path}.allowedValues`, "allowed_values_invalid");
+      const mode = cfg.mode ?? "exact";
+      if (mode !== "exact" && mode !== "tagged-list") add(`${path}.mode`, "mode_invalid");
+      if (mode === "tagged-list") {
+        const tags = cfg.itemTags;
+        const tagsOk =
+          Array.isArray(tags) &&
+          tags.length > 0 &&
+          new Set(tags).size === tags.length &&
+          tags.every((t) => isNonEmptyString(t) && t === t.trim() && !/[()\r\n;]/.test(t) && !containsUrl(t));
+        if (!tagsOk) add(`${path}.itemTags`, "item_tags_invalid");
+      } else if (cfg.itemTags !== undefined) {
+        add(`${path}.itemTags`, "item_tags_need_tagged_list_mode");
+      }
       break;
     }
     default:

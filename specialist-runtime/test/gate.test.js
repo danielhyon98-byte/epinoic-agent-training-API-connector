@@ -253,3 +253,41 @@ test("gate config validation refuses vacuous or unsafe rules", () => {
   assert.ok(codesOf(missing).includes("check_missing"), "a check cannot be switched off by omission");
   assert.ok(codesOf({ ...SYNTHETIC_GATE_CONFIG, label: "unlabelled" }).includes("synthetic_label_missing"));
 });
+
+test("sources-line tagged-list mode: tagged items pass; untagged items, URLs and too many items fail", () => {
+  const cfg = structuredClone(SYNTHETIC_GATE_CONFIG);
+  cfg.checks["sources-line"] = {
+    status: "active", prefix: "Sources:", required: true, mode: "tagged-list",
+    allowedValues: ["none consulted (no retrieval in this session)"],
+    itemTags: ["supplied text", "course notes", "recalled, not consulted"],
+  };
+  assert.deepEqual(validateGateConfig(cfg), { ok: true, errors: [] });
+  const g = (line) => check(gate(`The treaty was signed in 1919.\n${line}`, { config: cfg }), "sources-line");
+  assert.equal(g("Sources: none consulted (no retrieval in this session)").status, "pass");
+  assert.equal(g("Sources: Source A extract (supplied text); Fischer, Germany's Aims in the First World War (1961) (recalled, not consulted)").status, "pass");
+  assert.equal(g("Sources: course notes on the July Crisis (course notes)").status, "pass");
+  assert.deepEqual(g("Sources: Fischer (1961)"), { id: "sources-line", status: "fail", code: "sources_line_untagged_item" });
+  assert.deepEqual(g("Sources: Fischer (1961) (recalled, not consulted); Clark (2012)"), { id: "sources-line", status: "fail", code: "sources_line_untagged_item" });
+  assert.deepEqual(g("Sources: (recalled, not consulted)"), { id: "sources-line", status: "fail", code: "sources_line_untagged_item" });
+  assert.deepEqual(g("Sources: Fischer (1961) (consulted online)"), { id: "sources-line", status: "fail", code: "sources_line_untagged_item" });
+  assert.deepEqual(g("Sources: https://example.org/fischer (recalled, not consulted)"), { id: "sources-line", status: "fail", code: "sources_line_invalid" });
+  const many = Array.from({ length: 21 }, (_, i) => `Item ${i} (course notes)`).join("; ");
+  assert.deepEqual(g(`Sources: ${many}`), { id: "sources-line", status: "fail", code: "sources_line_untagged_item" });
+});
+
+test("sources-line config: mode and itemTags are validated; exact mode keeps its old behaviour", () => {
+  const base = { status: "active", prefix: "Sources:", required: true, allowedValues: ["none consulted (no retrieval in this session)"] };
+  const codes = (sl) => {
+    const cfg = structuredClone(SYNTHETIC_GATE_CONFIG);
+    cfg.checks["sources-line"] = sl;
+    return validateGateConfig(cfg).errors.map((e) => e.code);
+  };
+  assert.ok(codes({ ...base, mode: "loose" }).includes("mode_invalid"));
+  assert.ok(codes({ ...base, mode: "tagged-list" }).includes("item_tags_invalid"));
+  assert.ok(codes({ ...base, mode: "tagged-list", itemTags: [] }).includes("item_tags_invalid"));
+  assert.ok(codes({ ...base, mode: "tagged-list", itemTags: ["a (b)"] }).includes("item_tags_invalid"));
+  assert.ok(codes({ ...base, mode: "tagged-list", itemTags: ["x", "x"] }).includes("item_tags_invalid"));
+  assert.ok(codes({ ...base, itemTags: ["supplied text"] }).includes("item_tags_need_tagged_list_mode"));
+  assert.deepEqual(codes({ ...base, mode: "exact" }), []);
+  assert.equal(check(gate("Text.\nSources: Fischer (1961) (recalled, not consulted)"), "sources-line").code, "sources_line_invalid");
+});

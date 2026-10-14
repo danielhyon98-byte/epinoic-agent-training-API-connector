@@ -21,6 +21,8 @@ const REQUIRED = [
   "03-answering-functionality.md",
   "04-worked-examples.md"
 ];
+// Written by the simulation curators (simulation/README.md); optional, checked when present.
+const OPTIONAL = ["05-lessons-from-simulation.md"];
 const REQUIRED_KEYS = ["document", "subject", "slug", "version", "status", "precedence"];
 const URL_PATTERNS = [/\b[a-z][a-z0-9+.-]*:\/\/\S+/i, /\bwww\.[a-z0-9-]+\.[a-z]{2,}/i];
 
@@ -46,10 +48,10 @@ function parseFrontMatter(file, text) {
 
 for (const agent of roster.agents) {
   const dir = join(AGENTS_DIR, agent.slug, "knowledge");
-  for (const name of REQUIRED) {
+  for (const name of [...REQUIRED, ...OPTIONAL]) {
     const file = join(dir, name);
     const rel = `agents/${agent.slug}/knowledge/${name}`;
-    if (!existsSync(file)) { note(rel, "missing"); continue; }
+    if (!existsSync(file)) { if (!OPTIONAL.includes(name)) note(rel, "missing"); continue; }
     const text = readFileSync(file, "utf8");
     if (name !== "README.md") {
       const fm = parseFrontMatter(rel, text);
@@ -63,7 +65,7 @@ for (const agent of roster.agents) {
       for (const re of URL_PATTERNS) if (re.test(line)) note(`${rel}:${i + 1}`, `URL-like text: ${line.trim().slice(0, 80)}`);
     });
   }
-  const extra = existsSync(dir) ? readdirSync(dir).filter((f) => !REQUIRED.includes(f)) : [];
+  const extra = existsSync(dir) ? readdirSync(dir).filter((f) => !REQUIRED.includes(f) && !OPTIONAL.includes(f)) : [];
   for (const f of extra) note(`agents/${agent.slug}/knowledge/${f}`, "unexpected file");
 }
 

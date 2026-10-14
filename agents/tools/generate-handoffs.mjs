@@ -109,7 +109,9 @@ function knowledgeFileList(agent) {
     `4. \`agents/${agent.slug}/knowledge/02-task-types-and-answer-patterns.md\``,
     `5. \`agents/${agent.slug}/knowledge/03-answering-functionality.md\``,
     `6. \`agents/${agent.slug}/knowledge/04-worked-examples.md\``,
-    "7. `agents/_shared/knowledge/00-answering-functionality-core.md`"
+    ...(existsSync(join(AGENTS_DIR, agent.slug, "knowledge", "05-lessons-from-simulation.md"))
+      ? [`7. \`agents/${agent.slug}/knowledge/05-lessons-from-simulation.md\` (lessons from the overseer simulation; see \`simulation/README.md\`)`, "8. `agents/_shared/knowledge/00-answering-functionality-core.md`"]
+      : ["7. `agents/_shared/knowledge/00-answering-functionality-core.md`"])
   ].join("\n");
 }
 
