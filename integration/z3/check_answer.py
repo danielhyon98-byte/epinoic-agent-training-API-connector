@@ -40,6 +40,7 @@ SUBJECTS = {
     "psychology": "Psychology",
     "geography": "Geography",
     "spanish-b": "Language B: Spanish",
+    "language-b-spanish": "Language B: Spanish",
     "computer-science": "Computer Science",
     "physics": "Physics",
     "chemistry": "Chemistry",

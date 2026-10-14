@@ -8,7 +8,12 @@
 // and prints one JSON verdict. Offline: no model or provider is called.
 //
 //   node simulation/tools/check-answer.mjs --slug physics --request req.txt --answer ans.md \
-//        [--supplied supplied.json] [--out result.json]
+//        [--supplied supplied.json] [--out result.json] [--gate-config cfg.json]
+//
+// --gate-config loads an external gate config (for example one built from a real knowledge
+// base in a private repository). Codes that are ordinary exam vocabulary are dropped by the
+// gate's own benign-token filter and listed in the output. Gate checks that are "pending"
+// report "unsupported" and are advisory (judged by an overseer), not blocking.
 //
 // The translator runs with the Python named by EPINOIC_Z3_PYTHON (a venv with the
 // translator installed). If it is unset or missing, the Z3 part reports "not_run".
@@ -18,6 +23,7 @@ import { spawnSync } from "node:child_process";
 import { createOfflineTestRuntime } from "../../specialist-runtime/src/index.js";
 import { SYNTHETIC_MANIFEST } from "../../specialist-runtime/fixtures/synthetic/manifest.js";
 import { simulationGateConfig, SLUGS } from "../config/gate-configs.mjs";
+import { isBenignToken } from "../../specialist-runtime/src/gate/benign.js";
 
 function args() {
   const out = {};
@@ -31,13 +37,25 @@ function args() {
 }
 
 const opt = args();
-if (!SLUGS.includes(opt.slug)) throw new Error(`unknown slug ${opt.slug}`);
+if (!opt["gate-config"] && !SLUGS.includes(opt.slug)) throw new Error(`unknown slug ${opt.slug}`);
 const request = readFileSync(opt.request, "utf8");
 const answer = readFileSync(opt.answer, "utf8");
 const supplied = opt.supplied ? JSON.parse(readFileSync(opt.supplied, "utf8")) : [];
 
 // (1) Runtime gate.
-const config = simulationGateConfig(opt.slug);
+let config = simulationGateConfig;
+let droppedBenignCodes = [];
+if (opt["gate-config"]) {
+  const ext = JSON.parse(readFileSync(opt["gate-config"], "utf8"));
+  if (ext.slug !== opt.slug) throw new Error(`gate config is for ${ext.slug}, not ${opt.slug}`);
+  const leak = ext.checks["internal-code-leakage"];
+  if (leak && Array.isArray(leak.codes)) {
+    droppedBenignCodes = leak.codes.filter((c) => isBenignToken(c));
+    leak.codes = leak.codes.filter((c) => !isBenignToken(c));
+  }
+  config = () => ext;
+}
+config = config(opt.slug);
 const rt = createOfflineTestRuntime({ manifest: SYNTHETIC_MANIFEST, gateConfigs: { [opt.slug]: config } });
 const suppliedText = supplied.map((s) => s.text).join("\n");
 const gate = rt.runGate({ slug: opt.slug, gateConfig: config, answerText: answer, finishReason: "stop", userMessage: `${request}\n${suppliedText}` });
@@ -57,7 +75,8 @@ if (py && existsSync(py)) {
   }
 }
 
-const gateFails = gate.checks.filter((c) => c.status !== "pass");
+const gateFails = gate.checks.filter((c) => c.status === "fail");
+const gateUnsupported = gate.checks.filter((c) => c.status === "unsupported");
 const z3Errors = (z3.findings ?? []).filter((f) => f.severity === "error");
 const uncovered = (z3.coverage ?? []).filter((c) => !c.addressed && c.method !== "not_checkable");
 const broken = (z3.constraints ?? []).filter((c) => c.satisfied === false);
@@ -85,7 +104,11 @@ const verdict = {
     versions: z3.versions ?? null,
     reason: z3.reason ?? z3.error ?? null,
   },
-  advisory: uncovered.map((c) => `z3:item_not_addressed:${c.item_id} (heuristic ${c.method})`),
+  advisory: [
+    ...uncovered.map((c) => `z3:item_not_addressed:${c.item_id} (heuristic ${c.method})`),
+    ...gateUnsupported.map((c) => `gate:${c.id}:${c.code} (judged by an overseer)`),
+  ],
+  gateConfig: { version: config.configVersion, droppedBenignCodes },
   note: "Deterministic format/policy gate plus the translator hub's Z3 checks of the answer's own stated arithmetic, quotations and limits. Item coverage is heuristic and advisory. None of this establishes that the answer is true or complete.",
 };
 const text = JSON.stringify(verdict, null, 2);
