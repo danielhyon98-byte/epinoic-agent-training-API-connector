@@ -7,11 +7,14 @@ cycle, curator agents edit the knowledge documents with what the specialists had
 learn. The process runs for several cycles.
 
 > **What this is and is not.**
-> - Specialists run on the Haiku-tier model through the harness's `haiku` alias.
->   That alias is meant to resolve to Claude Haiku 5.5, but the workflow is not told
->   the exact version. Overseers and curators run on the session's default model.
->   This is not the Anthropic API path, and GPT-6 Luna was not run, because there is
->   no OpenAI access.
+> - **Every simulation agent runs on Claude Fable 5.1** (the harness's `fable`
+>   alias), at the user's request on 14 October. That covers scenario writers,
+>   specialists, the deterministic runner, both overseers and curators. The proposed
+>   deployment model for the specialists is still Claude Haiku 5.5
+>   (`agents/model-assignment.json`), so simulation results show what the knowledge
+>   documents enable on a stronger model, not how Haiku 5.5 would perform. This is
+>   not the Anthropic API path, and GPT-6 Luna was not run, because there is no
+>   OpenAI access.
 > - Each specialist is configured **only** from its supplementary knowledge
 >   (`agents/<slug>/knowledge/`) and the shared rules. The real master prompts and
 >   knowledge bases were unreachable, so results say nothing about the real
@@ -30,7 +33,7 @@ for each cycle (knowledge documents are updated between cycles):
     scenario writer -> 2 original questions (+ supplied texts), each dispatched through the
                        Z3 RouterHub -> explicit request (items, command terms, limits)
     for each question, up to 3 rounds:
-      specialist (haiku)      -> answer, written to the run folder
+      specialist (Fable 5.1)  -> answer, written to the run folder
       deterministic overseer  -> simulation/tools/check-answer.mjs:
                                  runtime gate (URLs, planted canary code, provisional marks,
                                  tagged Sources line) + Z3 RouterHub receipt (arithmetic,
