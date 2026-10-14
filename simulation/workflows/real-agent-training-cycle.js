@@ -5,6 +5,7 @@ export const meta = {
     { title: 'Scenarios', detail: 'original questions per specialist, in scope for its real syllabus gate, dispatched through the Z3 RouterHub' },
     { title: 'Simulate', detail: 'real specialist (full-context bundle, no tools), deterministic gate + Z3 receipt, overseers A and B, revisions on rejection' },
     { title: 'Curate', detail: 'curators edit the real knowledge base in house format; validator must pass; every edit logged' },
+    { title: 'Retest', detail: 'rebuild bundles, then a fresh specialist instance answers every question once from the curated bundle' },
   ],
 }
 
@@ -31,6 +32,12 @@ const BUNDLE_ROOT = A.bundleRoot || null
 // cycle's questions once from the rebuilt bundle; the same overseers judge it. This shows
 // whether the improvement lives in the knowledge documents themselves.
 const MODE = A.mode || 'train'
+// train mode only: args.scenarios {slug: [{qid, kind}]} reuses questions already written and
+// routed (files on disk) instead of calling the writer; args.retestAfterCurate (a tag such as
+// "haiku-curated") rebuilds the bundles after curation and runs a fresh-instance retest of
+// every question. With a Haiku specialist, round 1 is itself the fresh baseline on the
+// original knowledge base, so no separate baseline pass is needed.
+const RETEST_TAG = MODE === 'retest' ? A.retestTag : A.retestAfterCurate
 
 const FLAG = {
   type: 'object',
@@ -126,7 +133,7 @@ const CURATOR_SCHEMA = {
 const NO_NET = 'Self-contained environment: do NOT use web search, web fetch or any network tool.'
 const KB = `${WT}/knowledge-bases`
 const qdirOf = (slug, qid) => `${WT}/training/runs/cycle-${N}/${slug}/${qid}`
-const rdirOf = (slug, qid, r) => `${qdirOf(slug, qid)}/${MODE === 'retest' ? `fresh-${A.retestTag}` : `round-${r}`}`
+const rdirOf = (slug, qid, r) => `${qdirOf(slug, qid)}/${r === 'fresh' ? `fresh-${RETEST_TAG}` : `round-${r}`}`
 const bundleOf = (slug) => `${BUNDLE_ROOT || KB}/_bundles/${slug}.full-context.txt`
 
 function writerPrompt(slug) {
@@ -217,7 +224,7 @@ function curatorPrompt(slug, outcomes) {
   return `You are the knowledge-base curator for the REAL Epinoic AI "${NAMES[slug]}" specialist after training cycle ${N}. ${NO_NET}
 The specialist ran from its full-context bundle (its master prompt and knowledge documents in ${dir}/). Read every run file for this cycle under ${WT}/training/runs/cycle-${N}/${slug}/ (scenario.json, request.txt, supplied.json, and per round answer.md, diagnosis.json, deterministic.json, overseer-a.json, overseer-b.json).
 Outcome summary: ${JSON.stringify(outcomes)}
-Notes on the evidence: deterministic.json files are authoritative (they were re-scored after a gate false positive on question-value headers was fixed; any "provisional_label_missing" in the outcome summary above is that false positive, not an agent fault). A Z3 finding INT-SUBJ-001 on a line where the specialist QUOTES a student's wrong arithmetic in order to correct it is a checker artefact; do not teach the agent to avoid correcting errors, but you may teach it to state the correct relation rather than restating the wrong equation as its own.
+Notes on the evidence: deterministic.json files are authoritative. The gate's provisional-mark check is advisory in training because it misreads question-value headers (for example "15 marks") as awarded marks; Overseer B judges marking instead, so a "provisional_label_missing" advisory is not an agent fault. A Z3 finding INT-SUBJ-001 on a line where the specialist QUOTES a student's wrong arithmetic in order to correct it is a checker artefact; do not teach the agent to avoid correcting errors, but you may teach it to state the correct relation rather than restating the wrong equation as its own.
 
 Your job: change the REAL knowledge base so the next cycle starts better, in the house format.
 1. Read ${KB}/_build/SPEC.md (house format: file roster, coded rules with evidence labels [E] [O] [R] [I] [P], cross-reference style, Open points, word-count bounds) and the files you edit.
@@ -229,11 +236,12 @@ Your job: change the REAL knowledge base so the next cycle starts better, in the
 Return files_changed, lessons (one line each), factual_corrections, shared_rule_proposals (cross-subject or owner-level), open_issues, check_knowledge_passed (true when validate_kb.py reports 0 errors).`
 }
 
-async function runQuestion(slug, q, maxRounds = MAX_ROUNDS) {
+async function runQuestion(slug, q, maxRounds = MAX_ROUNDS, fresh = false) {
   const rounds = []
   let feedback = null
   let accepted = false
-  for (let r = 1; r <= maxRounds; r++) {
+  for (let i = 1; i <= maxRounds; i++) {
+    const r = fresh ? 'fresh' : i
     const ans = await agent(specialistPrompt(slug, q.qid, r, feedback), {
       label: `specialist:${q.qid}:r${r}`, phase: 'Simulate', schema: ANSWER_SCHEMA, model: SPECIALIST_MODEL,
     })
@@ -263,7 +271,7 @@ async function runQuestion(slug, q, maxRounds = MAX_ROUNDS) {
         a: count('a_lacking_detail'), b: count('b_logic_or_false'), c: count('c_no_source'), d: count('d_no_evidence'),
         major: flags.filter((f) => f.severity === 'major').length,
       },
-      diagnosed: r > 1 ? ans.diagnosis.length : null,
+      diagnosed: i > 1 ? ans.diagnosis.length : null,
       rejected,
     })
     if (!rejected) { accepted = true; break }
@@ -299,7 +307,7 @@ if (MODE === 'retest') {
     A.slugs,
     async (slug) => {
       const qs = A.questions[slug] || []
-      const out = await parallel(qs.map((q) => () => runQuestion(slug, q, 1)))
+      const out = await parallel(qs.map((q) => () => runQuestion(slug, q, 1, true)))
       return { slug, questions: out.filter(Boolean) }
     },
   )
@@ -309,7 +317,9 @@ log(`REAL AGENTS | specialists ${SPECIALIST_MODEL}, judges ${JUDGE_MODEL} | cycl
 phase('Scenarios')
 const results = await pipeline(
   A.slugs,
-  (slug) => agent(writerPrompt(slug), { label: `scenarios:${slug}`, phase: 'Scenarios', schema: SCENARIO_SCHEMA, model: JUDGE_MODEL }),
+  async (slug) => (A.scenarios && A.scenarios[slug])
+    ? { questions: A.scenarios[slug].map((q) => ({ ...q, route_ok: true })) }
+    : agent(writerPrompt(slug), { label: `scenarios:${slug}`, phase: 'Scenarios', schema: SCENARIO_SCHEMA, model: JUDGE_MODEL }),
   async (sc, slug) => {
     if (!sc || !sc.questions || sc.questions.length === 0) return { slug, questions: [], error: 'no_scenarios' }
     const qs = sc.questions.filter((q) => q.route_ok)
@@ -326,4 +336,26 @@ const results = await pipeline(
 const done = results.filter(Boolean)
 const allQ = done.flatMap((s) => s.questions)
 log(`cluster ${A.cluster}: ${allQ.filter((q) => q.accepted).length}/${allQ.length} answers accepted; ${allQ.reduce((n, q) => n + q.rounds.length, 0)} specialist rounds`)
-return { cycle: N, cluster: A.cluster, subjects: done }
+if (!RETEST_TAG) return { cycle: N, cluster: A.cluster, subjects: done }
+
+// Integrate this cluster's curated edits, then a fresh instance answers every question once.
+phase('Retest')
+const integ = await agent(`Run exactly these commands, one after another, and nothing else (do not edit any file):
+${A.slugs.map((slug) => `cd ${KB} && python3 -I _build/validate_kb.py ${slug}`).join('\n')}
+cd ${KB} && python3 -I _build/make_bundles.py ${KB}
+cd ${KB} && python3 -I _build/check_kb_set.py ${KB}
+Return ok=true only if every validate_kb.py run reports 0 errors, make_bundles.py succeeds and check_kb_set.py reports 0 problems; put the last 15 lines of each command's output in output.`, {
+  label: 'integrate:bundles', phase: 'Retest', model: 'haiku', effort: 'low',
+  schema: { type: 'object', properties: { ok: { type: 'boolean' }, output: { type: 'string' } }, required: ['ok', 'output'] },
+})
+if (!integ || !integ.ok) {
+  log(`bundle rebuild failed; fresh retest skipped: ${integ ? integ.output.slice(0, 400) : 'no result'}`)
+  return { cycle: N, cluster: A.cluster, subjects: done, integrate: integ }
+}
+const retest = await parallel(done.map((s) => async () => {
+  const out = await parallel(s.questions.map((q) => () => runQuestion(s.slug, q, 1, true)))
+  return { slug: s.slug, questions: out.filter(Boolean) }
+}))
+const rq = retest.filter(Boolean).flatMap((s) => s.questions)
+log(`fresh-${RETEST_TAG}: ${rq.filter((q) => q.accepted).length}/${rq.length} accepted on the curated bundles (round 1 is the original-bundle baseline)`)
+return { cycle: N, cluster: A.cluster, subjects: done, integrate: integ, retest: retest.filter(Boolean) }
