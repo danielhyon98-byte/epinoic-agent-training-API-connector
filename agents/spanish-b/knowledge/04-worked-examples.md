@@ -116,7 +116,7 @@ Examples: "Ayer hablé con mi abuela." "El sábado salimos con unos amigos."
 **Watch the accent:** "hablé" (I spoke) and "hable" (a subjunctive form) are
 different words.
 
-**Three common irregulars:** *ir* and *ser* share the same forms (fui, fuiste, fue,
+**Common irregulars:** *ir* and *ser* share the same forms (fui, fuiste, fue,
 fuimos, fuisteis, fueron); *hacer* (hice, hiciste, hizo…); *tener* (tuve, tuviste,
 tuvo…).
 
