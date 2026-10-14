@@ -2,6 +2,11 @@
 // Build the cycle report from the simulation run files (deterministic; no model call).
 //
 //   node simulation/tools/report.mjs --cycle 1 [--out simulation/reports/cycle-1.md]
+//       [--runs-dir <dir> --roster <json> --slugs a,b --header "<text>"]
+//
+// With --runs-dir (real-agent runs) the fixed stand-in sentence is left out and --header
+// describes the models. Fresh-instance retests are folders named fresh-<tag>; a tag
+// containing "baseline" ran on the original knowledge base, any other tag on the curated one.
 //
 // Lists, per specialist and question, every round's verdicts and every text excerpt the
 // overseers returned, grouped by the four feedback categories:
@@ -33,11 +38,13 @@ const dirs = (p) => (existsSync(p) ? readdirSync(p).filter((d) => statSync(join(
 const oneLine = (s) => String(s ?? "").replace(/\s+/g, " ").trim();
 const cell = (s) => oneLine(s).replace(/\|/g, "\\|");
 
-const totals = { questions: 0, accepted: 0, rounds: 0, firstTry: 0, fresh: 0, freshAccepted: 0, firstTryFlags: 0, freshFlags: 0, flags: { a_lacking_detail: 0, b_logic_or_false: 0, c_no_source: 0, d_no_evidence: 0 }, major: 0, detBlocking: 0, z3Errors: 0 };
+const totals = { questions: 0, accepted: 0, rounds: 0, firstTry: 0, firstTryFlags: 0, fresh: {}, flags: { a_lacking_detail: 0, b_logic_or_false: 0, c_no_source: 0, d_no_evidence: 0 }, major: 0, detBlocking: 0, z3Errors: 0 };
 const bySubject = [];
 const body = [];
 
-for (const slug of dirs(RUNS)) {
+const only = opt.slugs ? new Set(opt.slugs.split(",").filter(Boolean)) : null;
+const kbOf = (tag) => (/baseline/.test(tag) ? "original KB" : "curated KB");
+for (const slug of dirs(RUNS).filter((s) => !only || only.has(s))) {
   const subj = { slug, questions: 0, accepted: 0, rounds: 0, flags: 0 };
   body.push(`\n## ${name[slug] ?? slug} (\`${slug}\`)\n`);
   for (const qid of dirs(join(RUNS, slug))) {
@@ -81,18 +88,27 @@ for (const slug of dirs(RUNS)) {
       const oa = readJson(join(rdir, "overseer-a.json"));
       const ob = readJson(join(rdir, "overseer-b.json"));
       const flags = [...(oa?.flags ?? []), ...(ob?.flags ?? [])];
-      return { ok: Boolean(det && !det.blocking && oa?.verdict === "accept" && ob?.verdict === "accept"), flags, det, major: flags.filter((f) => f.severity === "major").length };
+      return { ok: Boolean(det && !det.blocking && oa?.verdict === "accept" && ob?.verdict === "accept"), flags, det, oa, ob, major: flags.filter((f) => f.severity === "major").length };
     };
     const first = existsSync(join(qdir, "round-1", "answer.md")) ? verdictOf(join(qdir, "round-1")) : null;
     if (first) totals.firstTryFlags += first.flags.length;
+    const cnt = (fl) => CATS.map(([k]) => fl.filter((f) => f.category === k).length).join(" / ");
+    const fresh = {};
     for (const fd of dirs(qdir).filter((d) => /^fresh-/.test(d))) {
       if (!existsSync(join(qdir, fd, "answer.md"))) continue;
       const v = verdictOf(join(qdir, fd));
-      totals.fresh++; totals.freshFlags += v.flags.length; if (v.ok) totals.freshAccepted++;
-      const cnt = (fl) => CATS.map(([k]) => fl.filter((f) => f.category === k).length).join(" / ");
-      roundLines.push(`| ${fd} (fresh instance, curated KB) | ${v.ok ? "**accepted**" : "rejected"} | ${v.det ? (v.det.blocking ? cell(v.det.blockingReasons.join(", ")) : "pass") : "missing"} | ${v.det?.z3?.status ?? "–"} | – | – | ${cnt(v.flags)} | – |`);
-      if (first) roundLines.push(`| change vs first attempt | ${first.ok ? "accepted" : "rejected"} → ${v.ok ? "accepted" : "rejected"} | | | | | flags ${first.flags.length} → ${v.flags.length}; major ${first.major} → ${v.major} | |`);
+      const tag = fd.slice("fresh-".length);
+      fresh[tag] = v;
+      const t = (totals.fresh[tag] ??= { questions: 0, accepted: 0, flags: 0, major: 0 });
+      t.questions++; t.flags += v.flags.length; t.major += v.major; if (v.ok) t.accepted++;
+      roundLines.push(`| ${fd} (fresh instance, ${kbOf(tag)}) | ${v.ok ? "**accepted**" : "rejected"} | ${v.det ? (v.det.blocking ? cell(v.det.blockingReasons.join(", ")) : "pass") : "missing"} | ${v.det?.z3?.status ?? "–"} | ${v.oa?.verdict ?? "missing"} | ${v.ob?.verdict ?? "missing"} | ${cnt(v.flags)} | – |`);
       for (const [k, label] of CATS) for (const f of v.flags.filter((x) => x.category === k)) flagLines.push(`- ${fd}, ${label}, ${f.severity}: "${oneLine(f.excerpt).slice(0, 300)}". ${oneLine(f.explanation)} *Fix:* ${oneLine(f.required_fix)}`);
+    }
+    const tags = Object.keys(fresh);
+    const base = tags.find((t) => /baseline/.test(t));
+    for (const t of tags.filter((x) => x !== base && base)) {
+      const b = fresh[base], v = fresh[t];
+      roundLines.push(`| change: fresh-${base} → fresh-${t} | ${b.ok ? "accepted" : "rejected"} → ${v.ok ? "accepted" : "rejected"} | | | | | flags ${b.flags.length} → ${v.flags.length}; major ${b.major} → ${v.major} | |`);
     }
     body.push(`### ${qid} (${sc?.kind ?? "?"}): ${accepted ? "accepted" : "not accepted"} after ${rounds.length} round(s)\n`);
     body.push(`> ${oneLine(sc?.request).slice(0, 400)}\n`);
@@ -107,14 +123,15 @@ for (const slug of dirs(RUNS)) {
 const head = [
   `# Simulation cycle ${cycle}: overseer report`,
   "",
-  "Generated by `simulation/tools/report.mjs` from `" + (opt["runs-dir"] ? opt["runs-dir"].split("/").slice(-2).join("/") : "simulation/runs") + "/cycle-" + cycle + "/`." + (opt.header ? ` ${opt.header}` : "") + " All agents (specialists, overseers, curators) ran on Claude Fable 5.1 (the harness's `fable` alias); specialists were configured only from the supplementary knowledge and shared rules. Overseers are language models (fallible), backed by the deterministic gate and the Z3 Logic Translator's RouterHub. This is a simulation, not evidence about the real specialists or about the API path.",
+  "Generated by `simulation/tools/report.mjs` from `" + (opt["runs-dir"] ? opt["runs-dir"].split("/").slice(-2).join("/") : "simulation/runs") + "/cycle-" + cycle + "/`." + (opt.header ? ` ${opt.header}` : "") + (opt["runs-dir"] ? "" : " All agents (specialists, overseers, curators) ran on Claude Fable 5.1 (the harness's `fable` alias); specialists were configured only from the supplementary knowledge and shared rules. Overseers are language models (fallible), backed by the deterministic gate and the Z3 Logic Translator's RouterHub. This is a simulation, not evidence about the real specialists or about the API path."),
   "",
   "## Totals",
   "",
   `- Questions: ${totals.questions}; accepted: ${totals.accepted}; accepted on the first answer: ${totals.firstTry}; specialist rounds: ${totals.rounds}`,
   `- Flags: (a) lacking detail ${totals.flags.a_lacking_detail}, (b) logic/false ${totals.flags.b_logic_or_false}, (c) no source ${totals.flags.c_no_source}, (d) no evidence ${totals.flags.d_no_evidence}; major ${totals.major}`,
   `- Deterministic blocking rounds: ${totals.detBlocking}; Z3 error findings: ${totals.z3Errors}`,
-  `- Fresh-instance retests (new instance, curated knowledge base, no feedback): ${totals.fresh}; accepted ${totals.freshAccepted}. First attempts before curation: accepted ${totals.firstTry} of ${totals.questions}, ${totals.firstTryFlags} flags; fresh attempts after curation: ${totals.freshFlags} flags.`,
+  `- First attempts in the training rounds: accepted ${totals.firstTry} of ${totals.questions}, ${totals.firstTryFlags} flags.`,
+  ...Object.entries(totals.fresh).map(([tag, t]) => `- Fresh-instance retest \`fresh-${tag}\` (new instance, ${kbOf(tag)}, one attempt, no feedback): accepted ${t.accepted} of ${t.questions}; ${t.flags} flags, ${t.major} major.`),
   "",
   "| Specialist | Questions | Accepted | Rounds | Flags |",
   "| --- | --- | --- | --- | --- |",
