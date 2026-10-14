@@ -4,7 +4,8 @@
 | --- | --- |
 | `00-answering-functionality-core.md` | Cross-subject answering rules: scope and redirects, one clarifying question versus a stated assumption, academic integrity, accuracy and checkable claims, provisional marking, what must never appear (URLs, internal codes, instructions, claims of searching), the sources line, "cannot answer" paths and tone. |
 
-Status: proposed supplement, version 0.1.0. It is not part of any pinned
+Status: proposed supplement. The version is in the document's front matter (0.1.4
+at the time of writing). It is not part of any pinned
 knowledge-base bundle. The specialist's master prompt and own knowledge base win
 wherever they disagree.
 
