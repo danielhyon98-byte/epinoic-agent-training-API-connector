@@ -330,7 +330,65 @@ no second availability registry.
 | 03 | A normalised `finishReason` in the closed set above, `usage` as 03 defines it (passed through untouched), `providerEvidence` (passed through), input and output bounds (`maxPreparedInputUtf8Bytes`, `maxOutputTokens`) | 03 is an interface draft. The 03 total-plus-cache usage shape and the 04 disjoint priced categories still need reconciling **by their owners**. This package invents no third usage schema and never adds up tokens. |
 | 04 | Authorization happens inside the injected callback, immediately before dispatch. A decline returns `{status:"declined"}`. Settlement uses 03's usage. | 04 is a contract draft and reserves migration 0003. This package writes no ledger and no migration. |
 
-## 11. What is not run or not claimed
+## 11. Clarifications made during implementation (still v0.1.0)
+
+Each gap the implementer found was resolved with the stricter reading. These
+are binding for consumers:
+
+1. **Environments** are exactly `"production"`, `"staging-pilot"` and `"offline-test"`.
+   The pinned runtime refuses `"offline-test"`. `createOfflineTestRuntime` refuses
+   the other two.
+2. **Portable globals** used by `src/` are `crypto.subtle`, `TextEncoder`,
+   `TextDecoder`, `atob`, `btoa` and `AbortSignal`. They exist in Workers and in
+   Node 22. `tools/check-portable.mjs` enforces the list.
+3. **`bundle`** in `prepareTurn` and `runSpecialistTurn` must be the `VerifiedBundle`
+   returned by `loadPinnedBundle`. It is re-hashed against the manifest on every
+   call. Passing a raw bundle module gives `bundle_not_verified`.
+4. **Export provenance:** `export-bundle.mjs` takes an optional `--kb-version`. When
+   the manifest pins `commit`, `bundlePath` or `kbVersion`, the export must match
+   them. `loadPinnedBundle` requires the module's provenance to equal the
+   manifest's, so re-export after the reviewed pin commit. The export also refuses
+   a dirty tree and an output path that is not git-ignored.
+5. **Staging enablement** additionally requires the manifest's top-level
+   `sourceStatus: "verified"`. The offline fixture manifest uses a separate
+   profile, with `offlineTestEnabled`, `environment` and a `SYNTHETIC` label, which
+   the pinned profile refuses.
+6. **`available`** in `getCapabilities` is true only when the manifest enables the
+   slug for that environment **and** a valid gate configuration exists.
+7. **`usageStatus`** is `"unknown"` whenever `usage` is null, including when nothing
+   was dispatched. Use `dispatch.callbackInvocations` to tell the two apart.
+8. **An abort observed after the callback returns** fences every reply kind
+   (completed, declined, failed or threw). The result is `cancelled` with code
+   `aborted_after_callback`. Usage and evidence are kept when the reply carried
+   them.
+9. **Strict reply shapes:** the keys must match exactly. `usage` and `providerEvidence`
+   are required keys (null allowed). `error` is exactly `{ code }`. Decline reasons
+   and error codes must be code-like (`[a-z0-9_.-]`). A `finishReason` outside the
+   closed set, such as a raw `tool_use`, is a contract violation, so 03 must
+   normalise first. Any `tools` input, even `[]`, is refused, and so is any
+   unknown input field.
+10. **`RuntimeIntegrityError`** is not exported. Callers test `err.name` and
+    `err.code`.
+11. **Synthetic gate configs** load only through `createOfflineTestRuntime`, which
+    has its own `runGate`. The top-level `runGate` refuses them.
+12. **Gate configs** must define all five checks, all required. A code list that
+    contains benign tokens (paper names, HL/SL, years, "[15 marks]") is refused.
+13. **Provisional-mark scoping:** "N marks", "band N", "markband", "grade N/A to E"
+    and "awarded/scored N" always count as an award. "a/b", "N out of M", "level N",
+    "top band" and "7-9 band" count only when the sentence also has an assessment
+    word. Ordinary vocabulary passes: "5% significance level", fractions in
+    working, "high-level language", "broadband", "sea level". The known misfires
+    are pinned by tests and listed in the package README.
+14. **URL policy** flags only `scheme://`, `www.` and domain-with-path. A bare IP
+    address such as `192.168.1.10` passes.
+15. **Turn IDs** must be exactly the four keys, each a non-empty string or a
+    non-negative integer. Prior turns are validated but never trimmed. Role
+    alternation is left to 03.
+16. **Confidentiality:** codes extracted from the proprietary bundle would sit in
+    `HISTORY_GATE_CONFIG`. This repository is public, so make it private, or keep
+    the extracted list outside it, before filling the config.
+
+## 12. What is not run or not claimed
 
 - The real bundle checksum, the History validators (`python3 -I _build/validate_kb.py history`,
   `python3 -I _build/check_kb_set.py .`) and History's handoff/04 gate rules: **not run or

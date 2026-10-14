@@ -44,25 +44,25 @@ export const RUNTIME_MANIFEST = deepFreeze({
 });
 
 /**
- * Website limits as reported in the coordination handoff, for reference only.
- * They are NOT defaults: every call must pass `limits` from website 01/03
- * configuration. The handoff text carrying the numbers was not available to
- * this package, so no value is recorded (null), rather than guessing one.
+ * Website limits as reported in the 13 October coordination handoff, for
+ * reference only. They were NOT read from website source (unreachable). They
+ * are NOT defaults: every call must pass `limits` from website 01/03
+ * configuration, and the runtime never reads this object. They are different
+ * bounds and do not map one-to-one onto the runtime's `limits` fields.
  */
 export const REPORTED_WEBSITE_LIMITS = deepFreeze({
   schema: SCHEMAS.reportedLimits,
-  status: "not-recorded",
+  status: "reported-in-handoff-not-read-from-website-source",
   usage: "reference-only-never-defaults",
   note:
-    "The coordination handoff that reports the website limits was not readable in this session. " +
-    "Values stay null until copied from that handoff in a reviewed change. The runtime never reads them.",
+    "Copied from the coordination handoff (website main 2cd31820…). Message and body limits, " +
+    "the stored result cap and the turn deadline are separate bounds. Website 01 supplies the real " +
+    "values through `limits`; an incomplete or oversize answer is never truncated to fit.",
   values: {
-    maxMessageCodePoints: null,
-    maxPriorTurns: null,
-    maxPriorTurnsUtf8Bytes: null,
-    maxPreparedInputUtf8Bytes: null,
-    maxAnswerUtf8Bytes: null,
-    maxOutputTokens: null,
+    messageMaxCodePoints: 12000,
+    requestBodyMaxBytes: 32768,
+    storedResultMaxBytes: 65536,
+    turnDeadlineSeconds: 180,
   },
 });
 

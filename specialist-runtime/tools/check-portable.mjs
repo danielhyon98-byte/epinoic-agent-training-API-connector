@@ -15,11 +15,13 @@
 // Comments, string literals, template text and regex literals are blanked
 // before scanning, so prose such as "never calls console" is not flagged.
 //
-//   node tools/check-portable.mjs      (exit 0 when clean, 1 with findings)
+//   node tools/check-portable.mjs                 (scans ../src; exit 0 when clean, 1 with findings)
+//   node tools/check-portable.mjs --src <dir>     (scans another tree, used by the tests)
 
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
+import { UsageError, parseStrictArgs } from "./lib/args.mjs";
 
 const REGEX_AFTER_WORD = new Set([
   "return", "typeof", "instanceof", "in", "of", "new", "delete", "void", "throw", "case", "do", "else", "yield", "await",
@@ -236,12 +238,20 @@ export function scanDirectory(srcRoot) {
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1])) {
-  const srcRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..", "src");
+  let args;
+  try {
+    args = parseStrictArgs(process.argv.slice(2), { required: [], optional: ["src"] });
+  } catch (err) {
+    if (!(err instanceof UsageError)) throw err;
+    process.stderr.write(`check-portable: ${err.message}\nusage: node tools/check-portable.mjs [--src <dir>]\n`);
+    process.exit(2);
+  }
+  const srcRoot = args.src ? resolve(args.src) : resolve(dirname(fileURLToPath(import.meta.url)), "..", "src");
   const { files, findings } = scanDirectory(srcRoot);
   if (findings.length > 0) {
     for (const f of findings) process.stderr.write(`${relative(process.cwd(), f.file)}:${f.line}: forbidden: ${f.rule}\n`);
     process.stderr.write(`check-portable: FAILED (${findings.length} finding(s) in ${files.length} files)\n`);
     process.exit(1);
   }
-  process.stdout.write(`check-portable: OK (${files.length} files in src/, no forbidden imports or globals)\n`);
+  process.stdout.write(`check-portable: OK (${files.length} files in ${relative(process.cwd(), srcRoot) || "."}, no forbidden imports or globals)\n`);
 }

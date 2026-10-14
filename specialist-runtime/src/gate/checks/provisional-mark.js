@@ -22,7 +22,7 @@
  *
  * Known limits (fail-closed or fail-open, see README "Limitations"):
  * "Paper 2 is out of 30 marks" and "grade 6 students" are treated as awards;
- * "you got 5/7" without a cue word and "this is a level 4 response" are not.
+ * "Your essay: 5/7." (no cue word) and "This is a level 4 response." are not.
  * @module gate/checks/provisional-mark
  */
 
