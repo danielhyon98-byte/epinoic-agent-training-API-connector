@@ -1,0 +1,115 @@
+{
+  "schema": "epinoic.simulation-deterministic-check.v1",
+  "slug": "history",
+  "blocking": true,
+  "blockingReasons": [
+    "gate:sources-line:sources_line_untagged_item",
+    "z3:INT-SUBJ-001"
+  ],
+  "gate": {
+    "status": "failed",
+    "checks": [
+      {
+        "id": "completeness",
+        "status": "pass",
+        "code": "complete"
+      },
+      {
+        "id": "url-policy",
+        "status": "pass",
+        "code": "no_url"
+      },
+      {
+        "id": "internal-code-leakage",
+        "status": "pass",
+        "code": "no_internal_code"
+      },
+      {
+        "id": "provisional-mark",
+        "status": "pass",
+        "code": "no_awarded_marks"
+      },
+      {
+        "id": "sources-line",
+        "status": "fail",
+        "code": "sources_line_untagged_item"
+      }
+    ]
+  },
+  "z3": {
+    "status": "ACCEPTED_WITH_FINDINGS",
+    "branch": "history",
+    "counts": {
+      "error": 1,
+      "warning": 0,
+      "info": 0
+    },
+    "formalErrors": 1,
+    "findings": [
+      {
+        "code": "INT-SUBJ-001",
+        "severity": "error",
+        "formal": true,
+        "claims": [
+          "The famine of 1959 to 1961, at the heart of the Great Leap Forward (launched in 1958 and abandoned in stages during 1961 and 1962), was overwhelmingly man-made."
+        ],
+        "message": "the report's own chronology statement in claim h2.1 does not hold: 'The famine of 1959 to 1961, at the heart of the Great Leap Forward (launched in 1958 and abandoned in stages during 1961 and 1962)'; stated containment of dated events ('during': 1958 within 1961): The famine of 1959 to 1961, at the heart of the Great Leap Forward (launched in 1958 and abandoned in stages during 1961 and 1962), was overwhelmingly man-made."
+      }
+    ],
+    "requestItems": [
+      {
+        "item_id": "i1",
+        "text": "Can you explain what actually caused the famine during the Great Leap Forward (1958-62) and how bad it was, but with proper specifics I can use: dates, grain output figures, the actual policies (communes, backyard furnaces, the farming methods etc), named events like the conference where Mao's critic got purged, and the 1962 meeting where someone said it was mostly man-made (who said it?).",
+        "command_term": "explain"
+      },
+      {
+        "item_id": "i2",
+        "text": "Most importantly I need the different death toll estimates and WHO gives each one, because I want to write \"according to X\" instead of just \"millions\".",
+        "command_term": null
+      },
+      {
+        "item_id": "i3",
+        "text": "Also where do historians actually disagree about whose fault it was - Mao personally, the system, local cadres, the weather?",
+        "command_term": null
+      },
+      {
+        "item_id": "i4",
+        "text": "Please flag anything that's contested rather than giving me one number as if it's settled.",
+        "command_term": null
+      }
+    ],
+    "coverage": [
+      {
+        "item_id": "i1",
+        "addressed": true,
+        "method": "lexical_heuristic"
+      },
+      {
+        "item_id": "i2",
+        "addressed": true,
+        "method": "lexical_heuristic"
+      },
+      {
+        "item_id": "i3",
+        "addressed": true,
+        "method": "lexical_heuristic"
+      },
+      {
+        "item_id": "i4",
+        "addressed": true,
+        "method": "lexical_heuristic"
+      }
+    ],
+    "uncoveredItems": [],
+    "constraints": [],
+    "versions": {
+      "ENGINE_VERSION": "0.3.0",
+      "IR_VERSION": "1.0",
+      "POLICY_VERSION": "2026.10-v3",
+      "TRANSLATOR_VERSION": "0.3.0"
+    },
+    "reason": null
+  },
+  "advisory": [],
+  "note": "Deterministic format/policy gate plus the translator hub's Z3 checks of the answer's own stated arithmetic, quotations and limits. Item coverage is heuristic and advisory. None of this establishes that the answer is true or complete."
+}

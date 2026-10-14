@@ -1,0 +1,132 @@
+{
+  "schema": "epinoic.simulation-deterministic-check.v1",
+  "slug": "mathematics-aa",
+  "blocking": false,
+  "blockingReasons": [],
+  "gate": {
+    "status": "passed",
+    "checks": [
+      {
+        "id": "completeness",
+        "status": "pass",
+        "code": "complete"
+      },
+      {
+        "id": "url-policy",
+        "status": "pass",
+        "code": "no_url"
+      },
+      {
+        "id": "internal-code-leakage",
+        "status": "pass",
+        "code": "no_internal_code"
+      },
+      {
+        "id": "provisional-mark",
+        "status": "pass",
+        "code": "no_awarded_marks"
+      },
+      {
+        "id": "sources-line",
+        "status": "pass",
+        "code": "sources_line_valid"
+      }
+    ]
+  },
+  "z3": {
+    "status": "ACCEPTED_WITH_FINDINGS",
+    "branch": "mathematics",
+    "counts": {
+      "error": 0,
+      "warning": 0,
+      "info": 0
+    },
+    "formalErrors": 0,
+    "findings": [],
+    "requestItems": [
+      {
+        "item_id": "i1",
+        "text": "I don't really get how changing the unit can change a derivative, and the only explanation I got was \"radians are natural\", which isn't an explanation.",
+        "command_term": null
+      },
+      {
+        "item_id": "i2",
+        "text": "Can you explain it properly with actual evidence?",
+        "command_term": "explain"
+      },
+      {
+        "item_id": "i3",
+        "text": "(a) Show me numerically what happens to sin(h)/h as h gets small. Use h = 0.1, 0.01 and 0.001 in radians, then h = 1, 0.1 and 0.01 in degrees. What are the two limits and why are they different? [4 marks]",
+        "command_term": null
+      },
+      {
+        "item_id": "i4",
+        "text": "(b) Using the first principles definition, estimate the gradient of y = sin x at x = π/3 with h = 0.01 and compare it with cos(π/3). Explain why there is a gap and how I could make it smaller. [4 marks]",
+        "command_term": "estimate"
+      },
+      {
+        "item_id": "i5",
+        "text": "(c) Where does lim (h→0) sin h / h = 1 actually come from? My notes have a \"sandwich/squeeze\" argument with areas on the unit circle but I can't see where radians get used. Also, can I just use L'Hôpital's rule for this limit instead, since we've done it in HL? [4 marks]",
+        "command_term": null
+      },
+      {
+        "item_id": "i6",
+        "text": "(d) What is d/dx sin(x°) actually equal to? And briefly, where did radians even come from, who introduced them and when, and why does the IB make us use them in calculus? [3 marks]",
+        "command_term": null
+      },
+      {
+        "item_id": "i7",
+        "text": "Please give the actual numbers for each step and say where any historical claims come from.",
+        "command_term": null
+      }
+    ],
+    "coverage": [
+      {
+        "item_id": "i1",
+        "addressed": true,
+        "method": "lexical_heuristic"
+      },
+      {
+        "item_id": "i2",
+        "addressed": true,
+        "method": "lexical_heuristic"
+      },
+      {
+        "item_id": "i3",
+        "addressed": true,
+        "method": "part_label"
+      },
+      {
+        "item_id": "i4",
+        "addressed": true,
+        "method": "part_label"
+      },
+      {
+        "item_id": "i5",
+        "addressed": true,
+        "method": "part_label"
+      },
+      {
+        "item_id": "i6",
+        "addressed": true,
+        "method": "part_label"
+      },
+      {
+        "item_id": "i7",
+        "addressed": true,
+        "method": "lexical_heuristic"
+      }
+    ],
+    "uncoveredItems": [],
+    "constraints": [],
+    "versions": {
+      "ENGINE_VERSION": "0.3.0",
+      "IR_VERSION": "1.0",
+      "POLICY_VERSION": "2026.10-v3",
+      "TRANSLATOR_VERSION": "0.3.0"
+    },
+    "reason": null
+  },
+  "advisory": [],
+  "note": "Deterministic format/policy gate plus the translator hub's Z3 checks of the answer's own stated arithmetic, quotations and limits. Item coverage is heuristic and advisory. None of this establishes that the answer is true or complete."
+}
