@@ -1,0 +1,14 @@
+{
+  "fixtureBrand": "SYNTHETIC-FIXTURE-NOT-FOR-PRODUCTION",
+  "note": "Offline harness configuration for the evaluator and tests. The adapter, excerpt and model identifiers are synthetic placeholders: no adapter, provider or model exists behind them and none was called. The excerpt window stands in for website 01's excerpting, which this package does not own. datasets are SHA-256 digests of the synthetic eval splits (regenerate with npm run build:fixtures).",
+  "adapter": { "id": "synthetic-fixture-adapter", "version": "synthetic-adapter/0.1.0" },
+  "excerpt": { "version": "synthetic-excerpt/0.1.0-head-2048", "windowUtf8Bytes": 2048 },
+  "limits": { "maxExcerptUtf8Bytes": 2048 },
+  "calibrationContext": {
+    "model": "none:synthetic-fixture-no-model",
+    "datasets": {
+      "tuneSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "holdoutSha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  }
+}

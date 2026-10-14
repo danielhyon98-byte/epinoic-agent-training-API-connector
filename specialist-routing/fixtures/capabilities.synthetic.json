@@ -1,0 +1,57 @@
+{
+  "schema": "epinoic.specialist-capabilities.v1",
+  "runtimeContractVersion": "epinoic.specialist-runtime.v0.1.0",
+  "manifestVersion": "synthetic-fixture-2026-10-13.0",
+  "environment": "offline-test",
+  "entries": [
+    {
+      "slug": "history",
+      "available": true,
+      "supportedModes": ["pilot-single-turn-no-tools"],
+      "gateVersion": "history-gate/0.1.0",
+      "bundleSha256": "a5b8a2da6feb447ea06d9e38946ba50f71b14495e517169b5b3a418530119240"
+    },
+    {
+      "slug": "english-a-lang-lit",
+      "available": true,
+      "supportedModes": ["pilot-single-turn-no-tools"],
+      "gateVersion": "synthetic-gate/0.0.0",
+      "bundleSha256": "9e85102b6e65736ad8d4b9255609e5c6f13e3088180e6f6f46276c8681ef86f6"
+    },
+    {
+      "slug": "mathematics-aa",
+      "available": true,
+      "supportedModes": ["pilot-single-turn-no-tools"],
+      "gateVersion": "synthetic-gate/0.0.0",
+      "bundleSha256": "a1d1c4a5c3db7a1312e22ba16bf6cb7f69edff5b4db259184af58a25ac45de16"
+    },
+    {
+      "slug": "biology",
+      "available": true,
+      "supportedModes": ["pilot-single-turn-no-tools"],
+      "gateVersion": "synthetic-gate/0.0.0",
+      "bundleSha256": "9cf44ea5b7cdfdcb31becc4ac9cf3303150f472d3ea6a05953e77fcc013de322"
+    },
+    {
+      "slug": "spanish-b",
+      "available": true,
+      "supportedModes": ["pilot-single-turn-no-tools"],
+      "gateVersion": "synthetic-gate/0.0.0",
+      "bundleSha256": "d4ab727aeeb1de0dc0912a28863c1ef6890cfb2069accabe1131dfd4e6cfa9f9"
+    },
+    {
+      "slug": "physics",
+      "available": false,
+      "supportedModes": ["pilot-single-turn-no-tools"],
+      "gateVersion": null,
+      "bundleSha256": null
+    },
+    {
+      "slug": "ess",
+      "available": false,
+      "supportedModes": ["pilot-single-turn-no-tools"],
+      "gateVersion": null,
+      "bundleSha256": null
+    }
+  ]
+}

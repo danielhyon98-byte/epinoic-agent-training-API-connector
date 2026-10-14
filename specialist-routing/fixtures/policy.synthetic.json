@@ -1,0 +1,20 @@
+{
+  "schema": "epinoic.routing-policy.v1",
+  "policyVersion": "fixture/0.1.0",
+  "status": "fixture-only",
+  "fixtureBrand": "SYNTHETIC-FIXTURE-NOT-FOR-PRODUCTION",
+  "thresholds": {
+    "routeMin": 0.6,
+    "marginMin": 0.15,
+    "familyMin": 0.55,
+    "clarifyFloor": 0.3,
+    "outOfScopeMin": 0.6,
+    "mixedMin": 0.6,
+    "nonEnglishMin": 0.6,
+    "taskContextMin": 0.55
+  },
+  "calibration": {
+    "fingerprint": "0000000000000000000000000000000000000000000000000000000000000000",
+    "recordId": "synthetic-fixture-record-0001"
+  }
+}
