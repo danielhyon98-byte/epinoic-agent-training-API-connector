@@ -37,7 +37,7 @@ const MODE = A.mode || 'train'
 // "haiku-curated") rebuilds the bundles after curation and runs a fresh-instance retest of
 // every question. With a Haiku specialist, round 1 is itself the fresh baseline on the
 // original knowledge base, so no separate baseline pass is needed.
-const RETEST_TAG = MODE === 'retest' ? A.retestTag : A.retestAfterCurate
+const RETEST_TAG = (MODE === 'retest' || MODE === 'judge') ? A.retestTag : A.retestAfterCurate
 // Z3 adjudication (from cycle 1 maths-cs onward). Z3 runs on every answer. Each Z3 error
 // finding (z3:INT-...) is recomputed by a Fable adjudicator and ruled a real error or a
 // checker artefact; uncertain findings count as real. Only confirmed findings, gate failures
@@ -312,6 +312,12 @@ async function runQuestion(slug, q, maxRounds = MAX_ROUNDS, fresh = false) {
         label: `z3-adjudicator:${q.qid}:r${r}`, phase: 'Simulate', schema: ADJ_SCHEMA, model: JUDGE_MODEL, effort: 'high',
       })
     }
+    // A judge that returns nothing (usage limit, API error) is not a verdict: stop this question
+    // here, keep the files, and let a later 'judge' run fill in the missing reports.
+    if (!det || !oa || !ob || (z3Blocks.length && !adj)) {
+      rounds.push({ r, error: 'judge_failed', missing: [!det && 'deterministic', !oa && 'overseerA', !ob && 'overseerB', z3Blocks.length && !adj && 'z3-adjudicator'].filter(Boolean) })
+      return { qid: q.qid, kind: q.kind, accepted: false, judgeFailed: true, rounds }
+    }
     const artefacts = adj ? adj.findings.filter((f) => f.verdict === 'checker_artefact').length : 0
     const z3Confirmed = Math.max(0, z3Blocks.length - artefacts)
     const rejected = otherBlocks.length > 0 || z3Confirmed > 0 || !oa || !ob || oa.verdict === 'reject' || ob.verdict === 'reject'
@@ -357,6 +363,23 @@ if (MODE === 'curate') {
   return { cycle: N, mode: 'curate', curated: cur.filter(Boolean) }
 }
 
+if (MODE === 'judge') {
+  // Fill in judge reports for answers already on disk (after a judge failed): args.rounds is
+  // [{slug, qid, r}] with r a round number or 'fresh' (uses args.retestTag). Runs both overseers
+  // and the Z3 adjudicator (which returns no findings when there is nothing to adjudicate).
+  log(`REAL AGENTS | JUDGE | judges ${JUDGE_MODEL} | ${A.rounds.length} answer(s)`)
+  phase('Simulate')
+  const judged = await parallel(A.rounds.map((x) => async () => {
+    const [oa, ob, adj] = await parallel([
+      () => agent(overseerPrompt('A', x.slug, x.qid, x.r), { label: `overseerA:${x.qid}:r${x.r}`, phase: 'Simulate', schema: OVERSEER_SCHEMA, model: JUDGE_MODEL }),
+      () => agent(overseerPrompt('B', x.slug, x.qid, x.r), { label: `overseerB:${x.qid}:r${x.r}`, phase: 'Simulate', schema: OVERSEER_SCHEMA, model: JUDGE_MODEL, effort: 'high' }),
+      () => agent(adjudicatorPrompt(x.slug, x.qid, x.r), { label: `z3-adjudicator:${x.qid}:r${x.r}`, phase: 'Simulate', schema: ADJ_SCHEMA, model: JUDGE_MODEL, effort: 'high' }),
+    ])
+    return { ...x, verdictA: oa ? oa.verdict : 'missing', verdictB: ob ? ob.verdict : 'missing', adjudicated: adj ? adj.findings.length : 'missing', flags: [...((oa && oa.flags) || []), ...((ob && ob.flags) || [])].length }
+  }))
+  return { cycle: N, mode: 'judge', judged }
+}
+
 if (MODE === 'retest') {
   if (!A.retestTag || !A.questions) throw new Error('retest needs args.retestTag and args.questions {slug: [{qid, kind}]}')
   log(`REAL AGENTS | FRESH-INSTANCE RETEST ${A.retestTag} | specialists ${SPECIALIST_MODEL}${BUNDLE_ROOT ? ' (baseline bundle)' : ''}, judges ${JUDGE_MODEL} | cycle ${N}, cluster ${A.cluster}: ${A.slugs.join(', ')}`)
@@ -386,6 +409,10 @@ const results = await pipeline(
     return { slug, questions: out.filter(Boolean) }
   },
   async (res, slug) => {
+    if (res.questions.some((q) => q.judgeFailed)) {
+      log(`${slug}: a judge failed; curation and retest skipped so no edit rests on missing verdicts`)
+      return { ...res, curator: null, skipped: 'judge_failed' }
+    }
     const outcomes = res.questions.map((q) => ({ qid: q.qid, accepted: q.accepted, rounds: q.rounds.map((x) => ({ r: x.r, rejected: x.rejected, flags: x.flags, blocking: x.blockingReasons, z3Adjudicated: x.z3Adjudicated })) }))
     const cur = await agent(curatorPrompt(slug, outcomes), { label: `curator:${slug}`, phase: 'Curate', schema: CURATOR_SCHEMA, model: JUDGE_MODEL, effort: 'high' })
     return { ...res, curator: cur }
@@ -395,6 +422,7 @@ const done = results.filter(Boolean)
 const allQ = done.flatMap((s) => s.questions)
 log(`cluster ${A.cluster}: ${allQ.filter((q) => q.accepted).length}/${allQ.length} answers accepted; ${allQ.reduce((n, q) => n + q.rounds.length, 0)} specialist rounds`)
 if (!RETEST_TAG) return { cycle: N, cluster: A.cluster, subjects: done }
+if (done.some((s) => s.skipped)) return { cycle: N, cluster: A.cluster, subjects: done, retest: 'skipped: a judge failed' }
 
 // Integrate this cluster's curated edits, then a fresh instance answers every question once.
 phase('Retest')
