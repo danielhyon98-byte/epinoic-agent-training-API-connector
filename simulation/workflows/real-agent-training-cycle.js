@@ -141,7 +141,8 @@ const CURATOR_SCHEMA = {
 const NO_NET = 'Self-contained environment: do NOT use web search, web fetch or any network tool.'
 const KB = `${WT}/knowledge-bases`
 const qdirOf = (slug, qid) => `${WT}/training/runs/cycle-${N}/${slug}/${qid}`
-const rdirOf = (slug, qid, r) => `${qdirOf(slug, qid)}/${r === 'fresh' ? `fresh-${RETEST_TAG}` : `round-${r}`}`
+// r: a round number, 'fresh' (the run's retest tag) or 'fresh:<tag>' (judge mode, any retest folder)
+const rdirOf = (slug, qid, r) => `${qdirOf(slug, qid)}/${r === 'fresh' ? `fresh-${RETEST_TAG}` : String(r).startsWith('fresh:') ? `fresh-${String(r).slice(6)}` : `round-${r}`}`
 const bundleOf = (slug) => `${BUNDLE_ROOT || KB}/_bundles/${slug}.full-context.txt`
 
 function writerPrompt(slug) {
@@ -276,7 +277,7 @@ Your job: change the REAL knowledge base so the next cycle starts better, in the
 2. Edit only files in ${dir}/ (master_prompt.txt and the seven .md documents). Make surgical, well-placed edits that fix what the runs show: a rule that was missing or unclear, a correction-table row, an example or pattern-not-to-imitate in examples.md, a quality-test item, a corrected fact. New or changed rules must carry the [P] label (proposed from simulation) unless the evidence supports another label, and follow the document's own code numbering (next free code; no reuse). Prefer the .md documents; edit master_prompt.txt only for a mandatory rule that must be in the instruction channel.
 3. NEVER: weaken a non-negotiable, the academic-integrity or provisional-marking rules, or the AUTHORITY ORDER; change the verbatim SOURCE POLICY lines; add URLs; add copyrighted text, past-paper text or real student data; invent facts (mark anything uncertain as [R] with an interim rule, per the house format).
 4. Run: cd ${KB} && python3 -I _build/validate_kb.py ${slug} — fix until it reports 0 errors (keep warnings at 0 if possible; report any). Do NOT run make_bundles.py or check_kb_set.py (the coordinator rebuilds bundles once for all subjects).
-5. Write ${WT}/training/changes/cycle-${N}/${slug}.md: for every edit, the file and rule code, what changed (before -> after, short), why (which flags/diagnoses/runs motivated it, by qid and round), and its evidence label. Also list proposals you did NOT make (for example changes that belong in the shared SOURCE POLICY or need the owner).
+5. Write ${WT}/training/changes/cycle-${N}/${slug}.md${A.modelNames ? ` (its first line after the title: "Models: specialist ${A.modelNames.specialist}; overseers, Z3 adjudicator and curator ${A.modelNames.judge}.")` : ''}: for every edit, the file and rule code, what changed (before -> after, short), why (which flags/diagnoses/runs motivated it, by qid and round), and its evidence label. Also list proposals you did NOT make (for example changes that belong in the shared SOURCE POLICY or need the owner).
 
 Return files_changed, lessons (one line each), factual_corrections, shared_rule_proposals (cross-subject or owner-level), open_issues, check_knowledge_passed (true when validate_kb.py reports 0 errors).`
 }

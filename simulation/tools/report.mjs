@@ -61,6 +61,9 @@ const kbOf = (tag) => (/baseline/.test(tag) ? "original KB" : "curated KB");
 for (const slug of dirs(RUNS).filter((s) => !only || only.has(s))) {
   const subj = { slug, questions: 0, accepted: 0, rounds: 0, flags: 0 };
   body.push(`\n## ${name[slug] ?? slug} (\`${slug}\`)\n`);
+  // models.json (written by the coordinator) names the models behind each part of the record.
+  const models = readJson(join(RUNS, slug, "models.json"));
+  if (models) body.push(`Models: ${Object.entries(models).filter(([k]) => k !== "notes").map(([k, v]) => `${k}: ${typeof v === "string" ? v : Object.entries(v).map(([r, m]) => `${r} ${m}`).join(", ")}`).join("; ")}.${models.notes ? ` ${models.notes}` : ""}\n`);
   for (const qid of dirs(join(RUNS, slug))) {
     const qdir = join(RUNS, slug, qid);
     const sc = readJson(join(qdir, "scenario.json"));
