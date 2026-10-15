@@ -75,6 +75,15 @@ test("internal-code-leakage: exact, boundary-matched codes fail; dash variants a
   }
 });
 
+test("internal-code-leakage: superscript and subscript units are not codes; full-width codes still are", async () => {
+  const { normaliseForCodes } = await import("../src/gate/text-scan.js");
+  assert.equal(normaliseForCodes("P = εσAT⁴ with T in K⁴"), "P = εσAT^4 with T in K^4");
+  assert.equal(normaliseForCodes("H₂O"), "H_2O");
+  assert.equal(normaliseForCodes("ＨＸＲ‐１０１"), "HXR-101");
+  assert.equal(check(gate(withSources("Rule HXR-¹⁰¹ is a superscript, not the code.")), "internal-code-leakage").status, "pass");
+  assert.equal(check(gate(withSources("Rule ＨＸＲ-１０１ is full-width.")), "internal-code-leakage").status, "fail");
+});
+
 test("internal-code-leakage excludes codes present in the user's own message (quoted user material)", () => {
   const userMessage = 'My teacher wrote "HXR-101" on my essay. What does it mean?';
   const answer = withSources('Your teacher\'s note "HXR-101" is not something I can interpret.');

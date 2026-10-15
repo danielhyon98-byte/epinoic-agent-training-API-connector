@@ -18,12 +18,22 @@ export function normaliseForScan(text) {
   return text.normalize("NFKC").replace(ZERO_WIDTH, "");
 }
 
+// Superscript and subscript characters (U+00B2, U+00B3, U+00B9, U+2070-U+209C). NFKC folds
+// them to plain characters, which turned the unit "K⁴" into the rule code "K4" (cycle 1,
+// Physics). For code matching they keep a marker: "K⁴" -> "K^4", "H₂" -> "H_2".
+const SUPERSCRIPT = /[\u00B2\u00B3\u00B9\u2070-\u207F]/g;
+const SUBSCRIPT = /[\u2080-\u209C]/g;
+
 /**
  * As normaliseForScan, and fold every dash/hyphen variant to "-" (for code matching).
+ * Superscripts and subscripts are kept apart from the base text ("K⁴" is not "K4").
  * @param {string} text
  */
 export function normaliseForCodes(text) {
-  return normaliseForScan(text).replace(ALL_HYPHENS, "-");
+  const marked = text
+    .replace(SUPERSCRIPT, (c) => `^${c.normalize("NFKC")}`)
+    .replace(SUBSCRIPT, (c) => `_${c.normalize("NFKC")}`);
+  return normaliseForScan(marked).replace(ALL_HYPHENS, "-");
 }
 
 /**
