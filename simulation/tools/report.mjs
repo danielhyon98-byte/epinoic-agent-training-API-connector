@@ -37,8 +37,22 @@ const readJson = (p) => { try { return JSON.parse(readFileSync(p, "utf8")); } ca
 const dirs = (p) => (existsSync(p) ? readdirSync(p).filter((d) => statSync(join(p, d)).isDirectory()).sort() : []);
 const oneLine = (s) => String(s ?? "").replace(/\s+/g, " ").trim();
 const cell = (s) => oneLine(s).replace(/\|/g, "\\|");
+// Effective deterministic result. Z3 error findings (z3:INT-*) are ruled by an adjudicator
+// where the round has z3-adjudication.json; without one they all count (strict). Gate
+// failures and unsatisfied Z3 constraints always block.
+const detOutcome = (det, adj) => {
+  if (!det) return { blocking: true, other: ["missing"], z3: 0, artefacts: 0, confirmed: 0, text: "missing" };
+  const z3 = det.blockingReasons.filter((x) => /^z3:INT-/.test(x));
+  const other = det.blockingReasons.filter((x) => !/^z3:INT-/.test(x));
+  const artefacts = Math.min(z3.length, (adj?.findings ?? []).filter((f) => f.verdict === "checker_artefact").length);
+  const confirmed = z3.length - artefacts;
+  const counts = Object.entries(z3.reduce((m, c) => ({ ...m, [c]: (m[c] ?? 0) + 1 }), {})).map(([c, n]) => `${c}${n > 1 ? ` x${n}` : ""}`);
+  const z3text = z3.length ? `${counts.join(", ")}${adj ? ` (adjudicated: ${confirmed} confirmed, ${artefacts} artefact${artefacts === 1 ? "" : "s"})` : " (not adjudicated)"}` : "";
+  const blocking = other.length > 0 || confirmed > 0;
+  return { blocking, other, z3: z3.length, artefacts, confirmed, text: [blocking ? "" : "pass", ...other, z3text].filter(Boolean).join("; ") };
+};
 
-const totals = { questions: 0, accepted: 0, rounds: 0, firstTry: 0, firstTryFlags: 0, firstTryMajor: 0, fresh: {}, flags: { a_lacking_detail: 0, b_logic_or_false: 0, c_no_source: 0, d_no_evidence: 0 }, major: 0, detBlocking: 0, z3Errors: 0 };
+const totals = { questions: 0, accepted: 0, rounds: 0, firstTry: 0, firstTryFlags: 0, firstTryMajor: 0, fresh: {}, z3Artefacts: 0, z3Confirmed: 0, flags: { a_lacking_detail: 0, b_logic_or_false: 0, c_no_source: 0, d_no_evidence: 0 }, major: 0, detBlocking: 0, z3Errors: 0 };
 const bySubject = [];
 const body = [];
 
@@ -62,22 +76,25 @@ for (const slug of dirs(RUNS).filter((s) => !only || only.has(s))) {
       const oa = readJson(join(rdir, "overseer-a.json"));
       const ob = readJson(join(rdir, "overseer-b.json"));
       const diag = readJson(join(rdir, "diagnosis.json"));
+      const adj = readJson(join(rdir, "z3-adjudication.json"));
       if (!existsSync(join(rdir, "answer.md"))) continue;
       totals.rounds++; subj.rounds++;
       const flags = [...(oa?.flags ?? []), ...(ob?.flags ?? [])];
       const z3err = (det?.z3?.findings ?? []).filter((f) => f.severity === "error");
-      const ok = det && !det.blocking && oa?.verdict === "accept" && ob?.verdict === "accept";
-      if (det?.blocking) totals.detBlocking++;
-      totals.z3Errors += z3err.length;
+      const dout = detOutcome(det, adj);
+      const ok = det && !dout.blocking && oa?.verdict === "accept" && ob?.verdict === "accept";
+      if (dout.blocking) totals.detBlocking++;
+      totals.z3Errors += z3err.length; totals.z3Artefacts += dout.artefacts; totals.z3Confirmed += dout.confirmed;
       for (const f of flags) { totals.flags[f.category] = (totals.flags[f.category] ?? 0) + 1; if (f.severity === "major") totals.major++; subj.flags++; }
-      roundLines.push(`| ${r} | ${ok ? "**accepted**" : "rejected"} | ${det ? (det.blocking ? cell(det.blockingReasons.join(", ")) : "pass") : "missing"} | ${det?.z3?.status ?? "–"}${z3err.length ? ` (${z3err.map((f) => f.code).join(", ")})` : ""} | ${oa?.verdict ?? "missing"} | ${ob?.verdict ?? "missing"} | ${CATS.map(([k]) => flags.filter((f) => f.category === k).length).join(" / ")} | ${diag?.diagnosis?.length ?? (r > 1 ? "missing" : "–")} |`);
+      roundLines.push(`| ${r} | ${ok ? "**accepted**" : "rejected"} | ${cell(dout.text)} | ${det?.z3?.status ?? "–"}${z3err.length ? ` (${z3err.map((f) => f.code).join(", ")})` : ""} | ${oa?.verdict ?? "missing"} | ${ob?.verdict ?? "missing"} | ${CATS.map(([k]) => flags.filter((f) => f.category === k).length).join(" / ")} | ${diag?.diagnosis?.length ?? (r > 1 ? "missing" : "–")} |`);
       if (ok) { accepted = true; if (r === 1) totals.firstTry++; }
       for (const [k, label] of CATS) {
         for (const f of flags.filter((x) => x.category === k)) {
           flagLines.push(`- Round ${r}, ${label}, ${f.severity}: "${oneLine(f.excerpt).slice(0, 300)}". ${oneLine(f.explanation)} *Fix:* ${oneLine(f.required_fix)}`);
         }
       }
-      for (const f of z3err) flagLines.push(`- Round ${r}, Z3 RouterHub ${f.code} (formal: ${f.formal}): "${oneLine((f.claims ?? [])[0]).slice(0, 200)}". ${oneLine(f.message).slice(0, 300)}`);
+      if (adj) for (const f of adj.findings ?? []) flagLines.push(`- Round ${r}, Z3 RouterHub ${f.code}, adjudicated **${f.verdict === "checker_artefact" ? "checker artefact" : "real error"}**: "${oneLine(f.claim).slice(0, 200)}". ${oneLine(f.reason).slice(0, 300)} *Recomputation:* ${oneLine(f.recomputation).slice(0, 300)}`);
+      else for (const f of z3err) flagLines.push(`- Round ${r}, Z3 RouterHub ${f.code} (formal: ${f.formal}): "${oneLine((f.claims ?? [])[0]).slice(0, 200)}". ${oneLine(f.message).slice(0, 300)}`);
       for (const d of diag?.diagnosis ?? []) flagLines.push(`- Round ${r} diagnosis: ${oneLine(d.flag).slice(0, 120)}. *Root cause:* ${oneLine(d.root_cause)} *Change:* ${oneLine(d.change)}`);
     }
     if (accepted) { totals.accepted++; subj.accepted++; }
@@ -87,8 +104,9 @@ for (const slug of dirs(RUNS).filter((s) => !only || only.has(s))) {
       const det = readJson(join(rdir, "deterministic.json"));
       const oa = readJson(join(rdir, "overseer-a.json"));
       const ob = readJson(join(rdir, "overseer-b.json"));
+      const dout = detOutcome(det, readJson(join(rdir, "z3-adjudication.json")));
       const flags = [...(oa?.flags ?? []), ...(ob?.flags ?? [])];
-      return { ok: Boolean(det && !det.blocking && oa?.verdict === "accept" && ob?.verdict === "accept"), flags, det, oa, ob, major: flags.filter((f) => f.severity === "major").length };
+      return { ok: Boolean(det && !dout.blocking && oa?.verdict === "accept" && ob?.verdict === "accept"), flags, det, dout, oa, ob, major: flags.filter((f) => f.severity === "major").length };
     };
     const first = existsSync(join(qdir, "round-1", "answer.md")) ? verdictOf(join(qdir, "round-1")) : null;
     if (first) { totals.firstTryFlags += first.flags.length; totals.firstTryMajor += first.major; }
@@ -101,7 +119,7 @@ for (const slug of dirs(RUNS).filter((s) => !only || only.has(s))) {
       fresh[tag] = v;
       const t = (totals.fresh[tag] ??= { questions: 0, accepted: 0, flags: 0, major: 0 });
       t.questions++; t.flags += v.flags.length; t.major += v.major; if (v.ok) t.accepted++;
-      roundLines.push(`| ${fd} (fresh instance, ${kbOf(tag)}) | ${v.ok ? "**accepted**" : "rejected"} | ${v.det ? (v.det.blocking ? cell(v.det.blockingReasons.join(", ")) : "pass") : "missing"} | ${v.det?.z3?.status ?? "–"} | ${v.oa?.verdict ?? "missing"} | ${v.ob?.verdict ?? "missing"} | ${cnt(v.flags)} | – |`);
+      roundLines.push(`| ${fd} (fresh instance, ${kbOf(tag)}) | ${v.ok ? "**accepted**" : "rejected"} | ${cell(v.dout.text)} | ${v.det?.z3?.status ?? "–"} | ${v.oa?.verdict ?? "missing"} | ${v.ob?.verdict ?? "missing"} | ${cnt(v.flags)} | – |`);
       for (const [k, label] of CATS) for (const f of v.flags.filter((x) => x.category === k)) flagLines.push(`- ${fd}, ${label}, ${f.severity}: "${oneLine(f.excerpt).slice(0, 300)}". ${oneLine(f.explanation)} *Fix:* ${oneLine(f.required_fix)}`);
     }
     const tags = Object.keys(fresh);
@@ -133,7 +151,7 @@ const head = [
   "",
   `- Questions: ${totals.questions}; accepted: ${totals.accepted}; accepted on the first answer: ${totals.firstTry}; specialist rounds: ${totals.rounds}`,
   `- Flags: (a) lacking detail ${totals.flags.a_lacking_detail}, (b) logic/false ${totals.flags.b_logic_or_false}, (c) no source ${totals.flags.c_no_source}, (d) no evidence ${totals.flags.d_no_evidence}; major ${totals.major}`,
-  `- Deterministic blocking rounds: ${totals.detBlocking}; Z3 error findings: ${totals.z3Errors}`,
+  `- Deterministic blocking rounds (after Z3 adjudication where present): ${totals.detBlocking}; Z3 error findings: ${totals.z3Errors} (adjudicated checker artefacts ${totals.z3Artefacts}; blocking findings counted ${totals.z3Confirmed})`,
   `- First attempts in the training rounds: accepted ${totals.firstTry} of ${totals.questions}; ${totals.firstTryFlags} flags, ${totals.firstTryMajor} major.`,
   ...Object.entries(totals.fresh).map(([tag, t]) => `- Fresh-instance retest \`fresh-${tag}\` (new instance, ${kbOf(tag)}, one attempt, no feedback): accepted ${t.accepted} of ${t.questions}; ${t.flags} flags, ${t.major} major.`),
   "",
