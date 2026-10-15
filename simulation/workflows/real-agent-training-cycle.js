@@ -38,6 +38,14 @@ const MODE = A.mode || 'train'
 // every question. With a Haiku specialist, round 1 is itself the fresh baseline on the
 // original knowledge base, so no separate baseline pass is needed.
 const RETEST_TAG = MODE === 'retest' ? A.retestTag : A.retestAfterCurate
+// Z3 adjudication (from cycle 1 maths-cs onward). Z3 runs on every answer. Each Z3 error
+// finding (z3:INT-...) is recomputed by a Fable adjudicator and ruled a real error or a
+// checker artefact; uncertain findings count as real. Only confirmed findings, gate failures
+// and unsatisfied Z3 constraints (word limits) block. The translator itself is unchanged.
+// harnessVersion 1 keeps the specialist feedback and Overseer B prompts exactly as they were
+// before adjudication (so a resumed run replays its finished rounds); 2 (the default) passes
+// the adjudication to the specialist and tells Overseer B that Z3 findings are adjudicated.
+const HV = A.harnessVersion || 2
 
 const FLAG = {
   type: 'object',
@@ -205,7 +213,7 @@ function overseerPrompt(which, slug, qid, r) {
 (d) d_no_evidence: a claim established without evidence: no date, figure, example, quotation from the supplied text, study finding or shown working supporting it.
 Also verify the request items yourself (deterministic coverage is heuristic): an unanswered required item is a major (a) flag.`
     : `You judge TRUTH, two categories:
-(b) b_logic_or_false: leaps in logic (a conclusion that does not follow, a missing step, generalising from one case, causation from correlation, a judgement not weighed against the counter-argument it needs) and factually untrue statements (wrong dates, figures, names, definitions, mechanisms, arithmetic). Any source, study, quotation, statistic, historian's view, page number, edition, library unit, textbook or MyLib/MyBib result that appears invented, misattributed or not actually available in this no-tools session is a MAJOR (b) flag. Recompute every number. Z3 findings with severity "error" in deterministic.json (for example INT-SUBJ-001) are formally verified failures of the answer's own arithmetic: include each as a (b) flag quoting the claim.
+(b) b_logic_or_false: leaps in logic (a conclusion that does not follow, a missing step, generalising from one case, causation from correlation, a judgement not weighed against the counter-argument it needs) and factually untrue statements (wrong dates, figures, names, definitions, mechanisms, arithmetic). Any source, study, quotation, statistic, historian's view, page number, edition, library unit, textbook or MyLib/MyBib result that appears invented, misattributed or not actually available in this no-tools session is a MAJOR (b) flag. Recompute every number. ${HV >= 2 ? 'Z3 findings in deterministic.json are adjudicated by a separate step that recomputes each one; do not copy a Z3 finding as a flag. Flag a numeric, chronological or quotation error only when you have verified it yourself.' : 'Z3 findings with severity "error" in deterministic.json (for example INT-SUBJ-001) are formally verified failures of the answer\'s own arithmetic: include each as a (b) flag quoting the claim.'}
 (c) c_no_source: a contestable claim that is not backed by a source the specialist's own SOURCE POLICY permits (read it in ${KB}/${slug}/master_prompt.txt: conversation material, course-standard knowledge presented as such, the library when available, MyLib for referencing only) or that is not flagged as unverified when it should be; and any "Sources:" line that does not follow that policy and audit 02 section 5 (in a no-tools run it may name supplied material or course-standard knowledge, never library units or MyLib guides).
 Also judge marking against the specialist's own rules (its non-negotiables and Assessment K32): any mark, band, level or grade the answer AWARDS to student work must be labelled provisional as those rules require; a missing label is a major (b) flag. A header stating what a question is worth (for example "Question - to what extent - 15 marks") is not an awarded mark.`
   return `You are Overseer ${which} in a self-contained training simulation that polices an answer by the REAL Epinoic AI "${NAMES[slug]}" specialist for IB Diploma students. ${NO_NET}
@@ -219,12 +227,49 @@ Verdict: "reject" if any major flag or 3 or more minor flags; otherwise "accept"
 Write your report to ${rdir}/overseer-${which.toLowerCase()}.json as {"overseer":"${which}","verdict":...,"flags":[...],"summary":"..."} and return the same object.`
 }
 
+const ADJ_SCHEMA = {
+  type: 'object',
+  properties: {
+    findings: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          code: { type: 'string' },
+          claim: { type: 'string' },
+          verdict: { type: 'string', enum: ['real_error', 'checker_artefact'] },
+          recomputation: { type: 'string' },
+          reason: { type: 'string' },
+        },
+        required: ['code', 'claim', 'verdict', 'recomputation', 'reason'],
+      },
+    },
+  },
+  required: ['findings'],
+}
+
+function adjudicatorPrompt(slug, qid, r) {
+  const qdir = qdirOf(slug, qid)
+  const rdir = rdirOf(slug, qid, r)
+  return `You adjudicate the Z3 Logic Translator's findings on one answer by the REAL Epinoic AI "${NAMES[slug]}" specialist, in a self-contained training simulation. ${NO_NET}
+The translator turns sentences of the answer into formal claims and checks them with Z3. It is strict and useful, but it can misread natural language: for example it may treat "3 > 3 is false" as an assertion that 3 > 3, read "(3 s.f.)" as a stated result, treat calculator settings such as "P/Y = C/Y = k" as algebra, take the specialist's correct evaluation of a student's wrong formula as the specialist's own claim, pair numbers from different sentences, or read "within six months of the end of the war" as a date range.
+
+Read ${rdir}/deterministic.json (z3.findings: every entry with severity "error"), ${rdir}/answer.md, ${qdir}/request.txt and ${qdir}/supplied.json. Edit no file except your report.
+
+For EVERY z3 finding with severity "error", in the order listed, decide:
+- real_error: the answer really states something false or unsupported: wrong arithmetic, algebra, comparison or chronology asserted as the specialist's own claim; a rounded value presented with "=" where the rounding changes the stated figure's meaning; or words in quotation marks presented as a quotation of the student's or a supplied text that are not verbatim there (an altered quotation, including notation rewritten, for example into LaTeX).
+- checker_artefact: the statement, read as the answer means it, is correct, and the finding comes from the checker misreading it.
+Show your work in recomputation: recompute every number exactly (fractions or enough decimal places), or quote the supplied text side by side with the quotation. If you cannot establish that the statement is correct, rule real_error. Being strict here matters: an artefact ruling removes a blocker.
+
+Write ${rdir}/z3-adjudication.json as {"findings":[{"code","claim","verdict","recomputation","reason"}]} and return the same object. If there are no error findings, return {"findings":[]}.`
+}
+
 function curatorPrompt(slug, outcomes) {
   const dir = `${KB}/${slug}`
   return `You are the knowledge-base curator for the REAL Epinoic AI "${NAMES[slug]}" specialist after training cycle ${N}. ${NO_NET}
 The specialist ran from its full-context bundle (its master prompt and knowledge documents in ${dir}/). Read every run file for this cycle under ${WT}/training/runs/cycle-${N}/${slug}/ (scenario.json, request.txt, supplied.json, and per round answer.md, diagnosis.json, deterministic.json, overseer-a.json, overseer-b.json).
 Outcome summary: ${JSON.stringify(outcomes)}
-Notes on the evidence: deterministic.json files are authoritative. The gate's provisional-mark check is advisory in training because it misreads question-value headers (for example "15 marks") as awarded marks; Overseer B judges marking instead, so a "provisional_label_missing" advisory is not an agent fault. A Z3 finding INT-SUBJ-001 on a line where the specialist QUOTES a student's wrong arithmetic in order to correct it is a checker artefact; do not teach the agent to avoid correcting errors, but you may teach it to state the correct relation rather than restating the wrong equation as its own.
+Notes on the evidence: deterministic.json files are authoritative. The gate's provisional-mark check is advisory in training because it misreads question-value headers (for example "15 marks") as awarded marks; Overseer B judges marking instead, so a "provisional_label_missing" advisory is not an agent fault. Z3 findings were adjudicated where a round has z3-adjudication.json: only findings ruled real_error are agent faults. A checker_artefact ruling means the statement was correct and the checker misread it: never add a rule that teaches the agent to avoid a correct statement, to stop correcting a student's error, or to word things for the checker. Only rounds listed in the outcome summary belong to this cycle; any other round folder was superseded when adjudication was introduced and must not be read.
 
 Your job: change the REAL knowledge base so the next cycle starts better, in the house format.
 1. Read ${KB}/_build/SPEC.md (house format: file roster, coded rules with evidence labels [E] [O] [R] [I] [P], cross-reference style, Open points, word-count bounds) and the files you edit.
@@ -259,12 +304,23 @@ async function runQuestion(slug, q, maxRounds = MAX_ROUNDS, fresh = false) {
     const flags = [...((oa && oa.flags) || []), ...((ob && ob.flags) || [])]
     const count = (cat, sev) => flags.filter((f) => f.category === cat && (!sev || f.severity === sev)).length
     const detBlocking = det ? det.blocking : null
-    const rejected = Boolean(detBlocking) || !oa || !ob || oa.verdict === 'reject' || ob.verdict === 'reject'
+    const z3Blocks = det ? det.blockingReasons.filter((x) => /^z3:INT-/.test(x)) : []
+    const otherBlocks = det ? det.blockingReasons.filter((x) => !/^z3:INT-/.test(x)) : ['deterministic_agent_failed']
+    let adj = null
+    if (z3Blocks.length) {
+      adj = await agent(adjudicatorPrompt(slug, q.qid, r), {
+        label: `z3-adjudicator:${q.qid}:r${r}`, phase: 'Simulate', schema: ADJ_SCHEMA, model: JUDGE_MODEL, effort: 'high',
+      })
+    }
+    const artefacts = adj ? adj.findings.filter((f) => f.verdict === 'checker_artefact').length : 0
+    const z3Confirmed = Math.max(0, z3Blocks.length - artefacts)
+    const rejected = otherBlocks.length > 0 || z3Confirmed > 0 || !oa || !ob || oa.verdict === 'reject' || ob.verdict === 'reject'
     rounds.push({
       r,
       detBlocking,
       blockingReasons: det ? det.blockingReasons : ['deterministic_agent_failed'],
       z3Errors: det ? det.z3Findings.filter((f) => f.severity === 'error').map((f) => f.code) : [],
+      z3Adjudicated: adj ? { confirmed: z3Confirmed, artefacts } : null,
       verdictA: oa ? oa.verdict : 'missing',
       verdictB: ob ? ob.verdict : 'missing',
       flags: {
@@ -276,7 +332,9 @@ async function runQuestion(slug, q, maxRounds = MAX_ROUNDS, fresh = false) {
     })
     if (!rejected) { accepted = true; break }
     feedback = {
-      deterministic: det ? { blockingReasons: det.blockingReasons, z3Findings: det.z3Findings, advisory: det.advisory } : 'deterministic check failed to run',
+      deterministic: det ? (HV >= 2
+        ? { blockingReasons: otherBlocks, z3Findings: adj ? adj.findings : det.z3Findings, advisory: det.advisory, note: adj ? 'Each Z3 finding was recomputed by an adjudicator: fix every real_error; a checker_artefact needs no change.' : undefined }
+        : { blockingReasons: det.blockingReasons, z3Findings: det.z3Findings, advisory: det.advisory }) : 'deterministic check failed to run',
       overseerA: oa ? { verdict: oa.verdict, flags: oa.flags, summary: oa.summary } : 'overseer A returned no report',
       overseerB: ob ? { verdict: ob.verdict, flags: ob.flags, summary: ob.summary } : 'overseer B returned no report',
     }
@@ -328,7 +386,7 @@ const results = await pipeline(
     return { slug, questions: out.filter(Boolean) }
   },
   async (res, slug) => {
-    const outcomes = res.questions.map((q) => ({ qid: q.qid, accepted: q.accepted, rounds: q.rounds.map((x) => ({ r: x.r, rejected: x.rejected, flags: x.flags, blocking: x.blockingReasons })) }))
+    const outcomes = res.questions.map((q) => ({ qid: q.qid, accepted: q.accepted, rounds: q.rounds.map((x) => ({ r: x.r, rejected: x.rejected, flags: x.flags, blocking: x.blockingReasons, z3Adjudicated: x.z3Adjudicated })) }))
     const cur = await agent(curatorPrompt(slug, outcomes), { label: `curator:${slug}`, phase: 'Curate', schema: CURATOR_SCHEMA, model: JUDGE_MODEL, effort: 'high' })
     return { ...res, curator: cur }
   },
