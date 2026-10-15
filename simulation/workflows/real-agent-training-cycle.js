@@ -46,6 +46,9 @@ const RETEST_TAG = (MODE === 'retest' || MODE === 'judge') ? A.retestTag : A.ret
 // before adjudication (so a resumed run replays its finished rounds); 2 (the default) passes
 // the adjudication to the specialist and tells Overseer B that Z3 findings are adjudicated.
 const HV = A.harnessVersion || 2
+// validate_kb.py checks the IB roster; the English Specialist has its own document set (it reports
+// the same 17 structural errors on the untouched baseline), and check_kb_set.py skips it too.
+const IB_ONLY = (slugs) => slugs.filter((slug) => slug !== 'english-specialist')
 
 const FLAG = {
   type: 'object',
@@ -189,7 +192,9 @@ Feedback function: first identify each issue. For every flag and finding, state 
 Never fabricate to satisfy a flag: if no permitted source supports a claim, say so as your SOURCE POLICY directs, qualify it, or remove it. If a flag conflicts with your own non-negotiables, keep your rule and explain why in the diagnosis.
 
 FEEDBACK:
-${JSON.stringify(feedback, null, 1)}`
+${feedback === 'files'
+    ? `Read it from the previous round's files in ${rdirOf(slug, qid, r - 1)}/: overseer-a.json and overseer-b.json (every flag with its excerpt, category, severity, explanation and required fix), deterministic.json (blockingReasons are faults to fix; advisory items are not faults and need no change), and z3-adjudication.json if it exists (fix every real_error; a checker_artefact needs no change). You may read these files for this round.`
+    : JSON.stringify(feedback, null, 1)}`
   }
   p += `
 
@@ -282,15 +287,20 @@ Your job: change the REAL knowledge base so the next cycle starts better, in the
 Return files_changed, lessons (one line each), factual_corrections, shared_rule_proposals (cross-subject or owner-level), open_issues, check_knowledge_passed (true when validate_kb.py reports 0 errors).`
 }
 
-async function runQuestion(slug, q, maxRounds = MAX_ROUNDS, fresh = false) {
+// resume (finish mode): {from, answered}. Start at round `from`; when `answered`, that round's
+// answer is already on disk and only its checks and judges run. Feedback for a round that has
+// to be written is read from the previous round's files.
+async function runQuestion(slug, q, maxRounds = MAX_ROUNDS, fresh = false, resume = null) {
   const rounds = []
-  let feedback = null
+  let feedback = resume && resume.from > 1 ? 'files' : null
   let accepted = false
-  for (let i = 1; i <= maxRounds; i++) {
+  for (let i = resume ? resume.from : 1; i <= maxRounds; i++) {
     const r = fresh ? 'fresh' : i
-    const ans = await agent(specialistPrompt(slug, q.qid, r, feedback), {
-      label: `specialist:${q.qid}:r${r}`, phase: 'Simulate', schema: ANSWER_SCHEMA, model: SPECIALIST_MODEL,
-    })
+    const ans = (resume && i === resume.from && resume.answered)
+      ? { answer_written: true, answer_chars: 0, diagnosis: [] }
+      : await agent(specialistPrompt(slug, q.qid, r, feedback), {
+        label: `specialist:${q.qid}:r${r}`, phase: 'Simulate', schema: ANSWER_SCHEMA, model: SPECIALIST_MODEL,
+      })
     if (!ans || !ans.answer_written) {
       rounds.push({ r, error: 'specialist_failed' })
       break
@@ -340,7 +350,7 @@ async function runQuestion(slug, q, maxRounds = MAX_ROUNDS, fresh = false) {
     if (!rejected) { accepted = true; break }
     feedback = {
       deterministic: det ? (HV >= 2
-        ? { blockingReasons: otherBlocks, z3Findings: adj ? adj.findings : det.z3Findings, advisory: det.advisory, note: adj ? 'Each Z3 finding was recomputed by an adjudicator: fix every real_error; a checker_artefact needs no change.' : undefined }
+        ? { blockingReasons: otherBlocks, z3Findings: adj ? adj.findings : det.z3Findings, advisory_not_faults: det.advisory, note: `Advisory items are not faults: change nothing for them.${adj ? ' Each Z3 finding was recomputed by an adjudicator: fix every real_error; a checker_artefact needs no change.' : ''}` }
         : { blockingReasons: det.blockingReasons, z3Findings: det.z3Findings, advisory: det.advisory }) : 'deterministic check failed to run',
       overseerA: oa ? { verdict: oa.verdict, flags: oa.flags, summary: oa.summary } : 'overseer A returned no report',
       overseerB: ob ? { verdict: ob.verdict, flags: ob.flags, summary: ob.summary } : 'overseer B returned no report',
@@ -379,6 +389,63 @@ if (MODE === 'judge') {
     return { ...x, verdictA: oa ? oa.verdict : 'missing', verdictB: ob ? ob.verdict : 'missing', adjudicated: adj ? adj.findings.length : 'missing', flags: [...((oa && oa.flags) || []), ...((ob && ob.flags) || [])].length }
   }))
   return { cycle: N, mode: 'judge', judged }
+}
+
+if (MODE === 'finish') {
+  // Complete subjects a session limit interrupted. args.finish:
+  //   {slug: {questions: [{qid, kind, accepted?, from?, answered?, priorRounds?}], curated?: bool}}
+  // A question with `from` resumes there; one without it is already finished (`accepted`).
+  // Then: curate (unless curated), rebuild and install every listed subject, fresh retest.
+  const F = A.finish
+  const slugs = Object.keys(F)
+  log(`REAL AGENTS | FINISH | specialists ${SPECIALIST_MODEL}, judges ${JUDGE_MODEL} | cycle ${N}: ${slugs.join(', ')}`)
+  phase('Simulate')
+  const done = await pipeline(
+    slugs,
+    async (slug) => {
+      const qs = await parallel(F[slug].questions.map((q) => async () => {
+        if (!q.from) return { qid: q.qid, kind: q.kind, accepted: Boolean(q.accepted), rounds: q.priorRounds || [] }
+        const res = await runQuestion(slug, q, MAX_ROUNDS, false, { from: q.from, answered: Boolean(q.answered) })
+        return { ...res, rounds: [...(q.priorRounds || []), ...res.rounds] }
+      }))
+      return { slug, questions: qs.filter(Boolean) }
+    },
+    async (res, slug) => {
+      if (res.questions.some((q) => q.judgeFailed)) {
+        log(`${slug}: a judge failed; curation and retest skipped`)
+        return { ...res, curator: null, skipped: 'judge_failed' }
+      }
+      if (F[slug].curated) return { ...res, curator: 'already curated' }
+      const outcomes = res.questions.map((q) => ({ qid: q.qid, accepted: q.accepted, rounds: q.rounds.map((x) => ({ r: x.r, rejected: x.rejected, flags: x.flags, blocking: x.blockingReasons, z3Adjudicated: x.z3Adjudicated })) }))
+      const cur = await agent(curatorPrompt(slug, outcomes), { label: `curator:${slug}`, phase: 'Curate', schema: CURATOR_SCHEMA, model: JUDGE_MODEL, effort: 'high' })
+      if (!cur) return { ...res, curator: null, skipped: 'curator_failed' }
+      return { ...res, curator: cur }
+    },
+  )
+  const ready = done.filter((s) => s && !s.skipped)
+  if (!ready.length) return { cycle: N, mode: 'finish', subjects: done }
+  phase('Retest')
+  const STAGE = `${A.stageRoot || `${WT}/../.epinoic-stage`}/finish-${ready.map((s) => s.slug).join('-').slice(0, 60)}`
+  const rs = ready.map((s) => s.slug)
+  const integ = await agent(`Run exactly these commands, one after another, and nothing else (do not edit any other file):
+rm -rf ${STAGE} && mkdir -p ${STAGE} && cp -a ${KB}/. ${STAGE}/
+${IB_ONLY(rs).map((slug) => `cd ${STAGE} && python3 -I _build/validate_kb.py ${slug}`).join('\n')}
+cd ${STAGE} && python3 -I _build/check_kb_set.py ${STAGE}
+${rs.map((slug) => `cp ${STAGE}/_bundles/${slug}.full-context.txt ${KB}/_bundles/.${slug}.tmp && mv -f ${KB}/_bundles/.${slug}.tmp ${KB}/_bundles/${slug}.full-context.txt`).join('\n')}
+cd ${WT} && python3 -I training/tools/build_gate_configs.py ${STAGE} training/config/gate --slugs ${rs.join(',')}
+Return ok=true only if: every validate_kb.py run reports 0 errors; check_kb_set.py prints no PROBLEM line that names ${rs.join(' or ')} and no "SOURCE POLICY differs" or "KNOWLEDGE ACCESS differs" line (problems naming only other specialists are tolerated: list them in output); and the copy, move and gate-config commands succeed. Put the last 15 lines of each command's output in output.`, {
+    label: 'integrate:bundles', phase: 'Retest', model: 'haiku', effort: 'low',
+    schema: { type: 'object', properties: { ok: { type: 'boolean' }, output: { type: 'string' } }, required: ['ok', 'output'] },
+  })
+  if (!integ || !integ.ok) {
+    log(`bundle rebuild failed; fresh retest skipped: ${integ ? integ.output.slice(0, 400) : 'no result'}`)
+    return { cycle: N, mode: 'finish', subjects: done, integrate: integ }
+  }
+  const retest = await parallel(ready.map((s) => async () => {
+    const out = await parallel(s.questions.map((q) => () => runQuestion(s.slug, q, 1, true)))
+    return { slug: s.slug, questions: out.filter(Boolean) }
+  }))
+  return { cycle: N, mode: 'finish', subjects: done, integrate: integ, retest: retest.filter(Boolean) }
 }
 
 if (MODE === 'retest') {
@@ -432,7 +499,7 @@ phase('Retest')
 const STAGE = `${A.stageRoot || `${WT}/../.epinoic-stage`}/${A.cluster}`
 const integ = await agent(`Run exactly these commands, one after another, and nothing else (do not edit any other file):
 rm -rf ${STAGE} && mkdir -p ${STAGE} && cp -a ${KB}/. ${STAGE}/
-${A.slugs.map((slug) => `cd ${STAGE} && python3 -I _build/validate_kb.py ${slug}`).join('\n')}
+${IB_ONLY(A.slugs).map((slug) => `cd ${STAGE} && python3 -I _build/validate_kb.py ${slug}`).join('\n')}
 cd ${STAGE} && python3 -I _build/check_kb_set.py ${STAGE}
 ${A.slugs.map((slug) => `cp ${STAGE}/_bundles/${slug}.full-context.txt ${KB}/_bundles/.${slug}.tmp && mv -f ${KB}/_bundles/.${slug}.tmp ${KB}/_bundles/${slug}.full-context.txt`).join('\n')}
 cd ${WT} && python3 -I training/tools/build_gate_configs.py ${STAGE} training/config/gate --slugs ${A.slugs.join(',')}
