@@ -398,11 +398,16 @@ if (!RETEST_TAG) return { cycle: N, cluster: A.cluster, subjects: done }
 
 // Integrate this cluster's curated edits, then a fresh instance answers every question once.
 phase('Retest')
-const integ = await agent(`Run exactly these commands, one after another, and nothing else (do not edit any file):
-${A.slugs.map((slug) => `cd ${KB} && python3 -I _build/validate_kb.py ${slug}`).join('\n')}
-cd ${KB} && python3 -I _build/make_bundles.py ${KB}
-cd ${KB} && python3 -I _build/check_kb_set.py ${KB}
-Return ok=true only if every validate_kb.py run reports 0 errors, make_bundles.py succeeds and check_kb_set.py reports 0 problems; put the last 15 lines of each command's output in output.`, {
+// Staged so that two subjects can train side by side: validate, build and set-check a copy of
+// the knowledge bases, then atomically install only this run's bundles and gate configs.
+const STAGE = `${A.stageRoot || `${WT}/../.epinoic-stage`}/${A.cluster}`
+const integ = await agent(`Run exactly these commands, one after another, and nothing else (do not edit any other file):
+rm -rf ${STAGE} && mkdir -p ${STAGE} && cp -a ${KB}/. ${STAGE}/
+${A.slugs.map((slug) => `cd ${STAGE} && python3 -I _build/validate_kb.py ${slug}`).join('\n')}
+cd ${STAGE} && python3 -I _build/check_kb_set.py ${STAGE}
+${A.slugs.map((slug) => `cp ${STAGE}/_bundles/${slug}.full-context.txt ${KB}/_bundles/.${slug}.tmp && mv -f ${KB}/_bundles/.${slug}.tmp ${KB}/_bundles/${slug}.full-context.txt`).join('\n')}
+cd ${WT} && python3 -I training/tools/build_gate_configs.py ${STAGE} training/config/gate --slugs ${A.slugs.join(',')}
+Return ok=true only if: every validate_kb.py run reports 0 errors; check_kb_set.py prints no PROBLEM line that names ${A.slugs.join(' or ')} and no "SOURCE POLICY differs" or "KNOWLEDGE ACCESS differs" line (problems naming only other specialists can come from another subject being edited at the same time and are tolerated: list them in output); and the copy, move and gate-config commands succeed. Put the last 15 lines of each command's output in output.`, {
   label: 'integrate:bundles', phase: 'Retest', model: 'haiku', effort: 'low',
   schema: { type: 'object', properties: { ok: { type: 'boolean' }, output: { type: 'string' } }, required: ['ok', 'output'] },
 })
