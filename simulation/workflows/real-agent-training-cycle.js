@@ -45,7 +45,10 @@ const RETEST_TAG = (MODE === 'retest' || MODE === 'judge') ? A.retestTag : A.ret
 // harnessVersion 1 keeps the specialist feedback and Overseer B prompts exactly as they were
 // before adjudication (so a resumed run replays its finished rounds); 2 (the default) passes
 // the adjudication to the specialist and tells Overseer B that Z3 findings are adjudicated.
-const HV = A.harnessVersion || 2
+const HV = A.harnessVersion || 3
+// harnessVersion 3 (cycle 2 on): overseers search the specialist's knowledge-base files before
+// calling a fact invented or recalled. In cycle 1 they read only the master prompt and flagged a
+// fact the curator had added (Biology q1 fresh retest). Cycle 1 reruns pass harnessVersion 2.
 // validate_kb.py checks the IB roster; the English Specialist has its own document set (it reports
 // the same 17 structural errors on the untouched baseline), and check_kb_set.py skips it too.
 const IB_ONLY = (slugs) => slugs.filter((slug) => slug !== 'english-specialist')
@@ -226,7 +229,7 @@ Also judge marking against the specialist's own rules (its non-negotiables and A
 
 ${lens}
 
-Read: ${KB}/${slug}/master_prompt.txt (the specialist's own rules: judge against them, and do not penalise the specialist for following its non-negotiables, for example labelling marks provisional, asking a gate question, or refusing to write coursework), ${qdir}/request.txt, ${qdir}/supplied.json, ${qdir}/explicit-request.json, ${qdir}/scenario.json (strong_answer_must and pitfalls are your private notes; the specialist never saw them), ${rdir}/answer.md and ${rdir}/deterministic.json (deterministic gate + Z3 RouterHub receipt). Edit no file except your report.
+Read: ${KB}/${slug}/master_prompt.txt (the specialist's own rules: judge against them, and do not penalise the specialist for following its non-negotiables, for example labelling marks provisional, asking a gate question, or refusing to write coursework),${HV >= 3 ? ` and search the specialist's knowledge base (the .md files in ${KB}/${slug}/, for example with grep) before you flag any fact, figure, date, study or source as invented, recalled or unavailable: what the knowledge base states is available to the specialist as its own reading, with the label its rules require (you may still flag it as false or as misused),` : ''} ${qdir}/request.txt, ${qdir}/supplied.json, ${qdir}/explicit-request.json, ${qdir}/scenario.json (strong_answer_must and pitfalls are your private notes; the specialist never saw them), ${rdir}/answer.md and ${rdir}/deterministic.json (deterministic gate + Z3 RouterHub receipt). Edit no file except your report.
 
 For every problem return the EXACT excerpt copied verbatim from answer.md (at most 300 characters), category, severity (major = misleading, wrong, or leaves a required part unanswered or unsupported; minor = weakens the answer), explanation and the required fix. Be strict but fair: no style or length flags; nothing beyond the question's scope or level; honest uncertainty is not a flaw. If the answer is strong, return no flags.
 Verdict: "reject" if any major flag or 3 or more minor flags; otherwise "accept".
