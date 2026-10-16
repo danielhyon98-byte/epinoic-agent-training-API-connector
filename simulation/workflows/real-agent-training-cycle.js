@@ -429,7 +429,9 @@ if (MODE === 'finish') {
     },
   )
   const ready = done.filter((s) => s && !s.skipped)
-  if (!ready.length) return { cycle: N, mode: 'finish', subjects: done }
+  // Without args.retestAfterCurate the run stops after curation (cycle 2 on: the audit comes
+  // before the rebuild and the fresh retest).
+  if (!ready.length || !RETEST_TAG) return { cycle: N, mode: 'finish', subjects: done }
   phase('Retest')
   const STAGE = `${A.stageRoot || `${WT}/../.epinoic-stage`}/finish-${ready.map((s) => s.slug).join('-').slice(0, 60)}`
   const rs = ready.map((s) => s.slug)
