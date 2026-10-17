@@ -490,7 +490,7 @@ async function runQuestion(slug, q, maxRounds = MAX_ROUNDS, fresh = false, resum
     // blocked because the checker also counted the separate notes after it).
     const cleared = new Set((adj ? adj.findings : [])
       .filter((f) => f.code === 'INT-REQ-005' && f.verdict === 'checker_artefact')
-      .map((f) => ((f.claim || '').match(/\bconstraint (c\d+)\b/) || [])[1]).filter(Boolean))
+      .map((f) => ((f.claim || '').match(/\bconstraint (c\d+)\b/i) || [])[1]).filter(Boolean).map((c) => c.toLowerCase()))
     const hardBlocks = otherBlocks.filter((x) => !(x.startsWith('z3:constraint_unsatisfied:') && cleared.has(x.split(':').pop())))
     const rejected = hardBlocks.length > 0 || z3Confirmed > 0 || !oa || !ob || oa.verdict === 'reject' || ob.verdict === 'reject'
     rounds.push({
