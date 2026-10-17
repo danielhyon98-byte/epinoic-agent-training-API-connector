@@ -5,6 +5,7 @@ export const meta = {
     { title: 'Scenarios', detail: 'original questions per specialist, in scope for its real syllabus gate, dispatched through the Z3 RouterHub' },
     { title: 'Simulate', detail: 'real specialist (full-context bundle, no tools), deterministic gate + Z3 receipt, overseers A and B, revisions on rejection' },
     { title: 'Curate', detail: 'curators edit the real knowledge base in house format; validator must pass; every edit logged' },
+    { title: 'Audit', detail: 'harness version 4: two auditors per subject check every edit since the cycle began; an independent verifier confirms each finding; only confirmed fixes are applied' },
     { title: 'Retest', detail: 'rebuild bundles, then a fresh specialist instance answers every question once from the curated bundle' },
   ],
 }
@@ -181,7 +182,7 @@ Return the questions (qid, kind, request, has_supplied_text, route_ok).`
 function specialistPrompt(slug, qid, r, feedback) {
   const qdir = qdirOf(slug, qid)
   const rdir = rdirOf(slug, qid, r)
-  let p = `Your complete system prompt is the file ${bundleOf(slug)} (the REAL full-context bundle of the Epinoic AI "${NAMES[slug]}" specialist: its master prompt followed by all of its knowledge documents). Read the ENTIRE file before answering: it is about 2,000-3,300 lines, so read lines 1-2000 first, then continue from line 2001 to the end. Then act exactly as that specialist, following its procedure, gates, non-negotiables, SOURCE POLICY and authority order.
+  let p = `Your complete system prompt is the file ${bundleOf(slug)} (the REAL full-context bundle of the Epinoic AI "${NAMES[slug]}" specialist: its master prompt followed by all of its knowledge documents). Read the ENTIRE file before answering: ${HV >= 4 ? 'it can run to several thousand lines, so read it in consecutive chunks (lines 1-2000, then from line 2001, 4001, and so on; use smaller chunks if a read is refused as too large) until you have read the last line' : 'it is about 2,000-3,300 lines, so read lines 1-2000 first, then continue from line 2001 to the end'}. Then act exactly as that specialist, following its procedure, gates, non-negotiables, SOURCE POLICY and authority order.
 
 This session runs in full-context mode WITHOUT tools: there is no library search, no MyLib/MyBib and no web access, and none was used. Where your instructions rely on the library or MyLib, follow your own rules for when they are unavailable; never claim a library unit, textbook or MyLib result was consulted. ${NO_NET}
 Do not read any other file except these for this question: ${qdir}/request.txt (the student's message), ${qdir}/supplied.json (texts the student pasted; may be []), ${qdir}/explicit-request.json (the router's explicit request from the Z3 RouterHub: items, command terms, limits)${r > 1 ? `, and your own previous answer ${rdirOf(slug, qid, r - 1)}/answer.md` : ''}. Never read scenario.json or other run files.
@@ -275,23 +276,154 @@ Show your work in recomputation: recompute every number exactly (fractions or en
 Write ${rdir}/z3-adjudication.json as {"findings":[{"code","claim","verdict","recomputation","reason"}]} and return the same object. If there are no error findings, return {"findings":[]}.`
 }
 
-function curatorPrompt(slug, outcomes) {
+// harnessVersion 4 (owner's instruction, 17 Oct): the growth loop. Curators maximise the editing of
+// the knowledge documents and add as much context as they can, so that fresh specialists answer
+// better. Haiku 5.5 has a 1M-token context window and the bundles start near 80k tokens, so the
+// SPEC word targets no longer cap growth: word-count warnings are accepted, errors are not. Every
+// cycle's edits are then audited (find, verify, fix) before the bundles are rebuilt.
+const GROWTH = (slug, dir) => `GROWTH MODE (the owner's instruction): maximise the editing of the knowledge documents and add as much context as you can, so that a fresh specialist answers this kind of question, and its neighbours, better without recall. Length is not a constraint: the specialist model has a 1M-token context window and this bundle is far below it, and the SPEC word targets are suspended for growth (word-count warnings from validate_kb.py are accepted; errors are not). Spend your effort on substance:
+  a. Fix everything the runs show (every major flag, every confirmed Z3 error, every repeated minor flag), at the root: the missing fact, the wrong or thin content row, the unclear rule, the missing example.
+  b. Grow the content the questions touched. For every topic, concept, case, text type, command term, calculation and skill this cycle's questions needed, write into content.md (or the subject's content-bearing documents) the full course-standard knowledge a strong answer draws on: precise definitions, mechanisms and causal chains, standard formulae with symbols, units and conditions, worked numerical examples with every step, key dates and figures with their evidence labels, standard diagrams described in words, competing interpretations, common misconceptions with the correct version, and the discriminators examiners reward. Then extend it to the neighbouring syllabus content a similar question would need (the same unit's adjacent subtopics), so that the next question in this area is covered too.
+  c. Grow examples.md: for each question kind this cycle used, add at least one complete, annotated model answer at the standard the overseers accepted (or better), built from the accepted round where there is one and repaired where there is not, plus short contrast pairs (weak sentence -> strong sentence) for every flag category the runs drew. Model answers use only facts the knowledge base itself states or course-standard knowledge, labelled as the house format requires.
+  d. Grow the procedures where the specialist looks first: the task procedure in Application §7 for each task kind used, its step-by-step checks, the correction table, and the final quality test. Put each check at the point of use (cycle 1 showed that rules buried deep in a long document were not applied; content and worked examples were).
+  e. Be correct: course-standard knowledge only, written in your own words; recompute every number you add (python3 -I is available); mark anything you are not certain of [R] with an interim rule, per the house format; never add copyrighted text, past-paper text, URLs or invented sources, studies, quotations or statistics. An audit will check every added line and remove errors.
+  f. Keep the house format: coded rules with the next free code, evidence labels, cross-references that exist, tables where the document uses tables, and the document's own section order.
+`
+function curatorPrompt(slug, outcomes, growthPass = false) {
   const dir = `${KB}/${slug}`
-  return `You are the knowledge-base curator for the REAL Epinoic AI "${NAMES[slug]}" specialist after training cycle ${N}. ${NO_NET}
+  return `You are the knowledge-base curator for the REAL Epinoic AI "${NAMES[slug]}" specialist after training cycle ${N}. ${NO_NET}${growthPass ? `
+This is a SECOND (growth) pass for cycle ${N}: a first curation pass already edited the knowledge base and logged its edits in ${WT}/training/changes/cycle-${N}/${slug}.md. Build on those edits (do not undo them unless they are wrong) and APPEND a section headed "Growth pass" to that change log instead of rewriting it.` : ''}
 The specialist ran from its full-context bundle (its master prompt and knowledge documents in ${dir}/). Read every run file for this cycle under ${WT}/training/runs/cycle-${N}/${slug}/ (scenario.json, request.txt, supplied.json, and per round answer.md, diagnosis.json, deterministic.json, overseer-a.json, overseer-b.json).
 Outcome summary: ${JSON.stringify(outcomes)}
 Notes on the evidence: deterministic.json files are authoritative. The gate's provisional-mark check is advisory in training because it misreads question-value headers (for example "15 marks") as awarded marks; Overseer B judges marking instead, so a "provisional_label_missing" advisory is not an agent fault. Z3 findings were adjudicated where a round has z3-adjudication.json: only findings ruled real_error are agent faults. A checker_artefact ruling means the statement was correct and the checker misread it: never add a rule that teaches the agent to avoid a correct statement, to stop correcting a student's error, or to word things for the checker. Only rounds listed in the outcome summary belong to this cycle; any other round folder was superseded when adjudication was introduced and must not be read.
 
-${HV >= 3 ? `Earlier cycles: read ${WT}/training/changes/cycle-*/${slug}.md and ${WT}/training/changes/cycle-*/audit/${slug}.md. Never reintroduce anything an audit corrected or removed.
+${HV >= 4 ? `Earlier cycles: read ${WT}/training/changes/cycle-*/${slug}.md, ${WT}/training/changes/cycle-*/audit/${slug}.md, ${WT}/training/results/cycle-*-${slug}.md (fresh-instance before/after comparisons: what stuck and what did not) and ${WT}/training/scenarios/cycle-*/${slug}.json (every question asked so far). Never reintroduce anything an audit corrected or removed.
+${GROWTH(slug, dir)}` : HV >= 3 ? `Earlier cycles: read ${WT}/training/changes/cycle-*/${slug}.md and ${WT}/training/changes/cycle-*/audit/${slug}.md. Never reintroduce anything an audit corrected or removed.
 Lesson from cycle 1: when the knowledge base corrected wrong or missing CONTENT, fresh specialists improved; when it added a PROCEDURAL rule deep in a long document, fresh specialists often did not apply it. So if a run shows the specialist failing at something an existing rule already covers, do not add a second rule further down: make the existing rule easier to apply where the specialist looks first for that task (the task procedure in Application §7, the box in Response structure, or the final quality test), shortening or merging rather than adding, and record in the change log that you surfaced an existing rule. Add a new rule only for a gap no existing rule covers.
 ` : ''}Your job: change the REAL knowledge base so the next cycle starts better, in the house format.
 1. Read ${KB}/_build/SPEC.md (house format: file roster, coded rules with evidence labels [E] [O] [R] [I] [P], cross-reference style, Open points, word-count bounds) and the files you edit.
-2. Edit only files in ${dir}/ (master_prompt.txt and the seven .md documents). Make surgical, well-placed edits that fix what the runs show: a rule that was missing or unclear, a correction-table row, an example or pattern-not-to-imitate in examples.md, a quality-test item, a corrected fact. New or changed rules must carry the [P] label (proposed from simulation) unless the evidence supports another label, and follow the document's own code numbering (next free code; no reuse). Prefer the .md documents; edit master_prompt.txt only for a mandatory rule that must be in the instruction channel.
+2. Edit only files in ${dir}/ (master_prompt.txt and the seven .md documents). ${HV >= 4 ? 'Make the edits GROWTH MODE describes, as many and as complete as you can, then also' : 'Make'} surgical, well-placed edits that fix what the runs show: a rule that was missing or unclear, a correction-table row, an example or pattern-not-to-imitate in examples.md, a quality-test item, a corrected fact. New or changed rules must carry the [P] label (proposed from simulation) unless the evidence supports another label, and follow the document's own code numbering (next free code; no reuse). Prefer the .md documents; edit master_prompt.txt only for a mandatory rule that must be in the instruction channel.
 3. NEVER: weaken a non-negotiable, the academic-integrity or provisional-marking rules, or the AUTHORITY ORDER; change the verbatim SOURCE POLICY lines; add URLs; add copyrighted text, past-paper text or real student data; invent facts (mark anything uncertain as [R] with an interim rule, per the house format).
-4. Run: cd ${KB} && python3 -I _build/validate_kb.py ${slug} — fix until it reports 0 errors (keep warnings at 0 if possible; report any). Do NOT run make_bundles.py or check_kb_set.py (the coordinator rebuilds bundles once for all subjects).
+4. ${slug === 'english-specialist' ? 'validate_kb.py does not apply to this specialist (its own document set reports the same 17 structural errors on the untouched baseline): check by reading that every edited section, rule code and cross-reference is consistent, and set check_knowledge_passed accordingly. ' : ''}Run: cd ${KB} && python3 -I _build/validate_kb.py ${slug} — fix until it reports 0 errors${slug === 'english-specialist' ? ' beyond those 17 baseline errors' : ''} (${HV >= 4 ? 'word-count warnings are accepted in growth mode; keep every other warning at 0 if possible' : 'keep warnings at 0 if possible'}; report any). Do NOT run make_bundles.py or check_kb_set.py (the coordinator rebuilds bundles once for all subjects).
 5. Write ${WT}/training/changes/cycle-${N}/${slug}.md${A.modelNames ? ` (its first line after the title: "Models: specialist ${A.modelNames.specialist}; overseers, Z3 adjudicator and curator ${A.modelNames.judge}.")` : ''}: for every edit, the file and rule code, what changed (before -> after, short), why (which flags/diagnoses/runs motivated it, by qid and round), and its evidence label. Also list proposals you did NOT make (for example changes that belong in the shared SOURCE POLICY or need the owner).
 
 Return files_changed, lessons (one line each), factual_corrections, shared_rule_proposals (cross-subject or owner-level), open_issues, check_knowledge_passed (true when validate_kb.py reports 0 errors).`
+}
+
+// Audit stage (harnessVersion 4, args.auditBase = the commit the cycle started from): every edit
+// since then is checked by two auditors (content-bearing files / everything else), each auditor's
+// findings by an independent verifier, and only confirmed fixes are applied. Same checks as
+// simulation/workflows/kb-edit-audit.js, run inside the subject's own pipeline so the rebuild and
+// the fresh retest follow without waiting for other subjects.
+const AUDIT_FINDINGS = {
+  type: 'object',
+  properties: {
+    findings: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          id: { type: 'string' },
+          file: { type: 'string' },
+          excerpt: { type: 'string' },
+          problem: { type: 'string', enum: ['factual_error', 'misleading_precision', 'contradiction', 'weakens_rule', 'writes_for_checker', 'format', 'unsupported_as_fact'] },
+          severity: { type: 'string', enum: ['major', 'minor'] },
+          explanation: { type: 'string' },
+          evidence: { type: 'string' },
+          fix_old: { type: 'string' },
+          fix_new: { type: 'string' },
+        },
+        required: ['id', 'file', 'excerpt', 'problem', 'severity', 'explanation', 'evidence', 'fix_old', 'fix_new'],
+      },
+    },
+    edits_reviewed: { type: 'integer' },
+  },
+  required: ['findings', 'edits_reviewed'],
+}
+const AUDIT_VERDICTS = {
+  type: 'object',
+  properties: {
+    verdicts: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: { id: { type: 'string' }, real: { type: 'boolean' }, reason: { type: 'string' }, fix_ok: { type: 'boolean' }, better_fix_new: { type: 'string' } },
+        required: ['id', 'real', 'reason', 'fix_ok', 'better_fix_new'],
+      },
+    },
+  },
+  required: ['verdicts'],
+}
+const AUDIT_FIX = {
+  type: 'object',
+  properties: {
+    applied: { type: 'array', items: { type: 'string' } },
+    not_applied: { type: 'array', items: { type: 'object', properties: { id: { type: 'string' }, reason: { type: 'string' } }, required: ['id', 'reason'] } },
+    validate_ok: { type: 'boolean' },
+  },
+  required: ['applied', 'not_applied', 'validate_ok'],
+}
+const auditGroups = (slug) => slug === 'english-specialist'
+  ? [['examples.md', 'language.md', 'paragraphs.md'], ['master_prompt.txt', 'application.md', 'formatting.md', 'interpretation.md']]
+  : [['content.md', 'examples.md'], ['master_prompt.txt', 'assessment.md', 'interpretation.md', 'application.md', 'structure.md', 'formatting.md']]
+
+function auditPrompt(slug, files, g) {
+  return `You audit the knowledge-base edits that a training loop made to the REAL Epinoic AI "${NAMES[slug]}" specialist (an IB Diploma tutor) in training cycle ${N}. ${NO_NET} Edit no file.
+
+1. Run: cd ${WT} && git diff ${A.auditBase} -- ${files.map((f) => `knowledge-bases/${slug}/${f}`).join(' ')}
+   These are every added or changed line in YOUR files (${files.join(', ')}) since the cycle began; another auditor covers the other files. Read ${WT}/training/changes/cycle-${N}/${slug}.md (the curator's log: what changed and why), ${KB}/_build/SPEC.md (house format: coded rules, evidence labels [E] [O] [R] [I] [P], cross-references, Open points), and as much surrounding text in ${KB}/${slug}/ as you need.
+2. Check EVERY added or changed statement (the edits may be long: work through every hunk) for:
+   - factual_error: a wrong fact, date, name, figure, definition, mechanism, formula or calculation. Recompute every number (python3 -I is available). For a detail labelled [R] (reported, unchecked), flag it only if you are confident it is wrong, and say what is right.
+   - misleading_precision: wording precise enough to look settled but coarse enough to mislead an inference the specialist is likely to draw.
+   - contradiction: the edit conflicts with other text in this knowledge base (search for it).
+   - weakens_rule: it weakens a non-negotiable, academic integrity, provisional marking, the SOURCE POLICY or the AUTHORITY ORDER.
+   - writes_for_checker: it teaches the specialist to word answers for the Z3 checker or the gate rather than for the student.
+   - format: a duplicate or reused rule code, a cross-reference to a code or section that does not exist, a missing or wrong evidence label.
+   - unsupported_as_fact: a contestable claim, specific statistic, study, quotation or named source presented as settled with no label, or anything that looks invented.
+3. Do not flag style, length or choices you would simply have made differently: the owner asked for maximal growth, so length is never a flaw. An honest "unconfirmed" label is not a flaw. If the edits are sound, return no findings.
+
+For each finding give: id (${slug}-g${g}-1, -2, ...); file (file name); excerpt (verbatim current text, at most 300 characters); problem; severity (major = a student would be misinformed or a rule is broken; minor = weaker or unclear); explanation; evidence (your recomputation, the conflicting line with its location, or the fact you rely on); and a fix: fix_old (exact current text, unique in that file) and fix_new (its replacement, in house format, keeping or adding the right evidence label; deleting a wrong passage is a valid fix). Also return edits_reviewed (the number of changed hunks you checked).`
+}
+
+function auditVerifyPrompt(slug, findings) {
+  return `You independently verify audit findings about the knowledge base of the REAL Epinoic AI "${NAMES[slug]}" specialist. ${NO_NET} Edit no file.
+
+Findings: ${JSON.stringify(findings.map((f) => ({ id: f.id, file: f.file, excerpt: f.excerpt, problem: f.problem, severity: f.severity, explanation: f.explanation, evidence: f.evidence, fix_old: f.fix_old, fix_new: f.fix_new })), null, 1)}
+
+For EACH finding, read ${KB}/${slug}/<file> around the excerpt, and other files in ${KB}/${slug}/ as needed, and try to refute it: is the current text in fact correct, adequately labelled, or consistent? Recompute any numbers yourself (python3 -I is available). Set real=true only if you can confirm the problem independently; if it is uncertain or a matter of taste, real=false.
+Then judge its fix: fix_ok=true if fix_old occurs exactly once in the file and fix_new corrects the problem in house format without adding a new error. If the fix is wrong or incomplete but the problem is real, set fix_ok=false and give better_fix_new (a replacement for the same fix_old); otherwise better_fix_new = "".
+Return verdicts: one {id, real, reason, fix_ok, better_fix_new} per finding.`
+}
+
+function auditFixPrompt(slug, confirmed) {
+  return `You apply confirmed audit fixes to the knowledge base of the REAL Epinoic AI "${NAMES[slug]}" specialist (training cycle ${N}). ${NO_NET}
+Each fix below was found by an auditor and confirmed by an independent verifier. For each one, replace fix_old with fix_new in ${KB}/${slug}/<file>, after checking that fix_old occurs exactly once. If it does not, or the replacement would break the house format, skip it and say why. Edit nothing else in ${KB}/${slug}/. Do not change SOURCE POLICY lines or weaken any rule.
+
+FIXES:
+${JSON.stringify(confirmed.map((f) => ({ id: f.id, file: f.file, problem: f.problem, severity: f.severity, explanation: f.explanation, fix_old: f.fix_old, fix_new: f.verdict.fix_ok ? f.fix_new : f.verdict.better_fix_new })), null, 1)}
+
+Then ${slug !== 'english-specialist' ? `run: cd ${KB} && python3 -I _build/validate_kb.py ${slug} and make sure it reports 0 errors (word-count warnings are accepted; if a fix causes an error, correct or revert that fix)` : 'check by reading that each edited section still reads correctly (validate_kb.py does not apply to this specialist\'s document set)'}. Do not run make_bundles.py or check_kb_set.py.
+Write ${WT}/training/changes/cycle-${N}/audit/${slug}.md: a title, then for every finding (applied or not) its id, file, problem and severity, the text before and after, the reason, and the verifier's reason. Return applied (ids), not_applied (id and reason) and validate_ok.`
+}
+
+async function auditSubject(slug) {
+  const groups = auditGroups(slug)
+  const perGroup = await parallel(groups.map((files, gi) => async () => {
+    const res = await agent(auditPrompt(slug, files, gi + 1), { label: `audit:${slug}:g${gi + 1}`, phase: 'Audit', schema: AUDIT_FINDINGS, model: JUDGE_MODEL, effort: 'high' })
+    if (!res) return { failed: true, findings: [], edits_reviewed: 0 }
+    if (!res.findings.length) return { findings: [], edits_reviewed: res.edits_reviewed }
+    const v = await agent(auditVerifyPrompt(slug, res.findings), { label: `audit-verify:${slug}:g${gi + 1}`, phase: 'Audit', schema: AUDIT_VERDICTS, model: JUDGE_MODEL, effort: 'high' })
+    if (!v) return { failed: true, findings: res.findings, edits_reviewed: res.edits_reviewed }
+    const byId = Object.fromEntries(v.verdicts.map((x) => [x.id, x]))
+    return { findings: res.findings.map((f) => ({ ...f, verdict: byId[f.id] || null })), edits_reviewed: res.edits_reviewed }
+  }))
+  const all = perGroup.filter(Boolean).flatMap((x) => x.findings)
+  const failed = perGroup.some((x) => !x || x.failed)
+  const confirmed = all.filter((f) => f.verdict && f.verdict.real)
+  log(`${slug}: audit ${all.length} finding(s), ${confirmed.length} confirmed${failed ? ' (an auditor or verifier failed)' : ''}`)
+  if (!confirmed.length) return { findings: all.length, confirmed: 0, applied: [], failed }
+  const fix = await agent(auditFixPrompt(slug, confirmed), { label: `audit-fix:${slug}`, phase: 'Audit', schema: AUDIT_FIX, model: JUDGE_MODEL, effort: 'high' })
+  return { findings: all.length, confirmed: confirmed.length, applied: fix ? fix.applied : [], not_applied: fix ? fix.not_applied : 'fixer failed', validate_ok: fix ? fix.validate_ok : false, failed: failed || !fix }
 }
 
 // resume (finish mode): {from, answered}. Start at round `from`; when `answered`, that round's
@@ -422,11 +554,17 @@ if (MODE === 'finish') {
         log(`${slug}: a judge failed; curation and retest skipped`)
         return { ...res, curator: null, skipped: 'judge_failed' }
       }
-      if (F[slug].curated) return { ...res, curator: 'already curated' }
+      if (F[slug].curated && !F[slug].growthPass) return { ...res, curator: 'already curated' }
       const outcomes = res.questions.map((q) => ({ qid: q.qid, accepted: q.accepted, rounds: q.rounds.map((x) => ({ r: x.r, rejected: x.rejected, flags: x.flags, blocking: x.blockingReasons, z3Adjudicated: x.z3Adjudicated })) }))
-      const cur = await agent(curatorPrompt(slug, outcomes), { label: `curator:${slug}`, phase: 'Curate', schema: CURATOR_SCHEMA, model: JUDGE_MODEL, effort: 'high' })
+      const cur = await agent(curatorPrompt(slug, outcomes, Boolean(F[slug].curated && F[slug].growthPass)), { label: `curator:${slug}`, phase: 'Curate', schema: CURATOR_SCHEMA, model: JUDGE_MODEL, effort: 'high' })
       if (!cur) return { ...res, curator: null, skipped: 'curator_failed' }
       return { ...res, curator: cur }
+    },
+    async (res, slug) => {
+      if (res.skipped || !A.auditBase) return res
+      const audit = await auditSubject(slug)
+      // A failed auditor or fixer leaves edits unchecked: rebuild and retest only audited subjects.
+      return audit.failed ? { ...res, audit, skipped: 'audit_failed' } : { ...res, audit }
     },
   )
   const ready = done.filter((s) => s && !s.skipped)
