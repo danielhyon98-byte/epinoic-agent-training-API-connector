@@ -484,7 +484,15 @@ async function runQuestion(slug, q, maxRounds = MAX_ROUNDS, fresh = false, resum
     }
     const artefacts = adj ? adj.findings.filter((f) => f.verdict === 'checker_artefact').length : 0
     const z3Confirmed = Math.max(0, z3Blocks.length - artefacts)
-    const rejected = otherBlocks.length > 0 || z3Confirmed > 0 || !oa || !ob || oa.verdict === 'reject' || ob.verdict === 'reject'
+    // An unsatisfied Z3 constraint (z3:constraint_unsatisfied:<id>, e.g. a word limit) is reported
+    // with an INT-REQ-005 finding that the adjudicator rules on. When that finding is ruled a checker
+    // artefact, the constraint no longer blocks (cycle 4: an essay of 792 words for "about 800" was
+    // blocked because the checker also counted the separate notes after it).
+    const cleared = new Set((adj ? adj.findings : [])
+      .filter((f) => f.code === 'INT-REQ-005' && f.verdict === 'checker_artefact')
+      .map((f) => ((f.claim || '').match(/\bconstraint (c\d+)\b/) || [])[1]).filter(Boolean))
+    const hardBlocks = otherBlocks.filter((x) => !(x.startsWith('z3:constraint_unsatisfied:') && cleared.has(x.split(':').pop())))
+    const rejected = hardBlocks.length > 0 || z3Confirmed > 0 || !oa || !ob || oa.verdict === 'reject' || ob.verdict === 'reject'
     rounds.push({
       r,
       detBlocking,
@@ -503,7 +511,7 @@ async function runQuestion(slug, q, maxRounds = MAX_ROUNDS, fresh = false, resum
     if (!rejected) { accepted = true; break }
     feedback = {
       deterministic: det ? (HV >= 2
-        ? { blockingReasons: otherBlocks, z3Findings: adj ? adj.findings : det.z3Findings, advisory_not_faults: det.advisory, note: `Advisory items are not faults: change nothing for them.${adj ? ' Each Z3 finding was recomputed by an adjudicator: fix every real_error; a checker_artefact needs no change.' : ''}` }
+        ? { blockingReasons: hardBlocks, z3Findings: adj ? adj.findings : det.z3Findings, advisory_not_faults: det.advisory, note: `Advisory items are not faults: change nothing for them.${adj ? ' Each Z3 finding was recomputed by an adjudicator: fix every real_error; a checker_artefact needs no change.' : ''}` }
         : { blockingReasons: det.blockingReasons, z3Findings: det.z3Findings, advisory: det.advisory }) : 'deterministic check failed to run',
       overseerA: oa ? { verdict: oa.verdict, flags: oa.flags, summary: oa.summary } : 'overseer A returned no report',
       overseerB: ob ? { verdict: ob.verdict, flags: ob.flags, summary: ob.summary } : 'overseer B returned no report',
