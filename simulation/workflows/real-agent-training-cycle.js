@@ -634,7 +634,14 @@ const results = await pipeline(
     }
     const outcomes = res.questions.map((q) => ({ qid: q.qid, accepted: q.accepted, rounds: q.rounds.map((x) => ({ r: x.r, rejected: x.rejected, flags: x.flags, blocking: x.blockingReasons, z3Adjudicated: x.z3Adjudicated })) }))
     const cur = await agent(curatorPrompt(slug, outcomes), { label: `curator:${slug}`, phase: 'Curate', schema: CURATOR_SCHEMA, model: JUDGE_MODEL, effort: 'high' })
+    if (!cur) return { ...res, curator: null, skipped: 'curator_failed' }
     return { ...res, curator: cur }
+  },
+  async (res, slug) => {
+    // harnessVersion 4: audit this cycle's edits before the rebuild and the fresh retest.
+    if (res.skipped || !A.auditBase) return res
+    const audit = await auditSubject(slug)
+    return audit.failed ? { ...res, audit, skipped: 'audit_failed' } : { ...res, audit }
   },
 )
 const done = results.filter(Boolean)
