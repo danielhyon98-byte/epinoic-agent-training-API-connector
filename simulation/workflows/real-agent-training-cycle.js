@@ -33,6 +33,11 @@ const BUNDLE_ROOT = A.bundleRoot || null
 // cycle's questions once from the rebuilt bundle; the same overseers judge it. This shows
 // whether the improvement lives in the knowledge documents themselves.
 const MODE = A.mode || 'train'
+// Run folder and question ids. A held-out evaluation (args.runsSubdir, e.g. "heldout-1", with args.qidPrefix "h1")
+// keeps its questions apart from the training cycles: no curator ever reads them, so they measure first-attempt
+// quality on questions the knowledge base was never edited for. Default: training/runs/cycle-<N>, qids c<N>-....
+const RUNS = A.runsSubdir || `cycle-${N}`
+const QID = A.qidPrefix || `c${N}`
 // train mode only: args.scenarios {slug: [{qid, kind}]} reuses questions already written and
 // routed (files on disk) instead of calling the writer; args.retestAfterCurate (a tag such as
 // "haiku-curated") rebuilds the bundles after curation and runs a fresh-instance retest of
@@ -160,7 +165,7 @@ const integratePrompt = (label, slugs) => `${NO_NET}
 Run exactly this one command and nothing else (do not edit any file yourself):
 python3 -I ${TOOLS}/simulation/tools/integrate-bundles.py --worktree ${WT} --stage-root ${A.stageRoot || `${WT}/../.epinoic-stage`} --label ${label} --slugs ${slugs.join(',')}
 It prints one JSON object with the fields ok and output. Return exactly those two values: ok as the script printed it, and its output text (the last 4,000 characters if it is longer). If the command cannot run, return ok=false with the error.`
-const qdirOf = (slug, qid) => `${WT}/training/runs/cycle-${N}/${slug}/${qid}`
+const qdirOf = (slug, qid) => `${WT}/training/runs/${RUNS}/${slug}/${qid}`
 // r: a round number, 'fresh' (the run's retest tag) or 'fresh:<tag>' (judge mode, any retest folder)
 const rdirOf = (slug, qid, r) => `${qdirOf(slug, qid)}/${r === 'fresh' ? `fresh-${RETEST_TAG}` : String(r).startsWith('fresh:') ? `fresh-${String(r).slice(6)}` : `round-${r}`}`
 const bundleOf = (slug) => `${BUNDLE_ROOT || KB}/_bundles/${slug}.full-context.txt`
@@ -179,16 +184,17 @@ Requirements:
 - Text-based subjects (history, english-*, language-b-spanish, psychology, geography): at least one includes a short supplied text (80-250 words) the student pastes: an original passage, a clearly fictional source, an invented data table, or public-domain text only. Never in-copyright literature. Spanish B may be in Spanish or English.
 - One message as a 16-19 year old would write it (may include "[n marks]" or a word limit). Text only. No official IB papers, markschemes or textbook text; no URLs; no real personal data.
 - Do not repeat earlier cycles: read ${WT}/training/scenarios/cycle-*/${slug}.json if they exist.
-${HV >= 3 && N > 1 ? `- Test what the last cycle changed: read ${WT}/training/changes/cycle-${N - 1}/${slug}.md and, if it exists, ${WT}/training/changes/cycle-${N - 1}/audit/${slug}.md. At least one question must be a situation where a rule or fact added or corrected there decides whether the answer is right (without naming the rule or hinting at it), so the cycle shows whether a fresh specialist applies it.
+${A.heldout ? `- HELD-OUT EVALUATION: these questions will never be used to edit the knowledge base. Do not aim them at any recent change; write typical, varied questions of each kind on topics, texts and tasks that differ from every earlier question listed in ${WT}/training/scenarios/*/${slug}.json and ${WT}/training/runs/cycle-*/${slug}/*/scenario.json.
+` : ''}${HV >= 3 && N > 1 && !A.heldout ? `- Test what the last cycle changed: read ${WT}/training/changes/cycle-${N - 1}/${slug}.md and, if it exists, ${WT}/training/changes/cycle-${N - 1}/audit/${slug}.md. At least one question must be a situation where a rule or fact added or corrected there decides whether the answer is right (without naming the rule or hinting at it), so the cycle shows whether a fresh specialist applies it.
 ` : ''}
-For each question (qid = c${N}-${slug}-q1, ...) create QDIR = ${WT}/training/runs/cycle-${N}/${slug}/<qid>/ and write:
+For each question (qid = ${QID}-${slug}-q1, ...) create QDIR = ${WT}/training/runs/${RUNS}/${slug}/<qid>/ and write:
 - QDIR/request.txt: the student's message only (supplied text NOT pasted here; refer to it, e.g. "Source A below").
 - QDIR/supplied.json: JSON array of {"document_id","title","text"} ([] if none).
 - QDIR/scenario.json: {"qid","slug":"${slug}","cycle":${N},"kind","course_level":"SL"|"HL"|"unknown","request","supplied_texts","strong_answer_must":[...],"pitfalls":[...]} (overseer-only notes).
 Then run exactly:
   EPINOIC_Z3_PYTHON=${PY} node ${TOOLS}/simulation/tools/route-request.mjs --slug ${slug} --request QDIR/request.txt --supplied QDIR/supplied.json --out QDIR/explicit-request.json
 and check it printed "ok":true (route_ok). Fix and rerun if not.
-Finally write ${WT}/training/scenarios/cycle-${N}/${slug}.json = {"slug":"${slug}","cycle":${N},"questions":[all scenario.json objects]}.
+Finally write ${WT}/training/scenarios/${RUNS}/${slug}.json = {"slug":"${slug}","cycle":${N},"questions":[all scenario.json objects]}.
 Return the questions (qid, kind, request, has_supplied_text, route_ok).`
 }
 
@@ -307,7 +313,7 @@ function curatorPrompt(slug, outcomes, growthPass = false) {
   return `You are the knowledge-base curator for the REAL Epinoic AI "${NAMES[slug]}" specialist after training cycle ${N}. ${NO_NET} ${AUTH}${growthPass ? `
 This is a SECOND (growth) pass for cycle ${N}: a first curation pass already edited the knowledge base and logged its edits in ${WT}/training/changes/cycle-${N}/${slug}.md. Build on those edits (do not undo them unless they are wrong) and APPEND a section headed "Growth pass" to that change log instead of rewriting it.` : ''}${A.partialSince ? `
 An earlier attempt at this curation was interrupted part-way. Any edits it left are shown by: cd ${WT} && git diff ${A.partialSince} -- knowledge-bases/${slug} (no output means it left none${growthPass ? '; the first pass\'s edits are older than this commit' : ''}). They are unlogged: review each one, keep it if it is correct, fix or remove it otherwise, and include every kept edit in your change log.` : ''}
-The specialist ran from its full-context bundle (its master prompt and knowledge documents in ${dir}/). Read every run file for this cycle under ${WT}/training/runs/cycle-${N}/${slug}/ (scenario.json, request.txt, supplied.json, and per round answer.md, diagnosis.json, deterministic.json, overseer-a.json, overseer-b.json).
+The specialist ran from its full-context bundle (its master prompt and knowledge documents in ${dir}/). Read every run file for this cycle under ${WT}/training/runs/${RUNS}/${slug}/ (scenario.json, request.txt, supplied.json, and per round answer.md, diagnosis.json, deterministic.json, overseer-a.json, overseer-b.json).
 Outcome summary: ${JSON.stringify(outcomes)}
 Notes on the evidence: deterministic.json files are authoritative. The gate's provisional-mark check is advisory in training because it misreads question-value headers (for example "15 marks") as awarded marks; Overseer B judges marking instead, so a "provisional_label_missing" advisory is not an agent fault. Z3 findings were adjudicated where a round has z3-adjudication.json: only findings ruled real_error are agent faults. A checker_artefact ruling means the statement was correct and the checker misread it: never add a rule that teaches the agent to avoid a correct statement, to stop correcting a student's error, or to word things for the checker. Only rounds listed in the outcome summary belong to this cycle; any other round folder was superseded when adjudication was introduced and must not be read.
 
@@ -623,6 +629,17 @@ if (MODE === 'retest') {
     },
   )
   return { cycle: N, cluster: A.cluster, mode: 'retest', retestTag: A.retestTag, subjects: fresh.filter(Boolean) }
+}
+if (MODE === 'scenarios') {
+  // Write (and route) questions only: no answers, no curation. Used for held-out evaluations, whose answers are then
+  // produced by mode "retest" (once with the current bundle, once with args.bundleRoot for an earlier one).
+  log(`REAL AGENTS | SCENARIOS ONLY | writer ${JUDGE_MODEL} | ${RUNS}: ${A.slugs.join(', ')} | ${Q} questions each`)
+  phase('Scenarios')
+  const written = await parallel(A.slugs.map((slug) => async () => {
+    const sc = await agent(writerPrompt(slug), { label: `scenarios:${slug}`, phase: 'Scenarios', schema: SCENARIO_SCHEMA, model: JUDGE_MODEL })
+    return { slug, questions: sc ? sc.questions : [] }
+  }))
+  return { cycle: N, runs: RUNS, mode: 'scenarios', subjects: written.filter(Boolean) }
 }
 log(`REAL AGENTS | specialists ${SPECIALIST_MODEL}, judges ${JUDGE_MODEL} | cycle ${N}, cluster ${A.cluster}: ${A.slugs.join(', ')} | ${Q} questions each, up to ${MAX_ROUNDS} rounds`)
 phase('Scenarios')
