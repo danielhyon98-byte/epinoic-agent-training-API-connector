@@ -184,7 +184,8 @@ Requirements:
 - Text-based subjects (history, english-*, language-b-spanish, psychology, geography): at least one includes a short supplied text (80-250 words) the student pastes: an original passage, a clearly fictional source, an invented data table, or public-domain text only. Never in-copyright literature. Spanish B may be in Spanish or English.
 - One message as a 16-19 year old would write it (may include "[n marks]" or a word limit). Text only. No official IB papers, markschemes or textbook text; no URLs; no real personal data.
 - Do not repeat earlier cycles: read ${WT}/training/scenarios/cycle-*/${slug}.json if they exist.
-${A.heldout ? `- HELD-OUT EVALUATION: these questions will never be used to edit the knowledge base. Do not aim them at any recent change; write typical, varied questions of each kind on topics, texts and tasks that differ from every earlier question listed in ${WT}/training/scenarios/*/${slug}.json and ${WT}/training/runs/cycle-*/${slug}/*/scenario.json.
+${A.heldout ? `- HELD-OUT EVALUATION: these questions will never be used to edit the knowledge base. Do not aim them at any recent change; write typical, varied questions of each kind on topics, texts and tasks that differ from every earlier question listed in ${WT}/training/scenarios/*/${slug}*.json and ${WT}/training/runs/*/${slug}/*/scenario.json.
+- Every supplied passage must be ORIGINAL: write it now for this question (80-200 words). Never reproduce any published text, public-domain works included, and never quote more than a few words of any real work; refer to real works by title only.
 ` : ''}${HV >= 3 && N > 1 && !A.heldout ? `- Test what the last cycle changed: read ${WT}/training/changes/cycle-${N - 1}/${slug}.md and, if it exists, ${WT}/training/changes/cycle-${N - 1}/audit/${slug}.md. At least one question must be a situation where a rule or fact added or corrected there decides whether the answer is right (without naming the rule or hinting at it), so the cycle shows whether a fresh specialist applies it.
 ` : ''}
 For each question (qid = ${QID}-${slug}-q1, ...) create QDIR = ${WT}/training/runs/${RUNS}/${slug}/<qid>/ and write:
@@ -194,7 +195,7 @@ For each question (qid = ${QID}-${slug}-q1, ...) create QDIR = ${WT}/training/ru
 Then run exactly:
   EPINOIC_Z3_PYTHON=${PY} node ${TOOLS}/simulation/tools/route-request.mjs --slug ${slug} --request QDIR/request.txt --supplied QDIR/supplied.json --out QDIR/explicit-request.json
 and check it printed "ok":true (route_ok). Fix and rerun if not.
-Finally write ${WT}/training/scenarios/${RUNS}/${slug}.json = {"slug":"${slug}","cycle":${N},"questions":[all scenario.json objects]}.
+Finally write ${WT}/training/scenarios/${RUNS}/${slug}${A.qidPrefix ? `.${QID}` : ''}.json = {"slug":"${slug}","cycle":${N},"questions":[all scenario.json objects]}.
 Return the questions (qid, kind, request, has_supplied_text, route_ok).`
 }
 
