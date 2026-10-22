@@ -579,17 +579,20 @@ if (MODE === 'curate') {
 
 if (MODE === 'judge') {
   // Fill in judge reports for answers already on disk (after a judge failed): args.rounds is
-  // [{slug, qid, r}] with r a round number or 'fresh' (uses args.retestTag). Runs both overseers
-  // and the Z3 adjudicator (which returns no findings when there is nothing to adjudicate).
+  // [{slug, qid, r, need?}] with r a round number or 'fresh' (uses args.retestTag). Runs both overseers
+  // and the Z3 adjudicator (which returns no findings when there is nothing to adjudicate). `need`
+  // (any of 'A', 'B', 'z3') limits the run to the reports that are missing; without it all three run.
   log(`REAL AGENTS | JUDGE | judges ${JUDGE_MODEL} | ${A.rounds.length} answer(s)`)
   phase('Simulate')
   const judged = await parallel(A.rounds.map((x) => async () => {
+    const want = (k) => !x.need || x.need.includes(k)
     const [oa, ob, adj] = await parallel([
-      () => agent(overseerPrompt('A', x.slug, x.qid, x.r), { label: `overseerA:${x.qid}:r${x.r}`, phase: 'Simulate', schema: OVERSEER_SCHEMA, model: JUDGE_MODEL }),
-      () => agent(overseerPrompt('B', x.slug, x.qid, x.r), { label: `overseerB:${x.qid}:r${x.r}`, phase: 'Simulate', schema: OVERSEER_SCHEMA, model: JUDGE_MODEL, effort: 'high' }),
-      () => agent(adjudicatorPrompt(x.slug, x.qid, x.r), { label: `z3-adjudicator:${x.qid}:r${x.r}`, phase: 'Simulate', schema: ADJ_SCHEMA, model: JUDGE_MODEL, effort: 'high' }),
+      async () => want('A') ? agent(overseerPrompt('A', x.slug, x.qid, x.r), { label: `overseerA:${x.qid}:r${x.r}`, phase: 'Simulate', schema: OVERSEER_SCHEMA, model: JUDGE_MODEL }) : 'kept',
+      async () => want('B') ? agent(overseerPrompt('B', x.slug, x.qid, x.r), { label: `overseerB:${x.qid}:r${x.r}`, phase: 'Simulate', schema: OVERSEER_SCHEMA, model: JUDGE_MODEL, effort: 'high' }) : 'kept',
+      async () => want('z3') ? agent(adjudicatorPrompt(x.slug, x.qid, x.r), { label: `z3-adjudicator:${x.qid}:r${x.r}`, phase: 'Simulate', schema: ADJ_SCHEMA, model: JUDGE_MODEL, effort: 'high' }) : 'kept',
     ])
-    return { ...x, verdictA: oa ? oa.verdict : 'missing', verdictB: ob ? ob.verdict : 'missing', adjudicated: adj ? adj.findings.length : 'missing', flags: [...((oa && oa.flags) || []), ...((ob && ob.flags) || [])].length }
+    const v = (o) => o === 'kept' ? 'kept' : o ? o.verdict : 'missing'
+    return { ...x, verdictA: v(oa), verdictB: v(ob), adjudicated: adj === 'kept' ? 'kept' : adj ? adj.findings.length : 'missing', flags: [oa, ob].reduce((s, o) => s + ((o && o !== 'kept' && o.flags) ? o.flags.length : 0), 0) }
   }))
   return { cycle: N, mode: 'judge', judged }
 }
