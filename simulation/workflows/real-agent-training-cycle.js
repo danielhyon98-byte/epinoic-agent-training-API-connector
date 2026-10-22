@@ -57,6 +57,10 @@ const HV = A.harnessVersion || 3
 // user = the subject's message prompt with the student's request, pasted texts and the router's analysis inside
 // (written per round by knowledge-bases/_build/build_request.py). Off by default: earlier cycles are unchanged.
 const MSG = Boolean(A.messagePrompt)
+// args.readGuard: the specialist reports the bundle's line count and the last line it read in sequence, and is
+// re-run once in the same round when it stopped short (cycle 7: a round-2 specialist read 1,772 of 6,586 lines and
+// skimmed the rest). Off by default, so earlier runs and their prompts are unchanged.
+const RG = Boolean(A.readGuard)
 // harnessVersion 3 (cycle 2 on): overseers search the specialist's knowledge-base files before
 // calling a fact invented or recalled. In cycle 1 they read only the master prompt and flagged a
 // fact the curator had added (Biology q1 fresh retest). Cycle 1 reruns pass harnessVersion 2.
@@ -120,6 +124,11 @@ const ANSWER_SCHEMA = {
     },
   },
   required: ['answer_written', 'answer_chars', 'diagnosis'],
+}
+const ANSWER_SCHEMA_RG = {
+  ...ANSWER_SCHEMA,
+  properties: { ...ANSWER_SCHEMA.properties, bundle_lines_total: { type: 'integer' }, bundle_last_line_read: { type: 'integer' } },
+  required: [...ANSWER_SCHEMA.required, 'bundle_lines_total', 'bundle_last_line_read'],
 }
 const DET_SCHEMA = {
   type: 'object',
@@ -230,9 +239,14 @@ ${feedback === 'files'
     ? `Read it from the previous round's files in ${rdirOf(slug, qid, r - 1)}/: overseer-a.json and overseer-b.json (every flag with its excerpt, category, severity, explanation and required fix), deterministic.json (blockingReasons are faults to fix; advisory items are not faults and need no change), and z3-adjudication.json if it exists (fix every real_error; a checker_artefact needs no change). You may read these files for this round.`
     : JSON.stringify(feedback, null, 1)}`
   }
+  if (RG) {
+    p += `
+
+READ GUARD: before you answer, run wc -l ${bundleOf(slug)} and keep that number. Then read the bundle from line 1 to that last line in consecutive chunks, in order, on every round including a revision: no skipping, no searching, no jumping to sections. Your earlier answer and the feedback replace no part of the bundle. If a chunk is refused as too large, read the same lines in smaller chunks before moving on.`
+  }
   p += `
 
-Return: answer_written (true once the file exists), answer_chars, and diagnosis (empty for round 1).`
+Return: answer_written (true once the file exists), answer_chars, and diagnosis (empty for round 1).${RG ? ' Also return bundle_lines_total (the wc -l count) and bundle_last_line_read (the highest line you read with no gap before it).' : ''}`
   return p
 }
 
@@ -465,11 +479,22 @@ async function runQuestion(slug, q, maxRounds = MAX_ROUNDS, fresh = false, resum
   let accepted = false
   for (let i = resume ? resume.from : 1; i <= maxRounds; i++) {
     const r = fresh ? 'fresh' : i
-    const ans = (resume && i === resume.from && resume.answered)
+    let ans = (resume && i === resume.from && resume.answered)
       ? { answer_written: true, answer_chars: 0, diagnosis: [] }
       : await agent(specialistPrompt(slug, q.qid, r, feedback), {
-        label: `specialist:${q.qid}:r${r}`, phase: 'Simulate', schema: ANSWER_SCHEMA, model: SPECIALIST_MODEL,
+        label: `specialist:${q.qid}:r${r}`, phase: 'Simulate', schema: RG ? ANSWER_SCHEMA_RG : ANSWER_SCHEMA, model: SPECIALIST_MODEL,
       })
+    let reread = null
+    if (RG && ans && ans.answer_written && ans.bundle_lines_total && ans.bundle_last_line_read < ans.bundle_lines_total) {
+      reread = { first: [ans.bundle_last_line_read, ans.bundle_lines_total] }
+      log(`${q.qid} r${r}: specialist read ${ans.bundle_last_line_read} of ${ans.bundle_lines_total} bundle lines; re-running once`)
+      const again = await agent(`${specialistPrompt(slug, q.qid, r, feedback)}
+
+This is a second attempt at the same round: the first attempt read only lines 1-${ans.bundle_last_line_read} of ${ans.bundle_lines_total} before answering. Read the whole bundle this time, then write a new answer (overwrite answer.md).`, {
+        label: `specialist:${q.qid}:r${r}:reread`, phase: 'Simulate', schema: ANSWER_SCHEMA_RG, model: SPECIALIST_MODEL,
+      })
+      if (again && again.answer_written) { ans = again; reread.second = [again.bundle_last_line_read, again.bundle_lines_total] }
+    }
     if (!ans || !ans.answer_written) {
       rounds.push({ r, error: 'specialist_failed' })
       break
@@ -522,6 +547,7 @@ async function runQuestion(slug, q, maxRounds = MAX_ROUNDS, fresh = false, resum
         major: flags.filter((f) => f.severity === 'major').length,
       },
       diagnosed: i > 1 ? ans.diagnosis.length : null,
+      ...(RG ? { bundleRead: [ans.bundle_last_line_read ?? null, ans.bundle_lines_total ?? null], reread } : {}),
       rejected,
     })
     if (!rejected) { accepted = true; break }
