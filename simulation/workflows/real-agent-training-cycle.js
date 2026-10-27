@@ -495,7 +495,14 @@ This is a second attempt at the same round: the first attempt read only lines 1-
       })
       if (again && again.answer_written) { ans = again; reread.second = [again.bundle_last_line_read, again.bundle_lines_total] }
     }
-    if (!ans || !ans.answer_written) {
+    // A specialist that returns nothing (usage limit, API error) has not answered: stop this question
+    // like a failed judge, so that curation waits and a later finish run redoes the round (22 Oct: a
+    // round cut off by the weekly limit was taken as the question's last, and the curator ran).
+    if (!ans) {
+      rounds.push({ r, error: 'specialist_failed' })
+      return { qid: q.qid, kind: q.kind, accepted: false, judgeFailed: true, rounds }
+    }
+    if (!ans.answer_written) {
       rounds.push({ r, error: 'specialist_failed' })
       break
     }
@@ -618,7 +625,7 @@ if (MODE === 'finish') {
     },
     async (res, slug) => {
       if (res.questions.some((q) => q.judgeFailed)) {
-        log(`${slug}: a judge failed; curation and retest skipped`)
+        log(`${slug}: a specialist or judge returned nothing; curation and retest skipped`)
         return { ...res, curator: null, skipped: 'judge_failed' }
       }
       if (F[slug].curated && !F[slug].growthPass) return { ...res, curator: 'already curated' }
@@ -696,7 +703,7 @@ const results = await pipeline(
   },
   async (res, slug) => {
     if (res.questions.some((q) => q.judgeFailed)) {
-      log(`${slug}: a judge failed; curation and retest skipped so no edit rests on missing verdicts`)
+      log(`${slug}: a specialist or judge returned nothing; curation and retest skipped so no edit rests on missing verdicts`)
       return { ...res, curator: null, skipped: 'judge_failed' }
     }
     const outcomes = res.questions.map((q) => ({ qid: q.qid, accepted: q.accepted, rounds: q.rounds.map((x) => ({ r: x.r, rejected: x.rejected, flags: x.flags, blocking: x.blockingReasons, z3Adjudicated: x.z3Adjudicated })) }))
